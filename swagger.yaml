@@ -151,6 +151,17 @@ paths:
             format: JWT
             description: The token of the user to get the data specific to the user
           required: false
+        - in: query
+          name: klubCategory
+          schema:
+            type: string
+            enum:
+              - diving
+              - family
+              - coffee
+              - mutalu
+          required: false
+          description: This will filter the klub such that you get other klub
       responses:
         200:
           description: The recommended klub
@@ -330,12 +341,15 @@ paths:
       description: Gets the data required to render the story list
       operationId: getStoryList
       parameters:
-        - name: klubCategoryId
+        - name: klubCategory
           in: query
           schema:
-            type: number
-          required: false
-          description: The category id of the klub
+            type: string
+            enum:
+              - diving
+              - family
+              - coffee
+              - mutalu
         - name: Accept-Language
           in: header
           schema:
@@ -1128,36 +1142,38 @@ components:
                   description: The number of the members
                   examples: [1]
         exclusive:
-          type: object
-          properties:
-            klubTitle:
-              type: object
-              description: The title of the klub
-              properties:
-                title:
+          type: array
+          items:
+            type: object
+            properties:
+              klubTitle:
+                type: object
+                description: The title of the klub
+                properties:
+                  title:
+                    type: string
+                    description: The title of the klub
+                    examples: ["Klub Title"]
+                  description:
+                    type: string
+                    description: The description of the klub
+                    examples: ["Klub Description"]
+              exclusiveBanner:
+                $ref: "#/components/schemas/ExclusiveBanner"
+              images:
+                type: array
+                items:
                   type: string
-                  description: The title of the klub
-                  examples: ["Klub Title"]
-                description:
-                  type: string
-                  description: The description of the klub
-                  examples: ["Klub Description"]
-            exclusiveBanner:
-              $ref: "#/components/schemas/ExclusiveBanner"
-            images:
-              type: array
-              items:
-                type: string
-                description: The image of the klub
-                examples: ["https://klub-image.com/klub.jpg"]
-            quota:
-              type: array
-              items:
-                $ref: "#/components/schemas/QuotaObject"
-            media:
-              type: array
-              items:
-                $ref: "#/components/schemas/MediaObject"
+                  description: The image of the klub
+                  examples: ["https://klub-image.com/klub.jpg"]
+              quota:
+                type: array
+                items:
+                  $ref: "#/components/schemas/QuotaObject"
+              media:
+                type: array
+                items:
+                  $ref: "#/components/schemas/MediaObject"
         detail:
           description: The detail of the klub
           type: object

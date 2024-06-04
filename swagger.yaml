@@ -1161,19 +1161,13 @@ components:
               exclusiveBanner:
                 $ref: "#/components/schemas/ExclusiveBanner"
               images:
-                type: array
-                items:
-                  type: string
-                  description: The image of the klub
-                  examples: ["https://klub-image.com/klub.jpg"]
+                type: string
+                description: The image of the klub
+                examples: ["https://klub-image.com/klub.jpg"]
               quota:
-                type: array
-                items:
-                  $ref: "#/components/schemas/QuotaObject"
+                $ref: "#/components/schemas/QuotaObject"
               media:
-                type: array
-                items:
-                  $ref: "#/components/schemas/MediaObject"
+                $ref: "#/components/schemas/MediaObject"
         detail:
           description: The detail of the klub
           type: object

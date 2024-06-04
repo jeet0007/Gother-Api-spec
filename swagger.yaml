@@ -1168,6 +1168,18 @@ components:
                 $ref: "#/components/schemas/QuotaObject"
               media:
                 $ref: "#/components/schemas/MediaObject"
+              slug:
+                type: string
+                description: The slug of the klub
+                examples: ["klub-slug"]
+              citySlug:
+                type: string
+                description: The city slug of the klub
+                examples: ["city-slug"]
+              countrySlug:
+                type: string
+                description: The country slug of the klub
+                examples: ["country-slug"]
         detail:
           description: The detail of the klub
           type: object
@@ -1185,11 +1197,11 @@ components:
                   examples: ["Klub Title"]
                 titleColor:
                   type: string
-                  description: The color of the title
-                  examples: ["#50D77A"]
+                  description: Name of the club
+                  examples: ["Coffee & Tea KLUB"]
                 titleBack:
                   type: string
-                  description: The title of the klub
+                  description: The title of the klub bellow the title color
                   examples: ["Klub Title"]
             colorTheme:
               type: object

@@ -182,7 +182,7 @@ paths:
       description: Gets the data required to render the landing page of the klub
       security:
         - bearerAuth: []
-      operationId: getKlubLandingByCategoryId
+      operationId: getKlubLandingByCategory
       tags:
         - klub
       parameters:
@@ -216,6 +216,156 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/KlubLandingObject"
+        401:
+          $ref: "#/components/responses/TokenExpiredError"
+  /v2/klub/experienceExclusive:
+    get:
+      summary: Get the exclusive experience
+      description: Gets the data required to render the exclusive experience
+      security:
+        - bearerAuth: []
+      operationId: getExclusiveExperience
+      tags:
+        - klub
+      parameters:
+        - in: query
+          name: klubCategory
+          schema:
+            type: string
+            enum:
+              - diving
+              - family
+              - coffee
+              - mutalu
+          required: false
+          description: The category of the klub you want to get
+        - in: header
+          name: Data-Token
+          schema:
+            type: string
+            format: JWT
+            description: The token of the user to get the data specific to the user
+          required: false
+      responses:
+        200:
+          description: The exclusive experience
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: boolean
+                    description: The status code
+                    examples: [true, false]
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        name:
+                          type: string
+                          description: The name of the experience
+                          examples: ["Experience Name"]
+                        slug:
+                          type: string
+                          description: The slug of the experience
+                          examples: ["experience-slug"]
+                        areaName:
+                          type: string
+                          description: The area name of the experience
+                          default: null
+                          examples: ["Area Name"]
+                        areaSlug:
+                          type: string
+                          description: The area slug of the experience
+                          default: null
+                          examples: ["area-slug"]
+                        cityName:
+                          type: string
+                          description: The city name of the experience
+                          default: null
+                          examples: ["City Name"]
+                        citySlug:
+                          type: string
+                          description: The city slug of the experience
+                          default: null
+                          examples: ["city-slug"]
+                        countryName:
+                          type: string
+                          description: The country name of the experience
+                          default: null
+                          examples: ["Country Name"]
+                        countrySlug:
+                          type: string
+                          description: The country slug of the experience
+                          default: null
+                          examples: ["country-slug"]
+                        tier:
+                          $ref: "#/components/schemas/TierType"
+                        ticketType:
+                          $ref: "#/components/schemas/TicketType"
+                        isFavourite:
+                          type: boolean
+                          description: The status of the experience
+                          examples: [true, false]
+                        isExclusive:
+                          type: boolean
+                          description: The status of the experience
+                          examples: [true, false]
+                        klubCategory:
+                          type: object
+                          properties:
+                            name:
+                              type: string
+                              description: The name of the klub category
+                              examples: ["Klub Category Name"]
+                            slug:
+                              type: string
+                              description: The slug of the klub category
+                              examples: ["klub-category-slug"]
+                        category:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              name:
+                                type: string
+                                description: The name of the category
+                                examples: ["Category Name"]
+                              slug:
+                                type: string
+                                description: The slug of the category
+                                examples: ["category-slug"]
+                        location:
+                          type: object
+                          properties:
+                            lat:
+                              type: number
+                              description: The latitude of the location
+                              examples: [13.7563]
+                            long:
+                              type: number
+                              description: The longitude of the location
+                              examples: [100.5018]
+                        photos:
+                          type: array
+                          items:
+                            type: string
+                            description: The photos of the experience
+                            examples: ["https://klub-image.com/klub-photo.jpg"]
+                        rating:
+                          type: number
+                          description: The rating of the experience
+                          default: null
+                          examples: [5]
+                        numReview:
+                          type: number
+                          description: The number of reviews of the experience
+                          default: null
+                          examples: [2.1]
+                        prices:
+                          $ref: "#/components/schemas/PricesObject"
         401:
           $ref: "#/components/responses/TokenExpiredError"
   /v2/promotion/promotionLists:
@@ -1776,6 +1926,10 @@ components:
           type: string
           description: The type of the price
           examples: ["ADULT"]
+        packageName:
+          type: string
+          description: The package name of the price
+          examples: ["Package name"]
         nameEn:
           type: string
           description: The name of the price in English

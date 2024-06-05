@@ -666,6 +666,8 @@ paths:
           $ref: "#/components/responses/TokenExpiredError"
   /v2/klub/crossSell/experience:
     get:
+      tags:
+        - klub
       operationId: getCrossSellExperience
       summary: Get the cross sell experience
       description: Gets the data about list for cross-sell experiences

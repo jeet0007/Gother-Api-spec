@@ -193,13 +193,7 @@ paths:
             enum: ["diving", "family", "coffee", "mutalu"]
           required: true
           description: The category id of the klub
-        - in: header
-          name: Accept-Language
-          schema:
-            type: string
-            enum:
-              - en
-              - th
+        - $ref: "#/components/parameters/Accept-Language"
           required: false
           description: The language of the response
         - in: header
@@ -500,13 +494,7 @@ paths:
               - family
               - coffee
               - mutalu
-        - name: Accept-Language
-          in: header
-          schema:
-            type: string
-            enum:
-              - en
-              - th
+        - $ref: "#/components/parameters/Accept-Language"
           required: false
           description: The language of the response
       responses:
@@ -676,6 +664,48 @@ paths:
                             $ref: "#/components/schemas/FlightObject"
         401:
           $ref: "#/components/responses/TokenExpiredError"
+  /v2/klub/crossSell/experience:
+    get:
+      operationId: getCrossSellExperience
+      summary: Get the cross sell experience
+      description: Gets the data about list for cross-sell experiences
+      parameters:
+        - $ref: "#/components/parameters/Accept-Language"
+          required: false
+        - $ref: "#/components/parameters/preferred-currency"
+          required: false
+        - $ref: "#/components/parameters/KlubCategory"
+          required: true
+        - $ref: "#/components/parameters/Data-Token"
+          required: false
+      responses:
+        200:
+          description: The cross sell experience
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: boolean
+                    description: The status code
+                    examples: [true, false]
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        typeGroup:
+                          type: string
+                          description: The type of the group
+                          examples: ["โรงแรมติดท่าเรือ", "โรงแรมในเมือง"]
+                        experience:
+                          type: array
+                          items:
+                            $ref: "#/components/schemas/ExperienceCrossSellObject"
+        401:
+          $ref: "#/components/responses/TokenExpiredError"
+
   /v2/klub/joinKlub/join:
     post:
       tags:
@@ -823,15 +853,8 @@ paths:
             type: number
             description: Experience id
             examples: [3794, 3713, 3792]
-        - name: Accept-Language
-          in: header
-          schema:
-            type: string
-            enum:
-              - en
-              - th
+        - $ref: "#/components/parameters/Accept-Language"
           required: false
-          description: The language of the response
       responses:
         200:
           description: Get experience detail by id
@@ -863,27 +886,8 @@ paths:
       operationId: postPreAllocateExperience
       description: Pre allocate experience this is an optional step to allocate experience before booking to check for availability of the product
       parameters:
-        - name: Accept-Language
-          in: header
-          schema:
-            type: string
-            enum:
-              - en
-              - th
-          required: false
-          description: The language of the response
-        - name: preferred-currency
-          in: header
-          schema:
-            type: string
-            enum:
-              - THB
-              - USD
-              - EUR
-              - JPY
-              - CNY
-          required: false
-          description: The preferred currency of the user
+        - $ref: "#/components/parameters/Accept-Language"
+        - $ref: "#/components/parameters/preferred-currency"
       requestBody:
         $ref: "#/components/requestBodies/PreAllocateRequest"
       responses:
@@ -917,27 +921,8 @@ paths:
       description: Allocate is an mandatory step to generate the payment link for the user to book the experience
       operationId: postAllocateExperience
       parameters:
-        - name: Accept-Language
-          in: header
-          schema:
-            type: string
-            enum:
-              - en
-              - th
-          required: false
-          description: The language of the response
-        - name: preferred-currency
-          in: header
-          schema:
-            type: string
-            enum:
-              - THB
-              - USD
-              - EUR
-              - JPY
-              - CNY
-          required: false
-          description: The preferred currency of the user
+        - $ref: "#/components/parameters/Accept-Language"
+        - $ref: "#/components/parameters/preferred-currency"
       requestBody:
         $ref: "#/components/requestBodies/AllocateRequest"
       responses:
@@ -2082,6 +2067,107 @@ components:
             - general
         ticketType:
           $ref: "#/components/schemas/TicketType"
+    ExperienceCrossSellObject:
+      description: Experience cross sell object
+      type: object
+      properties:
+        name:
+          type: string
+          description: The name of the experience
+          examples: ["ทดสอบชื่อไทย"]
+        slug:
+          type: string
+          description: The slug of the experience
+          examples: ["experience-slug"]
+        areaName:
+          type: string
+          description: The area name of the experience
+          examples: ["สัตหีบ"]
+        areaSlug:
+          type: string
+          description: The area slug of the experience
+          examples: ["sattahip"]
+        cityName:
+          type: string
+          description: The city name of the experience
+          examples: ["ชลบุรี"]
+        citySlug:
+          type: string
+          description: The city slug of the experience
+          examples: ["chonburi"]
+        countryName:
+          type: string
+          description: The country name of the experience
+          examples: ["ประเทศไทย"]
+        countrySlug:
+          type: string
+          description: The country slug of the experience
+          examples: ["thailand"]
+        tier:
+          $ref: "#/components/schemas/TierType"
+        ticketType:
+          $ref: "#/components/schemas/TicketType"
+        isFavourite:
+          type: boolean
+          description: Wether the experience is favorite or not
+          examples: [true]
+        isExclusive:
+          type: boolean
+          description: Wether the experience is exclusive or not
+          examples: [true]
+        klubCategory:
+          type: object
+          description: The category of the experience
+          properties:
+            name:
+              type: string
+              description: The name of the category
+              examples: ["Theme Park"]
+            slug:
+              type: string
+              description: The slug of the category
+              examples: ["theme-park"]
+        category:
+          type: array
+          description: The category of the experience
+          items:
+            properties:
+              name:
+                type: string
+                description: The name of the category
+                examples: ["Theme Park"]
+              slug:
+                type: string
+                description: The slug of the category
+                examples: ["theme-park"]
+        location:
+          type: object
+          properties:
+            lat:
+              type: number
+              description: The latitude of the experience
+              examples: [13.7563]
+            lng:
+              type: number
+              description: The longitude of the experience
+              examples: [100.5018]
+        photos:
+          type: array
+          description: The photos of the experience
+          items:
+            type: string
+            examples: ["https://www.example.com/photo.jpg"]
+        rating:
+          type: number
+          description: The rating of the experience
+          examples: [5]
+        numReview:
+          type: number
+          description: The number of the reviews of the experience
+          examples: [2.1]
+        prices:
+          $ref: "#/components/schemas/PricesObject"
+
     HowToUseObject:
       type: object
       description: The how to use of the package
@@ -2839,6 +2925,46 @@ components:
       required: false
       schema:
         type: number
+    Accept-Language:
+      name: Accept-Language
+      in: header
+      description: The language of the response
+      required: false
+      schema:
+        type: string
+        enum: [en, th]
+        default: th
+    preferred-currency:
+      name: preferred-currency
+      in: header
+      schema:
+        type: string
+        enum:
+          - THB
+          - USD
+          - EUR
+          - JPY
+          - CNY
+      required: false
+      description: The preferred currency of the user
+    KlubCategory:
+      name: klubCategory
+      in: query
+      description: The klub category of the experience
+      schema:
+        type: string
+        enum:
+          - diving
+          - family
+          - coffee
+          - mutalu
+    Data-Token:
+      name: data-token
+      in: header
+      description: If the user is logged in, the data token is required to see the user-specific data
+      schema:
+        type: string
+        format: JWT
 
   responses:
     UnauthorizedError:

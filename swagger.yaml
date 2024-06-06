@@ -2696,6 +2696,10 @@ components:
           type: string
           description: The name of the ticket
           examples: ["Ticket Name"]
+        ticket_slug:
+          type: string
+          description: The slug of the ticket
+          examples: ["ticket-slug"]
         tier:
           $ref: "#/components/schemas/TierType"
         mobile_number:
@@ -2718,45 +2722,7 @@ components:
           items:
             $ref: "#/components/schemas/QuestionObject"
         itineraryDetail:
-          type: array
-          description: The itinerary detail of the ticket
-          default: []
-          items:
-            type: object
-            description: the itineraryDetail object with camelCasing
-            properties:
-              photoPath:
-                type: string
-                description: The photo path of the itinerary
-                examples: ["https://www.example.com/photo.jpg"]
-              detail:
-                type: string
-                description: The detail of the itinerary
-                examples: ["Itinerary detail"]
-              time:
-                type: string
-                description: The time of the itinerary
-                examples: ["10:00", "12:00", "14:00"]
-              addressDetail:
-                type: string
-                description: The address detail of the itinerary
-                examples: ["Address detail"]
-              airportId:
-                type: number
-                description: The airport id of the itinerary
-                examples: [1]
-              areaId:
-                type: number
-                description: The area id of the itinerary
-                examples: [1]
-              cityId:
-                type: number
-                description: The city id of the itinerary
-                examples: [1]
-              countryId:
-                type: number
-                description: The country id of the itinerary
-                examples: [1]
+          $ref: "#/components/schemas/ItineraryDetailObject"
         meetingPoint:
           $ref: "#/components/schemas/MeetingPointObject"
         freeCancellation:
@@ -2782,6 +2748,18 @@ components:
           type: string
           description: The redeem end date of the ticket will be future date from redeem start
           examples: ["2021-12-31"]
+        area_slug:
+          type: string
+          description: The area slug of the ticket
+          examples: ["area-slug"]
+        city_slug:
+          type: string
+          description: The city slug of the ticket
+          examples: ["city-slug"]
+        country_slug:
+          type: string
+          description: The country slug of the ticket
+          examples: ["country-slug"]
         totalAdult:
           type: number
           description: The total adult of the ticket
@@ -2810,6 +2788,11 @@ components:
           type: string
           description: The currency of the ticket prices
           examples: ["THB"]
+        keySearchTimeExpire:
+          type: number
+          description: The duration of the key search time to expire
+          default: 3600
+          examples: [3600]
     TicketObject:
       type: array
       description: The tickets of the package
@@ -2945,6 +2928,10 @@ components:
           type: string
           description: The preparation detail JSON string
           examples: ["Preparation Detail"]
+        price_condition:
+          type: string
+          description: The price condition JSON string
+          examples: ["Price Condition"]
         ticket_include:
           type: string
           description: The ticket include JSON string
@@ -2953,6 +2940,14 @@ components:
           type: string
           description: The photo cover path
           examples: ["https://www.example.com/photo.jpg"]
+        is_best_selling:
+          type: string
+          description: Wether the ticket is best selling or not
+          examples: ["1", "0"]
+        is_top_rating:
+          type: string
+          description: Wether the ticket is top rating or not
+          examples: ["1", "0"]
     AllocationObject:
       description: The allocation object provides the summary of the order with payment url
       type: object

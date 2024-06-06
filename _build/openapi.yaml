@@ -851,13 +851,18 @@ paths:
       description: Get available experience by ticket id
       operationId: getAvailableExperience
       parameters:
-        - name: ticketId
+        - name: experienceId
           in: query
-          description: Ticket id
-          required: true
+          description: Experience id
           schema:
             type: number
-            description: Ticket id
+            description: Experience id
+        - name: slug
+          in: query
+          description: Experience slug
+          schema:
+            type: string
+            description: Experience slug
       responses:
         '200':
           description: Get available experience
@@ -866,8 +871,6 @@ paths:
               schema:
                 type: object
                 properties:
-                  data:
-                    $ref: '#/components/schemas/ExperienceObject'
                   status:
                     type: boolean
                     description: The status code
@@ -875,7 +878,9 @@ paths:
                   message:
                     type: string
                     description: The message
-                    default: Get available experience
+                    default: null
+                  data:
+                    $ref: '#/components/schemas/ExperienceObject'
                   packages:
                     type: array
                     items:
@@ -923,6 +928,43 @@ paths:
                     default: Get experience detail by id
                   data:
                     $ref: '#/components/schemas/ExperienceDetailObject'
+        '401':
+          $ref: '#/components/responses/TokenExpiredError'
+  /v2/experience/recommended:
+    get:
+      operationId: getRecommendedExperience
+      summary: Get recommended experience
+      description: Get recommended experience by experience id
+      security:
+        - bearerAuth: []
+      tags:
+        - experience
+      parameters:
+        - $ref: '#/components/parameters/ExperienceId'
+        - $ref: '#/components/parameters/Slug'
+        - $ref: '#/components/parameters/Accept-Language'
+        - $ref: '#/components/parameters/preferred-currency'
+        - $ref: '#/components/parameters/Data-Token'
+      responses:
+        '200':
+          description: Success response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: boolean
+                    description: The status code
+                    default: true
+                  message:
+                    type: string
+                    description: The message
+                    default: Get recommended experience
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/ExperienceObject'
         '401':
           $ref: '#/components/responses/TokenExpiredError'
   /v2/experience/preAllocate:
@@ -2090,22 +2132,27 @@ components:
             - '10:00'
             - '12:00'
             - '14:00'
-        address_detail:
+        addressDetail:
           type: string
           description: The address detail of the itinerary
           examples:
             - Address detail
-        airport_id:
+        airportId:
           type: number
           description: The airport id of the itinerary
           examples:
             - 1
-        area_id:
+        countryId:
+          type: number
+          description: The country id of the itinerary
+          examples:
+            - 1
+        areaId:
           type: number
           description: The area id of the itinerary
           examples:
             - 1
-        city_id:
+        cityId:
           type: number
           description: The city id of the itinerary
           examples:
@@ -2242,6 +2289,7 @@ components:
         redeemEnd:
           type: string
           description: The redeem end date of the package will be future date from redeem start
+          default: null
           examples:
             - '2021-12-31'
         currency:
@@ -2320,20 +2368,25 @@ components:
         isJoin:
           type: boolean
           description: Wether the user has joined the experience or not
+        bestSeller:
+          type: boolean
+          description: Wether the experience is best seller or not
         klubCategory:
-          $ref: '#/components/schemas/KlubCategory'
-        from:
-          type: string
-          description: The Source of the experience
-          examples:
-            - SeoPackages
+          type: object
+          description: The category of the experience
+          properties:
+            name:
+              type: string
+              description: The name of the category
+              examples:
+                - Theme Park
+            slug:
+              type: string
+              description: The slug of the category
+              examples:
+                - theme-park
         tier:
-          type: string
-          description: The tier of the experience
-          enum:
-            - exclusive
-            - handpick
-            - general
+          $ref: '#/components/schemas/TierType'
         ticketType:
           $ref: '#/components/schemas/TicketType'
     ExperienceCrossSellObject:
@@ -2640,7 +2693,7 @@ components:
               description: The latitude of the experience
               examples:
                 - 13.7563
-            lng:
+            long:
               type: number
               description: The longitude of the experience
               examples:
@@ -2695,7 +2748,7 @@ components:
             properties:
               detail:
                 type: string
-                description: The description of the experience
+                description: The description of the experience with html format
                 examples:
                   - <p>Experience Description</p>
               photo_path:
@@ -2811,7 +2864,6 @@ components:
               examples:
                 - Klub Name
         cardInfluencer:
-          default: null
           type: object
           description: The influencer card of the experience
           properties:
@@ -3405,6 +3457,18 @@ components:
       schema:
         type: string
         format: JWT
+    ExperienceId:
+      name: experienceId
+      in: query
+      description: The id of the experience
+      schema:
+        type: string
+    Slug:
+      name: slug
+      in: query
+      description: The slug of the experience
+      schema:
+        type: string
   responses:
     UnauthorizedError:
       description: Unauthorized

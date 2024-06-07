@@ -918,7 +918,40 @@ paths:
                       $ref: "#/components/schemas/ExperienceCrossSellObject"
         401:
           $ref: "#/components/responses/TokenExpiredError"
-
+  /v2/experience/categories:
+    get:
+      tags:
+        - experience
+      security:
+        - bearerAuth: []
+      summary: Get experience categories
+      operationId: getExperienceCategories
+      description: Get experience categories
+      parameters:
+        - $ref: "#/components/parameters/Accept-Language"
+          required: false
+      responses:
+        200:
+          description: Get experience categories
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: boolean
+                    description: The status code
+                    default: true
+                  message:
+                    type: string
+                    description: The message
+                    default: Get experience categories
+                  data:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/ExperienceCategoryObject"
+        401:
+          $ref: "#/components/responses/TokenExpiredError"
   /v2/experience/preAllocate:
     post:
       tags:
@@ -1125,6 +1158,7 @@ components:
       description: The exclusive klub object
       type: object
       properties:
+        # TODO: Add experienceId
         id:
           type: number
           description: The id of the klub(Running number)
@@ -2978,6 +3012,39 @@ components:
           type: string
           description: The payment url of the order
           examples: ["https://www.example.com/payment"]
+    ExperienceCategoryObject:
+      description: Experience category object
+      type: object
+      properties:
+        id:
+          type: number
+          description: The id of the category
+          examples: [1]
+        icon:
+          type: string
+          description: The icon of the category
+          examples: ["https://www.example.com/icon.jpg"]
+        name:
+          type: string
+          description: The name of the category
+          examples: ["Theme Park"]
+        group:
+          $ref: "#/components/schemas/TicketType"
+        groupName:
+          type: string
+          description: The name of the group
+          examples: ["Theme Park"]
+        ordering:
+          type: number
+          description: The ordering of the category
+          examples: [1]
+        slug:
+          type: string
+          description: The slug of the category
+          examples: ["theme-park"]
+        isRecommend:
+          type: boolean
+          description: Wether the category is recommended or not
 
   parameters:
     limit:

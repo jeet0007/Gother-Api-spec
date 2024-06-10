@@ -21,6 +21,8 @@ tags:
     description: The promotion is a special offer that is available for a limited time
   - name: experience
     description: The experience is a special event that is a bunch of activities that are available for a limited time
+  - name: utility
+    description: The utility is a set of tools that are available for the user to use
 
 paths:
   /auth/token:
@@ -1022,7 +1024,44 @@ paths:
                     $ref: "#/components/schemas/AllocationObject"
         401:
           $ref: "#/components/responses/TokenExpiredError"
-
+  /utilities/countryOfPassportList:
+    get:
+      tags:
+        - utility
+      summary: Get the country of passport list
+      description: Get the country of passport list master data
+      operationId: getCountryOfPassportList
+      responses:
+        200:
+          description: Get the country of passport list
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  countryOfPassport:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: number
+                          description: The id of the country
+                          examples: [1]
+                        name:
+                          type: string
+                          description: The name of the country
+                          examples: ["Thailand"]
+                        code2A:
+                          type: string
+                          description: The 2 char code of the country
+                          examples: ["TH"]
+                        code3A:
+                          type: string
+                          description: The 3 char code of the country
+                          examples: ["THA"]
+        401:
+          $ref: "#/components/responses/TokenExpiredError"
 components:
   schemas:
     QuotaObject:

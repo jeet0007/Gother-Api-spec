@@ -837,13 +837,13 @@ paths:
                     default: null
                   data:
                     allOf:
+                      - $ref: "#/components/schemas/ExperienceObject"
                       - type: object
                         properties:
                           packages:
                             type: array
                             items:
                               $ref: "#/components/schemas/PackageObject"
-                      - $ref: "#/components/schemas/ExperienceObject"
         401:
           $ref: "#/components/responses/TokenExpiredError"
   /v2/experience/detailById:

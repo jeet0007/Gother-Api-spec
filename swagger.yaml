@@ -1918,7 +1918,7 @@ components:
       description: Itinerary detail object
       type: object
       properties:
-        photo_path:
+        photoPath:
           type: string
           description: The photo path of the itinerary
           examples: ["https://www.example.com/photo.jpg"]
@@ -1993,10 +1993,6 @@ components:
           type: string
           description: The type of the price
           examples: ["ADULT"]
-        packageName:
-          type: string
-          description: The package name of the price
-          examples: ["Package name"]
         nameEn:
           type: string
           description: The name of the price in English
@@ -2025,6 +2021,10 @@ components:
           type: string
           description: The currency of the price
           examples: ["THB"]
+        isPrivate:
+          type: boolean
+          description: Wether the price is private or not
+          default: false
     PackageObject:
       description: Package object
       type: object
@@ -2038,19 +2038,9 @@ components:
           description: The name of the package
           examples: ["Package name"]
         description:
-          type: object
+          type: string
           description: The description of the package
-          properties:
-            header:
-              type: string
-              description: The header of the package
-              examples: ["Package header"]
-            list:
-              type: array
-              description: The list of the package
-              items:
-                type: string
-                examples: ["Description one"]
+          examples: ["Package description"]
         howToUse:
           $ref: "#/components/schemas/HowToUseObject"
         termsAndConditions:
@@ -2087,7 +2077,6 @@ components:
         itineraryDetail:
           type: array
           description: The itinerary detail of the package
-          default: []
           items:
             $ref: "#/components/schemas/ItineraryDetailObject"
         photoPath:
@@ -2124,6 +2113,12 @@ components:
                 description: The prices of the sub package
                 items:
                   $ref: "#/components/schemas/PricesObject"
+              fixedDates:
+                type: array
+                description: The fixed dates of the sub package
+                items:
+                  type: string
+                  examples: ["2021-01-01"]
     ExperienceObject:
       description: Experience object
       type: object
@@ -2154,6 +2149,9 @@ components:
           $ref: "#/components/schemas/TierType"
         ticketType:
           $ref: "#/components/schemas/TicketType"
+        isFixedDate:
+          type: boolean
+          description: Wether the experience is fixed date or not
     ExperienceCrossSellObject:
       description: Experience cross sell object
       type: object

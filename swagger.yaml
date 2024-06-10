@@ -836,11 +836,14 @@ paths:
                     description: The message
                     default: null
                   data:
-                    $ref: "#/components/schemas/ExperienceObject"
-                  packages:
-                    type: array
-                    items:
-                      $ref: "#/components/schemas/PackageObject"
+                    allOf:
+                      - type: object
+                        properties:
+                          packages:
+                            type: array
+                            items:
+                              $ref: "#/components/schemas/PackageObject"
+                      - $ref: "#/components/schemas/ExperienceObject"
         401:
           $ref: "#/components/responses/TokenExpiredError"
   /v2/experience/detailById:

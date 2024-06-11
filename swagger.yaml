@@ -1141,6 +1141,10 @@ components:
               type: string
               description: The shape mobile image of the exclusive banner
               examples: ["https://klub-image.com/klub-shape-mobile.jpg"]
+        color:
+          type: string
+          description: The color of the exclusive banner
+          examples: ["#50D77A"]
     RegularKlubObject:
       description: The klub object
       type: object
@@ -1292,11 +1296,24 @@ components:
           items:
             type: string
             description: The base color of the klub
-            examples: [["#50D77A", "#044236"]]
+            examples: ["#50D77A", "#044236"]
         isShow:
           type: boolean
           description: The status of the klub
           examples: [true]
+        slug:
+          type: string
+          description: The slug of the klub
+          examples: ["klub-slug"]
+        citySlug:
+          type: string
+          description: The city slug of the klub
+          examples: ["city-slug"]
+        countrySlug:
+          type: string
+          description: The country slug of the klub
+          examples: ["country-slug"]
+
     RecommendedKlub:
       description: The recommended klub object
       type: object

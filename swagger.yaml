@@ -1185,6 +1185,10 @@ components:
           type: string
           description: color of the text
           examples: ["#50D77A"]
+        buttonText:
+          type: string
+          description: The text of the button
+          examples: ["Button Text"]
         buttonStyle:
           type: object
           properties:

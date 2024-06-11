@@ -1027,7 +1027,7 @@ paths:
                     $ref: "#/components/schemas/AllocationObject"
         401:
           $ref: "#/components/responses/TokenExpiredError"
-  /utilities/countryOfPassportList:
+  /v2/countryOfPassportList:
     get:
       tags:
         - utility

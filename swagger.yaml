@@ -2084,10 +2084,6 @@ components:
           type: string
           description: The currency of the price
           examples: ["THB"]
-        isPrivate:
-          type: boolean
-          description: Wether the price is private or not
-          default: false
     PackageObject:
       description: Package object
       type: object
@@ -2171,6 +2167,10 @@ components:
                 type: string
                 description: The name of the sub package
                 examples: ["Package name"]
+              isPrivate:
+                type: boolean
+                description: Wether the sub package is private or not
+                default: false
               prices:
                 type: array
                 description: The prices of the sub package

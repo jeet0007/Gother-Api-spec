@@ -111,13 +111,10 @@ paths:
       tags:
         - klub
       parameters:
-        - in: header
-          name: Data-Token
-          schema:
-            type: string
-            format: JWT
-            description: The token of the user to get the data specific to the user
+        - $ref: "#/components/parameters/Accept-Language"
           required: false
+          description: The language of the response
+        - $ref: "#/components/parameters/Data-Token"
       responses:
         200:
           description: The klub landing page
@@ -1313,6 +1310,10 @@ components:
           type: string
           description: The country slug of the klub
           examples: ["country-slug"]
+        experienceId:
+          type: number
+          description: The experience id of the klub
+          examples: [1]
 
     RecommendedKlub:
       description: The recommended klub object

@@ -5,7 +5,7 @@ info:
     This is the GoApi documentation. You can find out more about the project on the [GoApi Repository](https://gl.traveligo.com/t1/go-api).
     Some useful links:
     - [GoApi Repository](https://gl.traveligo.com/t1/go-api)
-  version: 1.1.4
+  version: 1.2.4
   license:
     name: Internal
     url: "https://gl.traveligo.com/"
@@ -742,15 +742,15 @@ paths:
           $ref: "#/components/responses/TokenExpiredError"
         405:
           $ref: "#/components/responses/MethodNotAllowedResponse"
-  /v2/experience/detailById:
+  /v2/experience/detail:
     get:
       tags:
         - experience
       security:
         - bearerAuth: []
-      summary: Get experience detail by id
-      operationId: getExperienceDetailById
-      description: Get experience detail by experience id or ticket id
+      summary: Get experience detail
+      operationId: getExperienceDetail
+      description: Get experience detail by experience id or ticket id or slug
       parameters:
         - name: experienceId
           in: query
@@ -762,6 +762,30 @@ paths:
             examples: [3794, 3713, 3792]
         - $ref: "#/components/parameters/Accept-Language"
           required: false
+        - name: slug
+          in: query
+          description: Experience slug
+          required: false
+          schema:
+            type: string
+            description: Experience slug
+            examples: ["experience-slug"]
+        - name: citySlug
+          in: query
+          description: City slug
+          required: false
+          schema:
+            type: string
+            description: City slug
+            examples: ["city-slug"]
+        - name: countrySlug
+          in: query
+          description: Country slug
+          required: false
+          schema:
+            type: string
+            description: Country slug
+            examples: ["country-slug"]
       responses:
         200:
           description: Get experience detail by id

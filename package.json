@@ -1,18 +1,23 @@
 {
   "name": "gother",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "redocly bundle swagger.yaml --output _build/openapi.yaml",
+    "build:swagger": "swagger-cli bundle -o _build/openapi.yaml swagger.yaml",
     "preview": "npm run build && redocly preview-docs _build/openapi.yaml"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@redocly/cli": "^1.14.0",
+    "@redocly/cli": "^1.15.0",
     "@stoplight/spectral": "^6.5.0"
+  },
+  "devDependencies": {
+    "grunt-bump": "^0.8.0",
+    "husky": "^9.0.11"
   }
 }

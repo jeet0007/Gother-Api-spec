@@ -5,7 +5,7 @@ info:
     This is the GoApi documentation. You can find out more about the project on the [GoApi Repository](https://gl.traveligo.com/t1/go-api).
     Some useful links:
     - [GoApi Repository](https://gl.traveligo.com/t1/go-api)
-  version: 1.1.0
+  version: 1.1.1
   license:
     name: Internal
     url: "https://gl.traveligo.com/"
@@ -2501,17 +2501,7 @@ components:
         exclusiveContainer:
           $ref: "#/components/schemas/ExclusiveContainerObject"
         buttonBanner:
-          type: object
-          description: The button banner of the experience
-          properties:
-            icon:
-              type: string
-              description: The icon of the button
-              examples: ["https://www.example.com/icon.jpg"]
-            klubName:
-              type: string
-              description: The klub name of the button
-              examples: ["Klub Name"]
+          $ref: "#/components/schemas/ButtonBannerObject"
         cardInfluencer:
           type: object
           description: The influencer card of the experience
@@ -3026,6 +3016,26 @@ components:
           $ref: "#/components/schemas/BannerObjectExclusive"
         exclusiveContainer:
           $ref: "#/components/schemas/ExclusiveContainerObject"
+        buttonBanner:
+          $ref: "#/components/schemas/ButtonBannerObject"
+        cardInfluencer:
+          $ref: "#/components/schemas/CardInfluencerObject"
+        airline:
+          type: object
+          properties:
+            logoAirline:
+              type: string
+              description: The title logo of the airline
+              examples: ["https://www.example.com/logo.jpg"]
+            textTitleLogo:
+              type: string
+              description: The title of the logo
+              examples: ["Airline Title"]
+            textDescriptLogo:
+              type: string
+              description: The description of the logo
+              examples: ["Airline Description"]
+
     ExclusiveContainerObject:
       type: object
       description: The exclusive container of the experience
@@ -3036,6 +3046,34 @@ components:
           $ref: "#/components/schemas/ExclusiveBanner"
         media:
           $ref: "#/components/schemas/MediaObject"
+    ButtonBannerObject:
+      type: object
+      description: The button banner of the experience
+      properties:
+        icon:
+          type: string
+          description: The icon of the button
+          examples: ["https://www.example.com/icon.jpg"]
+        klubName:
+          type: string
+          description: The klub name of the button
+          examples: ["Klub Name"]
+    CardInfluencerObject:
+      type: object
+      description: The influencer card of the experience
+      properties:
+        imgInflu:
+          type: string
+          description: The image of the influencer
+          examples: ["https://www.example.com/influ.jpg"]
+        nameInflu:
+          type: string
+          description: The name of the influencer
+          examples: ["Influencer Name"]
+        detailInflu:
+          type: string
+          description: The detail of the influencer
+          examples: ["Influencer Detail"]
     ExclusiveExperienceObject:
       type: object
       description: Exclusive experience object

@@ -5,13 +5,15 @@ info:
     This is the GoApi documentation. You can find out more about the project on the [GoApi Repository](https://gl.traveligo.com/t1/go-api).
     Some useful links:
     - [GoApi Repository](https://gl.traveligo.com/t1/go-api)
-  version: 1.1.2
+  version: 1.1.1
   license:
     name: Internal
-    url: "https://gl.traveligo.com/"
+    url: https://gl.traveligo.com/
 servers:
   - url: https://goapi.travels.network/api
     description: Uat Server
+security:
+  - bearerAuth: []
 tags:
   - name: auth
     description: The authentication of a user in the system to verify the user's identity
@@ -23,7 +25,6 @@ tags:
     description: The experience is a special event that is a bunch of activities that are available for a limited time
   - name: utility
     description: The utility is a set of tools that are available for the user to use
-
 paths:
   /auth/token:
     post:
@@ -45,13 +46,12 @@ paths:
               required:
                 - requestKey
       responses:
-        200:
-          $ref: "#/components/responses/AuthSuccessResponse"
-
-        401:
-          $ref: "#/components/responses/UnauthorizedError"
-        405:
-          $ref: "#/components/responses/MethodNotAllowedResponse"
+        '200':
+          $ref: '#/components/responses/AuthSuccessResponse'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '405':
+          $ref: '#/components/responses/MethodNotAllowedResponse'
   /auth/checkToken:
     post:
       tags:
@@ -73,7 +73,7 @@ paths:
               required:
                 - token
       responses:
-        200:
+        '200':
           description: The token is valid
           content:
             application/json:
@@ -87,8 +87,9 @@ paths:
                   status:
                     type: number
                     description: The status code
-                    examples: [200]
-        401:
+                    examples:
+                      - 200
+        '401':
           description: The token is invalid
           content:
             application/json:
@@ -102,9 +103,10 @@ paths:
                   status:
                     type: number
                     description: The status code
-                    examples: [401]
-        405:
-          $ref: "#/components/responses/MethodNotAllowedResponse"
+                    examples:
+                      - 401
+        '405':
+          $ref: '#/components/responses/MethodNotAllowedResponse'
   /v2/klub/landing:
     get:
       summary: Get the klub landing page
@@ -115,12 +117,12 @@ paths:
       tags:
         - klub
       parameters:
-        - $ref: "#/components/parameters/Accept-Language"
+        - $ref: '#/components/parameters/Accept-Language'
           required: false
           description: The language of the response
-        - $ref: "#/components/parameters/Data-Token"
+        - $ref: '#/components/parameters/Data-Token'
       responses:
-        200:
+        '200':
           description: The klub landing page
           content:
             application/json:
@@ -130,13 +132,13 @@ paths:
                   klubForYour:
                     type: array
                     items:
-                      $ref: "#/components/schemas/RegularKlubObject"
+                      $ref: '#/components/schemas/RegularKlubObject'
                   klubExclusive:
                     type: array
                     items:
-                      $ref: "#/components/schemas/ExclusiveKlubObject"
-        401:
-          $ref: "#/components/responses/UnauthorizedError"
+                      $ref: '#/components/schemas/ExclusiveKlubObject'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
   /v2/klub/recommended:
     get:
       summary: Get the recommended klub
@@ -147,14 +149,13 @@ paths:
       tags:
         - klub
       parameters:
-        - $ref: "#/components/parameters/Accept-Language"
+        - $ref: '#/components/parameters/Accept-Language'
           required: false
           description: The language of the response
-        - $ref: "#/components/parameters/Data-Token"
-        - $ref: "#/components/parameters/KlubCategory"
-
+        - $ref: '#/components/parameters/Data-Token'
+        - $ref: '#/components/parameters/KlubCategory'
       responses:
-        200:
+        '200':
           description: The recommended klub
           content:
             application/json:
@@ -164,11 +165,11 @@ paths:
                   recommend:
                     type: array
                     items:
-                      $ref: "#/components/schemas/RecommendedKlub"
-        401:
-          $ref: "#/components/responses/TokenExpiredError"
-        405:
-          $ref: "#/components/responses/MethodNotAllowedResponse"
+                      $ref: '#/components/schemas/RecommendedKlub'
+        '401':
+          $ref: '#/components/responses/TokenExpiredError'
+        '405':
+          $ref: '#/components/responses/MethodNotAllowedResponse'
   /v2/klub/landingKlub:
     get:
       summary: Get the klub landing page
@@ -183,10 +184,14 @@ paths:
           name: klubCategory
           schema:
             type: string
-            enum: ["diving", "family", "coffee", "mutalu"]
+            enum:
+              - diving
+              - family
+              - coffee
+              - mutalu
           required: true
           description: The category id of the klub
-        - $ref: "#/components/parameters/Accept-Language"
+        - $ref: '#/components/parameters/Accept-Language'
           required: false
           description: The language of the response
         - in: header
@@ -197,16 +202,16 @@ paths:
             description: The token of the user to get the data specific to the user
           required: false
       responses:
-        200:
+        '200':
           description: Klub by category id
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/KlubLandingObject"
-        401:
-          $ref: "#/components/responses/TokenExpiredError"
-        405:
-          $ref: "#/components/responses/MethodNotAllowedResponse"
+                $ref: '#/components/schemas/KlubLandingObject'
+        '401':
+          $ref: '#/components/responses/TokenExpiredError'
+        '405':
+          $ref: '#/components/responses/MethodNotAllowedResponse'
   /v2/klub/experienceExclusive:
     get:
       summary: Get the exclusive experience
@@ -236,7 +241,7 @@ paths:
             description: The token of the user to get the data specific to the user
           required: false
       responses:
-        200:
+        '200':
           description: The exclusive experience
           content:
             application/json:
@@ -246,15 +251,17 @@ paths:
                   status:
                     type: boolean
                     description: The status code
-                    examples: [true, false]
+                    examples:
+                      - true
+                      - false
                   data:
                     type: array
                     items:
-                      $ref: "#/components/schemas/ExclusiveExperienceObject"
-        401:
-          $ref: "#/components/responses/TokenExpiredError"
-        405:
-          $ref: "#/components/responses/MethodNotAllowedResponse"
+                      $ref: '#/components/schemas/ExclusiveExperienceObject'
+        '401':
+          $ref: '#/components/responses/TokenExpiredError'
+        '405':
+          $ref: '#/components/responses/MethodNotAllowedResponse'
   /v2/promotion/promotionLists:
     get:
       tags:
@@ -283,16 +290,14 @@ paths:
             type: string
             description: The type of the promotion
             examples:
-              [
-                "hotel",
-                "home",
-                "tour",
-                "flight",
-                "activity",
-                "ticket",
-                "transfer",
-                "insurance",
-              ]
+              - hotel
+              - home
+              - tour
+              - flight
+              - activity
+              - ticket
+              - transfer
+              - insurance
           required: false
         - in: query
           name: category
@@ -301,7 +306,7 @@ paths:
             description: The category of the promotion
           required: false
       responses:
-        200:
+        '200':
           description: The promotion list
           content:
             application/json:
@@ -311,27 +316,27 @@ paths:
                   promotion:
                     type: array
                     items:
-                      $ref: "#/components/schemas/PromotionObject"
+                      $ref: '#/components/schemas/PromotionObject'
                   type:
                     type: array
                     description: The promotion type list
                     items:
-                      $ref: "#/components/schemas/PromotionTypeObject"
+                      $ref: '#/components/schemas/PromotionTypeObject'
                     default: []
                   category:
                     type: array
                     description: The promotion category list
                     items:
-                      $ref: "#/components/schemas/PromotionTypeObject"
+                      $ref: '#/components/schemas/PromotionTypeObject'
                     default: []
                   total:
                     type: number
                     description: The total number of promotions
                     default: 0
-        401:
-          $ref: "#/components/responses/TokenExpiredError"
-        405:
-          $ref: "#/components/responses/MethodNotAllowedResponse"
+        '401':
+          $ref: '#/components/responses/TokenExpiredError'
+        '405':
+          $ref: '#/components/responses/MethodNotAllowedResponse'
   /v2/promotion/detail:
     get:
       tags:
@@ -353,7 +358,7 @@ paths:
           required: false
           description: The promotion slug
       responses:
-        200:
+        '200':
           description: The promotion detail
           content:
             application/json:
@@ -363,15 +368,17 @@ paths:
                   promotion:
                     type: array
                     items:
-                      $ref: "#/components/schemas/PromotionObject"
+                      $ref: '#/components/schemas/PromotionObject'
                   success:
                     type: boolean
                     description: The status code
-                    examples: [true, false]
-        401:
-          $ref: "#/components/responses/TokenExpiredError"
-        405:
-          $ref: "#/components/responses/MethodNotAllowedResponse"
+                    examples:
+                      - true
+                      - false
+        '401':
+          $ref: '#/components/responses/TokenExpiredError'
+        '405':
+          $ref: '#/components/responses/MethodNotAllowedResponse'
   /v2/klub/story:
     get:
       security:
@@ -391,11 +398,11 @@ paths:
               - family
               - coffee
               - mutalu
-        - $ref: "#/components/parameters/Accept-Language"
+        - $ref: '#/components/parameters/Accept-Language'
           required: false
           description: The language of the response
       responses:
-        200:
+        '200':
           description: The story list
           content:
             application/json:
@@ -405,11 +412,11 @@ paths:
                   story:
                     type: array
                     items:
-                      $ref: "#/components/schemas/StoryObject"
-        401:
-          $ref: "#/components/responses/TokenExpiredError"
-        405:
-          $ref: "#/components/responses/MethodNotAllowedResponse"
+                      $ref: '#/components/schemas/StoryObject'
+        '401':
+          $ref: '#/components/responses/TokenExpiredError'
+        '405':
+          $ref: '#/components/responses/MethodNotAllowedResponse'
   /v2/klub/travelStory:
     get:
       security:
@@ -426,9 +433,9 @@ paths:
             type: number
           required: false
           description: The category id of the klub
-        - $ref: "#/components/parameters/limit"
+        - $ref: '#/components/parameters/limit'
       responses:
-        200:
+        '200':
           description: The travel story list
           content:
             application/json:
@@ -438,11 +445,11 @@ paths:
                   story:
                     type: array
                     items:
-                      $ref: "#/components/schemas/TravelStoryObject"
-        401:
-          $ref: "#/components/responses/TokenExpiredError"
-        405:
-          $ref: "#/components/responses/MethodNotAllowedResponse"
+                      $ref: '#/components/schemas/TravelStoryObject'
+        '401':
+          $ref: '#/components/responses/TokenExpiredError'
+        '405':
+          $ref: '#/components/responses/MethodNotAllowedResponse'
   /v2/klub/storyBySlug:
     get:
       security:
@@ -460,16 +467,16 @@ paths:
           required: true
           description: The slug of the story
       responses:
-        200:
+        '200':
           description: The story by slug
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/StoryBySlugObject"
-        401:
-          $ref: "#/components/responses/TokenExpiredError"
-        405:
-          $ref: "#/components/responses/MethodNotAllowedResponse"
+                $ref: '#/components/schemas/StoryBySlugObject'
+        '401':
+          $ref: '#/components/responses/TokenExpiredError'
+        '405':
+          $ref: '#/components/responses/MethodNotAllowedResponse'
   /v2/klub/crossSell/hotel:
     get:
       tags:
@@ -492,7 +499,7 @@ paths:
           required: false
           description: The category of the klub you want to get
       responses:
-        200:
+        '200':
           description: The cross sell hotel
           content:
             application/json:
@@ -502,7 +509,9 @@ paths:
                   status:
                     type: boolean
                     description: The status code
-                    examples: [true, false]
+                    examples:
+                      - true
+                      - false
                   data:
                     type: array
                     items:
@@ -511,16 +520,17 @@ paths:
                         typeGroup:
                           type: string
                           description: The type of the group
-                          examples: ["โรงแรมติดท่าเรือ", "โรงแรมในเมือง"]
+                          examples:
+                            - โรงแรมติดท่าเรือ
+                            - โรงแรมในเมือง
                         hotel:
                           type: array
                           items:
-                            $ref: "#/components/schemas/HotelObject"
-
-        401:
-          $ref: "#/components/responses/TokenExpiredError"
-        405:
-          $ref: "#/components/responses/MethodNotAllowedResponse"
+                            $ref: '#/components/schemas/HotelObject'
+        '401':
+          $ref: '#/components/responses/TokenExpiredError'
+        '405':
+          $ref: '#/components/responses/MethodNotAllowedResponse'
   /v2/klub/crossSell/flight:
     get:
       tags:
@@ -543,7 +553,7 @@ paths:
           required: false
           description: The category of the klub you want to get
       responses:
-        200:
+        '200':
           description: The cross sell flight
           content:
             application/json:
@@ -553,7 +563,9 @@ paths:
                   status:
                     type: boolean
                     description: The status code
-                    examples: [true, false]
+                    examples:
+                      - true
+                      - false
                   data:
                     type: array
                     items:
@@ -562,15 +574,17 @@ paths:
                         typeGroup:
                           type: string
                           description: The type of the group
-                          examples: ["โรงแรมติดท่าเรือ", "โรงแรมในเมือง"]
+                          examples:
+                            - โรงแรมติดท่าเรือ
+                            - โรงแรมในเมือง
                         flight:
                           type: array
                           items:
-                            $ref: "#/components/schemas/FlightObject"
-        401:
-          $ref: "#/components/responses/TokenExpiredError"
-        405:
-          $ref: "#/components/responses/MethodNotAllowedResponse"
+                            $ref: '#/components/schemas/FlightObject'
+        '401':
+          $ref: '#/components/responses/TokenExpiredError'
+        '405':
+          $ref: '#/components/responses/MethodNotAllowedResponse'
   /v2/klub/crossSell/experience:
     get:
       tags:
@@ -579,16 +593,16 @@ paths:
       summary: Get the cross sell experience
       description: Gets the data about list for cross-sell experiences
       parameters:
-        - $ref: "#/components/parameters/Accept-Language"
+        - $ref: '#/components/parameters/Accept-Language'
           required: false
-        - $ref: "#/components/parameters/preferred-currency"
+        - $ref: '#/components/parameters/preferred-currency'
           required: false
-        - $ref: "#/components/parameters/KlubCategory"
+        - $ref: '#/components/parameters/KlubCategory'
           required: true
-        - $ref: "#/components/parameters/Data-Token"
+        - $ref: '#/components/parameters/Data-Token'
           required: false
       responses:
-        200:
+        '200':
           description: The cross sell experience
           content:
             application/json:
@@ -598,7 +612,9 @@ paths:
                   status:
                     type: boolean
                     description: The status code
-                    examples: [true, false]
+                    examples:
+                      - true
+                      - false
                   data:
                     type: array
                     items:
@@ -607,15 +623,17 @@ paths:
                         typeGroup:
                           type: string
                           description: The type of the group
-                          examples: ["โรงแรมติดท่าเรือ", "โรงแรมในเมือง"]
+                          examples:
+                            - โรงแรมติดท่าเรือ
+                            - โรงแรมในเมือง
                         experience:
                           type: array
                           items:
-                            $ref: "#/components/schemas/ExperienceCrossSellObject"
-        401:
-          $ref: "#/components/responses/TokenExpiredError"
-        405:
-          $ref: "#/components/responses/MethodNotAllowedResponse"
+                            $ref: '#/components/schemas/ExperienceCrossSellObject'
+        '401':
+          $ref: '#/components/responses/TokenExpiredError'
+        '405':
+          $ref: '#/components/responses/MethodNotAllowedResponse'
   /v2/klub/joinKlub/join:
     post:
       tags:
@@ -643,7 +661,7 @@ paths:
               required:
                 - klubCategory
       responses:
-        200:
+        '200':
           description: The join klub response
           content:
             application/json:
@@ -653,15 +671,18 @@ paths:
                   status:
                     type: boolean
                     description: The status code
-                    examples: [true, false]
+                    examples:
+                      - true
+                      - false
                   message:
                     type: string
                     description: The message of the response
-                    examples: ["Join Klub Success"]
-        401:
-          $ref: "#/components/responses/TokenExpiredError"
-        405:
-          $ref: "#/components/responses/MethodNotAllowedResponse"
+                    examples:
+                      - Join Klub Success
+        '401':
+          $ref: '#/components/responses/TokenExpiredError'
+        '405':
+          $ref: '#/components/responses/MethodNotAllowedResponse'
   /v2/klub/joinKlub/leave:
     post:
       tags:
@@ -689,7 +710,7 @@ paths:
               required:
                 - klubCategory
       responses:
-        200:
+        '200':
           description: The leave klub response
           content:
             application/json:
@@ -699,15 +720,18 @@ paths:
                   status:
                     type: boolean
                     description: The status code
-                    examples: [true, false]
+                    examples:
+                      - true
+                      - false
                   message:
                     type: string
                     description: The message of the response
-                    examples: ["Leave Klub Success"]
-        401:
-          $ref: "#/components/responses/TokenExpiredError"
-        405:
-          $ref: "#/components/responses/MethodNotAllowedResponse"
+                    examples:
+                      - Leave Klub Success
+        '401':
+          $ref: '#/components/responses/TokenExpiredError'
+        '405':
+          $ref: '#/components/responses/MethodNotAllowedResponse'
   /v2/experience/available:
     get:
       tags:
@@ -731,7 +755,7 @@ paths:
             type: string
             description: Experience slug
       responses:
-        200:
+        '200':
           description: Get available experience
           content:
             application/json:
@@ -748,17 +772,17 @@ paths:
                     default: null
                   data:
                     allOf:
-                      - $ref: "#/components/schemas/ExperienceObject"
+                      - $ref: '#/components/schemas/ExperienceObject'
                       - type: object
                         properties:
                           packages:
                             type: array
                             items:
-                              $ref: "#/components/schemas/PackageObject"
-        401:
-          $ref: "#/components/responses/TokenExpiredError"
-        405:
-          $ref: "#/components/responses/MethodNotAllowedResponse"
+                              $ref: '#/components/schemas/PackageObject'
+        '401':
+          $ref: '#/components/responses/TokenExpiredError'
+        '405':
+          $ref: '#/components/responses/MethodNotAllowedResponse'
   /v2/experience/detailById:
     get:
       tags:
@@ -776,11 +800,14 @@ paths:
           schema:
             type: number
             description: Experience id
-            examples: [3794, 3713, 3792]
-        - $ref: "#/components/parameters/Accept-Language"
+            examples:
+              - 3794
+              - 3713
+              - 3792
+        - $ref: '#/components/parameters/Accept-Language'
           required: false
       responses:
-        200:
+        '200':
           description: Get experience detail by id
           content:
             application/json:
@@ -796,11 +823,11 @@ paths:
                     description: The message
                     default: Get experience detail by id
                   data:
-                    $ref: "#/components/schemas/ExperienceDetailObject"
-        401:
-          $ref: "#/components/responses/TokenExpiredError"
-        405:
-          $ref: "#/components/responses/MethodNotAllowedResponse"
+                    $ref: '#/components/schemas/ExperienceDetailObject'
+        '401':
+          $ref: '#/components/responses/TokenExpiredError'
+        '405':
+          $ref: '#/components/responses/MethodNotAllowedResponse'
   /v2/experience/recommended:
     get:
       operationId: getRecommendedExperience
@@ -811,13 +838,13 @@ paths:
       tags:
         - experience
       parameters:
-        - $ref: "#/components/parameters/ExperienceId"
-        - $ref: "#/components/parameters/Slug"
-        - $ref: "#/components/parameters/Accept-Language"
-        - $ref: "#/components/parameters/preferred-currency"
-        - $ref: "#/components/parameters/Data-Token"
+        - $ref: '#/components/parameters/ExperienceId'
+        - $ref: '#/components/parameters/Slug'
+        - $ref: '#/components/parameters/Accept-Language'
+        - $ref: '#/components/parameters/preferred-currency'
+        - $ref: '#/components/parameters/Data-Token'
       responses:
-        200:
+        '200':
           description: Success response
           content:
             application/json:
@@ -835,11 +862,11 @@ paths:
                   data:
                     type: array
                     items:
-                      $ref: "#/components/schemas/ExperienceCrossSellObject"
-        401:
-          $ref: "#/components/responses/TokenExpiredError"
-        405:
-          $ref: "#/components/responses/MethodNotAllowedResponse"
+                      $ref: '#/components/schemas/ExperienceCrossSellObject'
+        '401':
+          $ref: '#/components/responses/TokenExpiredError'
+        '405':
+          $ref: '#/components/responses/MethodNotAllowedResponse'
   /v2/experience/categories:
     get:
       tags:
@@ -850,10 +877,10 @@ paths:
       operationId: getExperienceCategories
       description: Get experience categories
       parameters:
-        - $ref: "#/components/parameters/Accept-Language"
+        - $ref: '#/components/parameters/Accept-Language'
           required: false
       responses:
-        200:
+        '200':
           description: Get experience categories
           content:
             application/json:
@@ -871,11 +898,11 @@ paths:
                   data:
                     type: array
                     items:
-                      $ref: "#/components/schemas/ExperienceCategoryObject"
-        401:
-          $ref: "#/components/responses/TokenExpiredError"
-        405:
-          $ref: "#/components/responses/MethodNotAllowedResponse"
+                      $ref: '#/components/schemas/ExperienceCategoryObject'
+        '401':
+          $ref: '#/components/responses/TokenExpiredError'
+        '405':
+          $ref: '#/components/responses/MethodNotAllowedResponse'
   /v2/experience/preAllocate:
     post:
       tags:
@@ -887,12 +914,12 @@ paths:
       operationId: postPreAllocateExperience
       description: Pre allocate experience this is an optional step to allocate experience before booking to check for availability of the product
       parameters:
-        - $ref: "#/components/parameters/Accept-Language"
-        - $ref: "#/components/parameters/preferred-currency"
+        - $ref: '#/components/parameters/Accept-Language'
+        - $ref: '#/components/parameters/preferred-currency'
       requestBody:
-        $ref: "#/components/requestBodies/PreAllocateRequest"
+        $ref: '#/components/requestBodies/PreAllocateRequest'
       responses:
-        200:
+        '200':
           description: Pre allocate experience
           content:
             application/json:
@@ -908,11 +935,11 @@ paths:
                     description: The message
                     default: Pre allocate experience
                   data:
-                    $ref: "#/components/schemas/PreAllocationObject"
-        401:
-          $ref: "#/components/responses/TokenExpiredError"
-        405:
-          $ref: "#/components/responses/MethodNotAllowedResponse"
+                    $ref: '#/components/schemas/PreAllocationObject'
+        '401':
+          $ref: '#/components/responses/TokenExpiredError'
+        '405':
+          $ref: '#/components/responses/MethodNotAllowedResponse'
   /v2/experience/allocate:
     post:
       tags:
@@ -924,12 +951,12 @@ paths:
       description: Allocate is an mandatory step to generate the payment link for the user to book the experience
       operationId: postAllocateExperience
       parameters:
-        - $ref: "#/components/parameters/Accept-Language"
-        - $ref: "#/components/parameters/preferred-currency"
+        - $ref: '#/components/parameters/Accept-Language'
+        - $ref: '#/components/parameters/preferred-currency'
       requestBody:
-        $ref: "#/components/requestBodies/AllocateRequest"
+        $ref: '#/components/requestBodies/AllocateRequest'
       responses:
-        200:
+        '200':
           description: Allocate experience
           content:
             application/json:
@@ -945,11 +972,11 @@ paths:
                     description: The message
                     default: Allocate experience
                   data:
-                    $ref: "#/components/schemas/AllocationObject"
-        401:
-          $ref: "#/components/responses/TokenExpiredError"
-        405:
-          $ref: "#/components/responses/MethodNotAllowedResponse"
+                    $ref: '#/components/schemas/AllocationObject'
+        '401':
+          $ref: '#/components/responses/TokenExpiredError'
+        '405':
+          $ref: '#/components/responses/MethodNotAllowedResponse'
   /v2/countryOfPassportList:
     get:
       tags:
@@ -958,7 +985,7 @@ paths:
       description: Get the country of passport list master data
       operationId: getCountryOfPassportList
       responses:
-        200:
+        '200':
           description: Get the country of passport list
           content:
             application/json:
@@ -973,23 +1000,27 @@ paths:
                         id:
                           type: number
                           description: The id of the country
-                          examples: [1]
+                          examples:
+                            - 1
                         name:
                           type: string
                           description: The name of the country
-                          examples: ["Thailand"]
+                          examples:
+                            - Thailand
                         code2A:
                           type: string
                           description: The 2 char code of the country
-                          examples: ["TH"]
+                          examples:
+                            - TH
                         code3A:
                           type: string
                           description: The 3 char code of the country
-                          examples: ["THA"]
-        401:
-          $ref: "#/components/responses/TokenExpiredError"
-        405:
-          $ref: "#/components/responses/MethodNotAllowedResponse"
+                          examples:
+                            - THA
+        '401':
+          $ref: '#/components/responses/TokenExpiredError'
+        '405':
+          $ref: '#/components/responses/MethodNotAllowedResponse'
 components:
   schemas:
     QuotaObject:
@@ -998,38 +1029,46 @@ components:
         message:
           type: string
           description: The message of the quota
-          examples: ["Quota Message"]
+          examples:
+            - Quota Message
         location:
           type: string
           description: The location of the event
-          examples: ["ภูเก็ต"]
+          examples:
+            - ภูเก็ต
         date:
           type: string
           description: The date of the event
-          examples: ["2022-01-01"]
+          examples:
+            - '2022-01-01'
         rating:
           type: number
           description: The rating of the event
-          examples: [5]
+          examples:
+            - 5
         review:
           type: number
           description: The review of the event
-          examples: [2.1]
+          examples:
+            - 2.1
     MediaObject:
       description: The media object
       properties:
         type:
           type: string
           description: The type of the media
-          examples: ["video"]
+          examples:
+            - video
         caption:
           type: string
           description: The caption of the media
-          examples: ["Media Caption"]
+          examples:
+            - Media Caption
         url:
           type: string
           description: The url of the media
-          examples: ["https://klub-image.com/klub-media.jpg"]
+          examples:
+            - https://klub-image.com/klub-media.jpg
     ExclusiveBanner:
       description: The exclusive banner of the klub
       type: object
@@ -1037,15 +1076,18 @@ components:
         title:
           type: string
           description: The title of the exclusive banner
-          examples: ["Exclusive Banner Title"]
+          examples:
+            - Exclusive Banner Title
         description:
           type: string
           description: The description of the exclusive banner
-          examples: ["Exclusive Banner Description"]
+          examples:
+            - Exclusive Banner Description
         route:
           type: string
           description: The route of the exclusive banner in the platform
-          examples: ["home"]
+          examples:
+            - home
         image:
           type: object
           description: The image of the exclusive banner
@@ -1053,19 +1095,23 @@ components:
             background:
               type: string
               description: The background image of the exclusive banner
-              examples: ["https://klub-image.com/klub-exclusive.jpg"]
+              examples:
+                - https://klub-image.com/klub-exclusive.jpg
             people:
               type: string
               description: The people image of the exclusive banner
-              examples: ["https://klub-image.com/klub-people.jpg"]
+              examples:
+                - https://klub-image.com/klub-people.jpg
             shape:
               type: string
               description: The shape image of the exclusive banner
-              examples: ["https://klub-image.com/klub-shape.jpg"]
+              examples:
+                - https://klub-image.com/klub-shape.jpg
             shapeMobile:
               type: string
               description: The shape mobile image of the exclusive banner
-              examples: ["https://klub-image.com/klub-shape-mobile.jpg"]
+              examples:
+                - https://klub-image.com/klub-shape-mobile.jpg
     RegularKlubObject:
       description: The klub object
       type: object
@@ -1073,67 +1119,80 @@ components:
         id:
           type: number
           description: The id of the klub(Running number)
-          examples: [1]
+          examples:
+            - 1
         title:
           type: string
           description: The title of the klub
-          examples: ["Klub Title"]
+          examples:
+            - Klub Title
         subTitle:
           type: string
           description: The subtitle of the klub
-          examples: ["Klub Subtitle"]
+          examples:
+            - Klub Subtitle
         route:
           type: string
           description: The route of the klub in the platform
-          examples: ["home"]
+          examples:
+            - home
         image:
           type: string
           description: The image of the klub
-          examples: ["https://klub-image.com/klub.jpg"]
+          examples:
+            - https://klub-image.com/klub.jpg
         backgroundImageLeft:
           type: string
           description: The left background image of the klub
-          examples: ["https://klub-image.com/klub-left.jpg"]
+          examples:
+            - https://klub-image.com/klub-left.jpg
         backgroundImageRight:
           type: string
           description: The right background image of the klub
-          examples: ["https://klub-image.com/klub-right.jpg"]
+          examples:
+            - https://klub-image.com/klub-right.jpg
         backgroundImageTop:
           type: string
           description: The top background image of the klub
-          examples: ["https://klub-image.com/klub-top.jpg"]
+          examples:
+            - https://klub-image.com/klub-top.jpg
         backgroundImageBottom:
           type: string
           description: The bottom background image of the klub
-          examples: ["https://klub-image.com/klub-bottom.jpg"]
+          examples:
+            - https://klub-image.com/klub-bottom.jpg
         textStyle:
           type: string
           description: color of the text
-          examples: ["#50D77A"]
+          examples:
+            - '#50D77A'
         buttonText:
           type: string
           description: The text of the button
-          examples: ["Button Text"]
+          examples:
+            - Button Text
         buttonStyle:
           type: object
           properties:
             text:
               type: string
               description: the color code of text
-              examples: ["#044236"]
+              examples:
+                - '#044236'
             background:
               type: string
               description: the color code of background
-              examples: ["#E8FFEE"]
+              examples:
+                - '#E8FFEE'
     ExclusiveKlubObject:
       description: The exclusive klub object
       type: object
       properties:
-        # TODO: Add experienceId
         id:
           type: number
           description: The id of the klub(Running number)
-          examples: [1]
+          examples:
+            - 1
         key:
           type: string
           description: The key of the klub
@@ -1142,18 +1201,21 @@ components:
             - family
             - coffee
             - mutalu
-          examples: ["diving"]
+          examples:
+            - diving
         tabMenu:
           type: object
           properties:
             text:
               type: string
               description: The text of the tab menu
-              examples: ["Tab Menu"]
+              examples:
+                - Tab Menu
             textColor:
               type: string
               description: The color of the text
-              examples: ["#50D77A"]
+              examples:
+                - '#50D77A'
         backgroundImage:
           description: The background image of the klub
           type: object
@@ -1165,15 +1227,18 @@ components:
                 shape:
                   type: string
                   description: The url for the shape of the image for the background
-                  examples: ["https://klub-image.com/klub-shape.jpg"]
+                  examples:
+                    - https://klub-image.com/klub-shape.jpg
                 vector:
                   type: string
                   description: The url for the vector of the image for the background
-                  examples: ["https://klub-image.com/klub-vector.jpg"]
+                  examples:
+                    - https://klub-image.com/klub-vector.jpg
                 vector2:
                   type: string
                   description: The url for the vector2 of the image for the background
-                  examples: ["https://klub-image.com/klub-vector2.jpg"]
+                  examples:
+                    - https://klub-image.com/klub-vector2.jpg
             mobile:
               type: object
               description: The mobile background image of the klub
@@ -1181,11 +1246,13 @@ components:
                 shape:
                   type: string
                   description: The url for the shape of the image for the background
-                  examples: ["https://klub-image.com/klub-shape.jpg"]
+                  examples:
+                    - https://klub-image.com/klub-shape.jpg
                 vector:
                   type: string
                   description: The url for the vector of the image for the background
-                  examples: ["https://klub-image.com/klub-vector.jpg"]
+                  examples:
+                    - https://klub-image.com/klub-vector.jpg
         klub:
           description: Information about the klub
           type: object
@@ -1193,52 +1260,62 @@ components:
             title:
               type: string
               description: The title of the klub
-              examples: ["Klub Title"]
+              examples:
+                - Klub Title
             description:
               type: string
               description: The description of the klub
-              examples: ["Klub Description"]
+              examples:
+                - Klub Description
             route:
               type: string
               description: The route of the klub in the platform
-              examples: ["home"]
+              examples:
+                - home
         exclusiveBanner:
-          $ref: "#/components/schemas/ExclusiveBanner"
+          $ref: '#/components/schemas/ExclusiveBanner'
         image:
           type: string
           description: The image of the klub
-          examples: ["https://klub-image.com/klub.jpg"]
+          examples:
+            - https://klub-image.com/klub.jpg
         quota:
-          $ref: "#/components/schemas/QuotaObject"
+          $ref: '#/components/schemas/QuotaObject'
         media:
-          $ref: "#/components/schemas/MediaObject"
+          $ref: '#/components/schemas/MediaObject'
         baseColor:
           type: array
           items:
             type: string
             description: The base color of the klub
-            examples: ["#50D77A", "#044236"]
+            examples:
+              - '#50D77A'
+              - '#044236'
         isShow:
           type: boolean
           description: The status of the klub
-          examples: [true]
+          examples:
+            - true
         slug:
           type: string
           description: The slug of the klub
-          examples: ["klub-slug"]
+          examples:
+            - klub-slug
         citySlug:
           type: string
           description: The city slug of the klub
-          examples: ["city-slug"]
+          examples:
+            - city-slug
         countrySlug:
           type: string
           description: The country slug of the klub
-          examples: ["country-slug"]
+          examples:
+            - country-slug
         experienceId:
           type: number
           description: The experience id of the klub
-          examples: [1]
-
+          examples:
+            - 1
     RecommendedKlub:
       description: The recommended klub object
       type: object
@@ -1246,7 +1323,8 @@ components:
         id:
           type: number
           description: The id of the klub(Running number)
-          examples: [1]
+          examples:
+            - 1
         type:
           type: string
           description: The type of the klub
@@ -1255,31 +1333,38 @@ components:
             - family
             - coffee
             - mutalu
-          examples: ["diving"]
+          examples:
+            - diving
         title:
           type: string
           description: The title of the klub
-          examples: ["Klub Title"]
+          examples:
+            - Klub Title
         description:
           type: string
           description: The description of the klub
-          examples: ["Klub Description"]
+          examples:
+            - Klub Description
         color:
           type: string
           description: The color of the klub
-          examples: ["#50D77A"]
+          examples:
+            - '#50D77A'
         imageBackground:
           type: string
           description: The image background of the klub
-          examples: ["https://klub-image.com/klub.jpg"]
+          examples:
+            - https://klub-image.com/klub.jpg
         images:
           type: string
           description: The images of the klub
-          examples: ["https://klub-image.com/klub.jpg"]
+          examples:
+            - https://klub-image.com/klub.jpg
         isJoin:
           type: boolean
           description: The status of the klub
-          examples: [true]
+          examples:
+            - true
     KlubLandingObject:
       description: The klub landing object
       type: object
@@ -1291,36 +1376,46 @@ components:
               type: boolean
               description: The status of the klub
               default: false
-              examples: [true]
+              examples:
+                - true
             type:
               type: string
               description: The type of the banner
-              enum: ["IMAGE", "VIDEO"]
-              examples: ["IMAGE"]
+              enum:
+                - IMAGE
+                - VIDEO
+              examples:
+                - IMAGE
             path:
               type: string
               description: The path of the banner
-              examples: ["https://klub-image.com/klub.jpg"]
+              examples:
+                - https://klub-image.com/klub.jpg
             iconPath:
               type: string
               description: The icon path of the banner
-              examples: ["https://klub-image.com/klub-icon.jpg"]
+              examples:
+                - https://klub-image.com/klub-icon.jpg
             titleSmall:
               type: string
               description: The small title of the banner
-              examples: ["Small Title"]
+              examples:
+                - Small Title
             titleBig:
               type: string
               description: The big title of the banner
-              examples: ["Big Title"]
+              examples:
+                - Big Title
             descriptionDesktop:
               type: string
               description: The description of the banner for desktop
-              examples: ["<p>Banner Description</p>"]
+              examples:
+                - <p>Banner Description</p>
             descriptionMobile:
               type: string
               description: The description of the banner for mobile with embeded html
-              examples: ["<b>Banner Description</b>"]
+              examples:
+                - <b>Banner Description</b>
             member:
               type: object
               properties:
@@ -1329,11 +1424,13 @@ components:
                   items:
                     type: string
                     description: The image of the member
-                    examples: ["https://klub-image.com/klub.jpg"]
+                    examples:
+                      - https://klub-image.com/klub.jpg
                 numMember:
                   type: number
                   description: The number of the members
-                  examples: [1]
+                  examples:
+                    - 1
         exclusive:
           type: array
           items:
@@ -1346,33 +1443,39 @@ components:
                   title:
                     type: string
                     description: The title of the klub
-                    examples: ["Klub Title"]
+                    examples:
+                      - Klub Title
                   description:
                     type: string
                     description: The description of the klub
-                    examples: ["Klub Description"]
+                    examples:
+                      - Klub Description
               exclusiveBanner:
-                $ref: "#/components/schemas/ExclusiveBanner"
+                $ref: '#/components/schemas/ExclusiveBanner'
               image:
                 type: string
                 description: The image of the klub
-                examples: ["https://klub-image.com/klub.jpg"]
+                examples:
+                  - https://klub-image.com/klub.jpg
               quota:
-                $ref: "#/components/schemas/QuotaObject"
+                $ref: '#/components/schemas/QuotaObject'
               media:
-                $ref: "#/components/schemas/MediaObject"
+                $ref: '#/components/schemas/MediaObject'
               slug:
                 type: string
                 description: The slug of the klub
-                examples: ["klub-slug"]
+                examples:
+                  - klub-slug
               citySlug:
                 type: string
                 description: The city slug of the klub
-                examples: ["city-slug"]
+                examples:
+                  - city-slug
               countrySlug:
                 type: string
                 description: The country slug of the klub
-                examples: ["country-slug"]
+                examples:
+                  - country-slug
         detail:
           description: The detail of the klub
           type: object
@@ -1380,67 +1483,83 @@ components:
             title:
               type: string
               description: The title of the klub
-              examples: ["Klub Title"]
+              examples:
+                - Klub Title
             subTitle:
               type: object
               properties:
                 titleFront:
                   type: string
                   description: The title of the klub
-                  examples: ["Klub Title"]
+                  examples:
+                    - Klub Title
                 titleColor:
                   type: string
                   description: Name of the club
-                  examples: ["Coffee & Tea KLUB"]
+                  examples:
+                    - Coffee & Tea KLUB
                 titleBack:
                   type: string
                   description: The title of the klub bellow the title color
-                  examples: ["Klub Title"]
+                  examples:
+                    - Klub Title
         colorTheme:
           type: object
           properties:
             lighter:
               type: string
               description: The lighter color of the klub
-              examples: ["#EBF8FF"]
+              examples:
+                - '#EBF8FF'
             light:
               type: string
               description: The light color of the klub
-              examples: ["#9BDDFF"]
+              examples:
+                - '#9BDDFF'
             base:
               type: string
               description: The base color of the klub
-              examples: ["#52A4FF"]
+              examples:
+                - '#52A4FF'
             dark:
               type: string
               description: The dark color of the klub
-              examples: ["#042A45"]
+              examples:
+                - '#042A45'
             pattern:
               type: object
               properties:
                 base:
                   type: string
                   description: The base color of the klub
-                  examples: ["#EBF8FF"]
+                  examples:
+                    - '#EBF8FF'
                 pattern:
                   type: string
                   description: The pattern color of the klub
-                  examples: ["#9BDDFF"]
+                  examples:
+                    - '#9BDDFF'
             patternDark:
               type: object
               properties:
                 base:
                   type: string
                   description: The base color of the klub
-                  examples: ["#EBF8FF"]
+                  examples:
+                    - '#EBF8FF'
                 pattern:
                   type: string
                   description: The pattern color of the klub
-                  examples: ["#042A45"]
+                  examples:
+                    - '#042A45'
         type:
           type: string
           description: The type of the klub
-          examples: ["diving", "family", "coffee", "mutalu"]
+          examples:
+            - diving
+            - family
+            - coffee
+            - mutalu
     PromotionTypeObject:
       description: The promotion type object
       type: object
@@ -1451,15 +1570,18 @@ components:
         name:
           type: string
           description: The name of the promotion type
-          examples: ["Promotion Name"]
+          examples:
+            - Promotion Name
         iconInactive:
           type: string
           description: The icon of the promotion type when inactive
-          examples: ["https://klub-image.com/promotion-icon-inactive.jpg"]
+          examples:
+            - https://klub-image.com/promotion-icon-inactive.jpg
         iconActive:
           type: string
           description: The icon of the promotion type when active
-          examples: ["https://klub-image.com/promotion-icon-active.jpg"]
+          examples:
+            - https://klub-image.com/promotion-icon-active.jpg
     PromotionObject:
       description: The promotion object
       type: object
@@ -1467,85 +1589,110 @@ components:
         id:
           type: number
           description: The id of the promotion(Running number)
-          examples: [1]
+          examples:
+            - 1
         title:
           type: string
           description: The title of the promotion
-          examples: ["Promotion Title"]
+          examples:
+            - Promotion Title
         excerpt:
           type: string
           description: The excerpt of the promotion
-          examples: ["Promotion Excerpt"]
+          examples:
+            - Promotion Excerpt
         description:
           type: string
           description: The description of the promotion in html format
-          examples: ["<div>Promotion Description</div>"]
+          examples:
+            - <div>Promotion Description</div>
         startPrice:
           type: number
           description: The start price of the promotion
-          examples: [1000]
+          examples:
+            - 1000
         currency:
           type: string
           description: The currency of the promotion
-          examples: ["THB"]
+          examples:
+            - THB
         product:
           type: array
           items:
-            enum: ["hotel", "flight", "activity", "ticket"]
+            enum:
+              - hotel
+              - flight
+              - activity
+              - ticket
         fullImage:
           type: string
           description: The full image of the promotion
-          examples: ["https://klub-image.com/promotion.jpg"]
+          examples:
+            - https://klub-image.com/promotion.jpg
         thumbImage:
           type: string
           description: The thumbnail image of the promotion
-          examples: ["https://klub-image.com/promotion-thumb.jpg"]
+          examples:
+            - https://klub-image.com/promotion-thumb.jpg
         mobileImage:
           type: string
           description: The mobile image of the promotion
-          examples: ["https://klub-image.com/promotion-mobile.jpg"]
+          examples:
+            - https://klub-image.com/promotion-mobile.jpg
         homeImage:
           type: string
           description: The home image of the promotion
-          examples: ["https://klub-image.com/promotion-home.jpg"]
+          examples:
+            - https://klub-image.com/promotion-home.jpg
         startDate:
           type: string
           format: date
           description: The start date of the promotion
-          examples: ["2022-01-01"]
+          examples:
+            - '2022-01-01'
         expireDate:
           type: string
           format: date
           description: The expire date of the promotion
-          examples: ["2022-01-01"]
+          examples:
+            - '2022-01-01'
         slug:
           type: string
           description: The slug of the promotion
-          examples: ["promotion-slug"]
+          examples:
+            - promotion-slug
         url:
           type: string
           description: The url of the promotion
-          examples: ["https://klub-image.com/promotion"]
+          examples:
+            - https://klub-image.com/promotion
         subtitle:
           type: string
           description: The subtitle of the promotion
-          examples: ["Discount 50%"]
+          examples:
+            - Discount 50%
         promotionType:
           type: string
           description: The promotion type of the promotion
-          examples: ["1"]
+          examples:
+            - '1'
         ignore_utm_ids:
           type: array
           items:
             type: number
           description: The ignore utm ids of the promotion
-          examples: [1, 2, 3]
+          examples:
+            - 1
+            - 2
+            - 3
         klubCategory:
           type: array
           items:
             type: string
             description: The category of the promotion
-            examples: ["2", "3"]
+            examples:
+              - '2'
+              - '3'
     StoryObject:
       description: The story object
       type: object
@@ -1553,19 +1700,24 @@ components:
         slug:
           type: string
           description: The slug of the story
-          examples: ["story-slug"]
+          examples:
+            - story-slug
         contentType:
           type: string
           description: The content type of the story
-          examples: ["klubstory"]
+          examples:
+            - klubstory
         type:
           type: string
           description: The type of the story
-          examples: ["family"]
+          examples:
+            - family
         isPromotion:
           type: boolean
           description: The status of the story wether it is a promotion or not(UI purpose)
-          examples: [true, false]
+          examples:
+            - true
+            - false
         thumbImage:
           type: object
           description: The thumbnail image of the story
@@ -1573,19 +1725,23 @@ components:
             image_1x1:
               type: string
               description: The image of the story
-              examples: ["https://klub-image.com/story.jpg"]
+              examples:
+                - https://klub-image.com/story.jpg
             image_4x3:
               type: string
               description: The image of the story
-              examples: ["https://klub-image.com/story.jpg"]
+              examples:
+                - https://klub-image.com/story.jpg
             image_16x9:
               type: string
               description: The image of the story
-              examples: ["https://klub-image.com/story.jpg"]
+              examples:
+                - https://klub-image.com/story.jpg
         title:
           type: string
           description: The title of the story
-          examples: ["Story Title"]
+          examples:
+            - Story Title
         location:
           type: object
           description: The location of the story
@@ -1593,11 +1749,13 @@ components:
             city:
               type: string
               description: The city of the story
-              examples: ["Bangkok"]
+              examples:
+                - Bangkok
             name:
               type: string
               description: The name of the location
-              examples: ["Downtown"]
+              examples:
+                - Downtown
         user:
           type: object
           description: The user of the story
@@ -1605,34 +1763,41 @@ components:
             name:
               type: string
               description: The name of the user
-              examples: ["User Name"]
+              examples:
+                - User Name
             avatar:
               type: string
               description: The avatar image of the user
-              examples: ["https://klub-image.com/user.jpg"]
+              examples:
+                - https://klub-image.com/user.jpg
     TravelStoryObject:
       description: The travel story object
       properties:
         slug:
           type: string
           description: The slug of the story
-          examples: ["story-slug"]
+          examples:
+            - story-slug
         contentType:
           type: string
           description: The content type of the story
-          examples: ["klubstory"]
+          examples:
+            - klubstory
         title:
           type: string
           description: The title of the story
-          examples: ["Story Title"]
+          examples:
+            - Story Title
         location:
           type: string
           description: The location of the story
-          examples: ["Bangkok"]
+          examples:
+            - Bangkok
         image:
           type: string
           description: The image of the story
-          examples: ["https://klub-image.com/story.jpg"]
+          examples:
+            - https://klub-image.com/story.jpg
     StoryDataObject:
       description: The story data object
       type: object
@@ -1640,21 +1805,25 @@ components:
         type:
           type: string
           description: The type of the story
-          examples: ["content"]
+          examples:
+            - content
         title:
           type: string
           description: The title of the story with html format
-          examples: ["<p>Story Title</p>"]
+          examples:
+            - <p>Story Title</p>
         image:
           type: array
           items:
             type: string
             description: The image of the story
-            examples: ["https://klub-image.com/story.jpg"]
+            examples:
+              - https://klub-image.com/story.jpg
         description:
           type: string
           description: The description of the story with html format
-          examples: ["<p>Story Description</p>"]
+          examples:
+            - <p>Story Description</p>
     StoryBySlugObject:
       description: The story object with slug
       type: object
@@ -1662,11 +1831,13 @@ components:
         slug:
           type: string
           description: The slug of the story can be mapped with travelStory api
-          examples: ["story-slug"]
+          examples:
+            - story-slug
         type:
           type: string
           description: The type of the story
-          examples: ["klubstory"]
+          examples:
+            - klubstory
         meta:
           type: object
           description: The metadata of the story
@@ -1674,24 +1845,29 @@ components:
             title:
               type: string
               description: The title
-              examples: ["Story Title"]
+              examples:
+                - Story Title
             description:
               type: string
               description: The description
-              examples: ["Story Description"]
+              examples:
+                - Story Description
         title:
           type: string
           description: The title of the story
-          examples: ["Story Title"]
+          examples:
+            - Story Title
         description:
           type: string
           description: The description of the story
-          examples: ["Story Description"]
+          examples:
+            - Story Description
         publicDate:
           type: string
           format: date
           description: The public date of the story
-          examples: ["2022-01-01"]
+          examples:
+            - '2022-01-01'
         cover:
           type: object
           description: Cover images for the story
@@ -1699,19 +1875,22 @@ components:
             image11:
               type: string
               description: The image of the story
-              examples: ["https://klub-image.com/story.jpg"]
+              examples:
+                - https://klub-image.com/story.jpg
             image43:
               type: string
               description: The image of the story
-              examples: ["https://klub-image.com/story.jpg"]
+              examples:
+                - https://klub-image.com/story.jpg
             image169:
               type: string
               description: The image of the story
-              examples: ["https://klub-image.com/story.jpg"]
+              examples:
+                - https://klub-image.com/story.jpg
         data:
           type: array
           items:
-            $ref: "#/components/schemas/StoryDataObject"
+            $ref: '#/components/schemas/StoryDataObject'
     HotelObject:
       description: The hotel object
       type: object
@@ -1719,66 +1898,81 @@ components:
         id:
           type: number
           description: The id of the hotel
-          examples: [1]
+          examples:
+            - 1
         images:
           type: string
           description: The image of the hotel
-          examples: ["https://klub-image.com/hotel.jpg"]
+          examples:
+            - https://klub-image.com/hotel.jpg
         title:
           type: string
           description: The title of the hotel
-          examples: ["Hotel Title"]
+          examples:
+            - Hotel Title
         hotel_star:
           type: number
           description: The star of the hotel
-          examples: [5]
+          examples:
+            - 5
         review:
           type: object
           properties:
             rating:
               type: number
               description: The rating of the hotel
-              examples: [5]
+              examples:
+                - 5
             num_review:
               type: number
               description: The review of the hotel
-              examples: [2.1]
+              examples:
+                - 2.1
         latitude:
           type: number
           description: The latitude of the hotel
-          examples: [13.7563]
+          examples:
+            - 13.7563
         longitude:
           type: number
           description: The longitude of the hotel
-          examples: [100.5018]
+          examples:
+            - 100.5018
         countrySlug:
           type: string
           description: The country slug of the hotel
-          examples: ["thailand"]
+          examples:
+            - thailand
         citySlug:
           type: string
           description: The city slug of the hotel
-          examples: ["bangkok"]
+          examples:
+            - bangkok
         areaSlug:
           type: string
           description: The area slug of the hotel
-          examples: ["downtown"]
+          examples:
+            - downtown
         hotelSlug:
           type: string
           description: The hotel slug of the hotel
-          examples: ["hotel-slug"]
+          examples:
+            - hotel-slug
         hotelSlugPath:
           type: string
           description: The hotel slug path of the hotel
-          examples: ["https://klub-image.com/hotel-slug"]
+          examples:
+            - https://klub-image.com/hotel-slug
         isFavourite:
           type: boolean
           description: The status of the hotel
-          examples: [true]
+          examples:
+            - true
         location:
           type: string
           description: The full location of the hotel
-          examples: ["Bangkok"]
+          examples:
+            - Bangkok
     FlightObject:
       description: The flight object
       type: object
@@ -1786,91 +1980,113 @@ components:
         flightOfferId:
           type: string
           description: The flight offer id of the flight
-          examples: ["1846"]
+          examples:
+            - '1846'
         airlineSlug:
           type: string
           description: The airline slug of the flight
-          examples: ["airline-slug"]
+          examples:
+            - airline-slug
         airlineName:
           type: string
           description: The airline name of the flight
-          examples: ["Airline Name"]
+          examples:
+            - Airline Name
         flightType:
           type: string
           description: The flight type of the flight
-          examples: ["เที่ยวเดียว"]
+          examples:
+            - เที่ยวเดียว
         ticketingPeriod:
           type: string
           description: The ticketing period of the flight
-          examples: ["2 เม.ย 24-30 เม.ย 24"]
+          examples:
+            - 2 เม.ย 24-30 เม.ย 24
         travelPeriod:
           type: string
           description: The travel period of the flight
-          examples: ["2 เม.ย 24-30 เม.ย 24"]
+          examples:
+            - 2 เม.ย 24-30 เม.ย 24
         fromAirportCode:
           type: string
           description: The from airport code of the flight
-          examples: ["BKK"]
+          examples:
+            - BKK
         toAirportCode:
           type: string
           description: The to airport code of the flight
-          examples: ["HKT"]
+          examples:
+            - HKT
         price:
           type: number
           description: The price of the flight
-          examples: [1000]
+          examples:
+            - 1000
         flightName:
           type: string
           description: The flight name of the flight
-          examples: ["Flight Name"]
+          examples:
+            - Flight Name
         cityName:
           type: string
           description: The city name of the flight
-          examples: ["City Name"]
+          examples:
+            - City Name
         photoPath:
           type: string
           description: The photo path of the flight
-          examples: ["https://klub-image.com/flight.jpg"]
+          examples:
+            - https://klub-image.com/flight.jpg
         airportCityTo:
           type: string
           description: The airport city to of the flight
-          examples: ["City Name"]
+          examples:
+            - City Name
         airportCityFrom:
           type: string
           description: The airport city from of the flight
-          examples: ["City Name"]
+          examples:
+            - City Name
         airlineLogo:
           type: string
           description: The airline logo of the flight
-          examples: ["https://klub-image.com/airline.jpg"]
+          examples:
+            - https://klub-image.com/airline.jpg
         currency:
           type: string
           description: The currency of the flight
-          examples: ["THB"]
+          examples:
+            - THB
         slug:
           type: string
           description: The slug of the flight
-          examples: ["flight-slug"]
+          examples:
+            - flight-slug
         intro:
           type: string
           description: The intro of the flight with html format
-          examples: ["<p>Flight Intro</p>"]
+          examples:
+            - <p>Flight Intro</p>
         cityFromName:
           type: string
           description: The city from name of the flight
-          examples: ["City Name"]
+          examples:
+            - City Name
         cityToName:
           type: string
           description: The city to name of the flight
-          examples: ["City Name"]
+          examples:
+            - City Name
         cityToSlug:
           type: string
           description: The city to slug of the flight
-          examples: ["city-slug"]
+          examples:
+            - city-slug
         cityFromSlug:
           type: string
           description: The city from slug of the flight
-          examples: ["city-slug"]
+          examples:
+            - city-slug
     KlubCategory:
       description: Klub category object
       type: string
@@ -1901,35 +2117,45 @@ components:
         photoPath:
           type: string
           description: The photo path of the itinerary
-          examples: ["https://www.example.com/photo.jpg"]
+          examples:
+            - https://www.example.com/photo.jpg
         detail:
           type: string
           description: The detail of the itinerary
-          examples: ["Itinerary detail"]
+          examples:
+            - Itinerary detail
         time:
           type: string
           description: The time of the itinerary
-          examples: ["10:00", "12:00", "14:00"]
+          examples:
+            - '10:00'
+            - '12:00'
+            - '14:00'
         addressDetail:
           type: string
           description: The address detail of the itinerary
-          examples: ["Address detail"]
+          examples:
+            - Address detail
         airportId:
           type: number
           description: The airport id of the itinerary
-          examples: [1]
+          examples:
+            - 1
         countryId:
           type: number
           description: The country id of the itinerary
-          examples: [1]
+          examples:
+            - 1
         areaId:
           type: number
           description: The area id of the itinerary
-          examples: [1]
+          examples:
+            - 1
         cityId:
           type: number
           description: The city id of the itinerary
-          examples: [1]
+          examples:
+            - 1
     QuestionObject:
       description: Question's object
       type: object
@@ -1937,18 +2163,21 @@ components:
         id:
           type: number
           description: The id of the question
-          examples: [1]
+          examples:
+            - 1
         question:
           type: string
           description: The question
-          examples: ["What is your name?"]
+          examples:
+            - What is your name?
         options:
           type: array
           description: The options of the question
           default: []
           items:
             type: string
-            examples: ["Option one"]
+            examples:
+              - Option one
         optional:
           type: boolean
           description: Wether the question is optional or not
@@ -1960,7 +2189,9 @@ components:
             name:
               type: string
               description: The name of the type
-              examples: ["FREETEXT", "OPTION"]
+              examples:
+                - FREETEXT
+                - OPTION
     PricesObject:
       description: Price object
       type: object
@@ -1968,39 +2199,48 @@ components:
         id:
           type: string
           description: The id of the price
-          examples: ["1"]
+          examples:
+            - '1'
         type:
           type: string
           description: The type of the price
-          examples: ["ADULT"]
+          examples:
+            - ADULT
         nameEn:
           type: string
           description: The name of the price in English
-          examples: ["Adult"]
+          examples:
+            - Adult
         nameTh:
           type: string
           description: The name of the price in Thai
-          examples: ["ผู้ใหญ่"]
+          examples:
+            - ผู้ใหญ่
         price:
           type: number
           description: The price of the price
-          examples: [700]
+          examples:
+            - 700
         originalPrice:
           type: number
           description: The original price of the price
-          examples: [800]
+          examples:
+            - 800
         exclusivePrice:
           type: number
           description: The exclusive price of the price
-          examples: [700]
+          examples:
+            - 700
         settlementPrice:
           type: number
           description: The settlement price of the price
-          examples: [350]
+          examples:
+            - 350
         currency:
           type: string
           description: The currency of the price
-          examples: ["THB"]
+          examples:
+            - THB
     PackageObject:
       description: Package object
       type: object
@@ -2008,32 +2248,38 @@ components:
         key:
           type: string
           description: The key of the package used as reference in the payment process
-          examples: ["someKey"]
+          examples:
+            - someKey
         name:
           type: string
           description: The name of the package
-          examples: ["Package name"]
+          examples:
+            - Package name
         description:
           type: string
           description: The description of the package
-          examples: ["Package description"]
+          examples:
+            - Package description
         howToUse:
-          $ref: "#/components/schemas/HowToUseObject"
+          $ref: '#/components/schemas/HowToUseObject'
         termsAndConditions:
-          $ref: "#/components/schemas/TermsAndConditionsObject"
+          $ref: '#/components/schemas/TermsAndConditionsObject'
         redeemStart:
           type: string
           description: The redeem start date of the package
-          examples: ["2021-01-01"]
+          examples:
+            - '2021-01-01'
         redeemEnd:
           type: string
           description: The redeem end date of the package will be future date from redeem start
           default: null
-          examples: ["2021-12-31"]
+          examples:
+            - '2021-12-31'
         currency:
           type: string
           description: The currency of the package prices
-          examples: ["THB"]
+          examples:
+            - THB
         instantConfirm:
           type: boolean
           description: Wether the package is instant confirm or need to wait for confirmation from vendor
@@ -2043,22 +2289,23 @@ components:
           description: The questions of the package
           default: []
           items:
-            $ref: "#/components/schemas/QuestionObject"
+            $ref: '#/components/schemas/QuestionObject'
         guestQuestions:
           type: array
           description: The guest questions of the package
           default: []
           items:
-            $ref: "#/components/schemas/QuestionObject"
+            $ref: '#/components/schemas/QuestionObject'
         itineraryDetail:
           type: array
           description: The itinerary detail of the package
           items:
-            $ref: "#/components/schemas/ItineraryDetailObject"
+            $ref: '#/components/schemas/ItineraryDetailObject'
         photoPath:
           type: string
           description: The photo path of the package
-          examples: ["https://www.example.com/photo.jpg"]
+          examples:
+            - https://www.example.com/photo.jpg
           default: null
         freeCancellation:
           type: boolean
@@ -2069,7 +2316,7 @@ components:
           description: The prices of the package
           default: []
           items:
-            $ref: "#/components/schemas/PricesObject"
+            $ref: '#/components/schemas/PricesObject'
         subPackages:
           type: array
           description: The sub packages of the package
@@ -2079,11 +2326,13 @@ components:
               key:
                 type: string
                 description: The key of the sub package used as reference in the payment process
-                examples: ["someKey"]
+                examples:
+                  - someKey
               name:
                 type: string
                 description: The name of the sub package
-                examples: ["Package name"]
+                examples:
+                  - Package name
               isPrivate:
                 type: boolean
                 description: Wether the sub package is private or not
@@ -2092,13 +2341,14 @@ components:
                 type: array
                 description: The prices of the sub package
                 items:
-                  $ref: "#/components/schemas/PricesObject"
+                  $ref: '#/components/schemas/PricesObject'
               fixedDates:
                 type: array
                 description: The fixed dates of the sub package
                 items:
                   type: string
-                  examples: ["2021-01-01"]
+                  examples:
+                    - '2021-01-01'
     ExperienceObject:
       description: Experience object
       type: object
@@ -2106,7 +2356,8 @@ components:
         name:
           type: string
           description: The name of the experience
-          examples: ["ทดสอบชื่อไทย"]
+          examples:
+            - ทดสอบชื่อไทย
         isJoin:
           type: boolean
           description: Wether the user has joined the experience or not
@@ -2120,15 +2371,17 @@ components:
             name:
               type: string
               description: The name of the category
-              examples: ["Theme Park"]
+              examples:
+                - Theme Park
             slug:
               type: string
               description: The slug of the category
-              examples: ["theme-park"]
+              examples:
+                - theme-park
         tier:
-          $ref: "#/components/schemas/TierType"
+          $ref: '#/components/schemas/TierType'
         ticketType:
-          $ref: "#/components/schemas/TicketType"
+          $ref: '#/components/schemas/TicketType'
         isFixedDate:
           type: boolean
           description: Wether the experience is fixed date or not
@@ -2139,51 +2392,62 @@ components:
         experienceId:
           type: number
           description: The id of the experience
-          examples: [1]
+          examples:
+            - 1
         name:
           type: string
           description: The name of the experience
-          examples: ["ทดสอบชื่อไทย"]
+          examples:
+            - ทดสอบชื่อไทย
         slug:
           type: string
           description: The slug of the experience
-          examples: ["experience-slug"]
+          examples:
+            - experience-slug
         areaName:
           type: string
           description: The area name of the experience
-          examples: ["สัตหีบ"]
+          examples:
+            - สัตหีบ
         areaSlug:
           type: string
           description: The area slug of the experience
-          examples: ["sattahip"]
+          examples:
+            - sattahip
         cityName:
           type: string
           description: The city name of the experience
-          examples: ["ชลบุรี"]
+          examples:
+            - ชลบุรี
         citySlug:
           type: string
           description: The city slug of the experience
-          examples: ["chonburi"]
+          examples:
+            - chonburi
         countryName:
           type: string
           description: The country name of the experience
-          examples: ["ประเทศไทย"]
+          examples:
+            - ประเทศไทย
         countrySlug:
           type: string
           description: The country slug of the experience
-          examples: ["thailand"]
+          examples:
+            - thailand
         tier:
-          $ref: "#/components/schemas/TierType"
+          $ref: '#/components/schemas/TierType'
         ticketType:
-          $ref: "#/components/schemas/TicketType"
+          $ref: '#/components/schemas/TicketType'
         isFavourite:
           type: boolean
           description: Wether the experience is favorite or not
-          examples: [true]
+          examples:
+            - true
         isExclusive:
           type: boolean
           description: Wether the experience is exclusive or not
-          examples: [true]
+          examples:
+            - true
         klubCategory:
           type: object
           description: The category of the experience
@@ -2191,11 +2455,13 @@ components:
             name:
               type: string
               description: The name of the category
-              examples: ["Theme Park"]
+              examples:
+                - Theme Park
             slug:
               type: string
               description: The slug of the category
-              examples: ["theme-park"]
+              examples:
+                - theme-park
         category:
           type: array
           description: The category of the experience
@@ -2204,50 +2470,60 @@ components:
               name:
                 type: string
                 description: The name of the category
-                examples: ["Theme Park"]
+                examples:
+                  - Theme Park
               slug:
                 type: string
                 description: The slug of the category
-                examples: ["theme-park"]
+                examples:
+                  - theme-park
         location:
           type: object
           properties:
             lat:
               type: number
               description: The latitude of the experience
-              examples: [13.7563]
+              examples:
+                - 13.7563
             long:
               type: number
               description: The longitude of the experience
-              examples: [100.5018]
+              examples:
+                - 100.5018
         photos:
           type: array
           description: The photos of the experience
           items:
             type: string
-            examples: ["https://www.example.com/photo.jpg"]
+            examples:
+              - https://www.example.com/photo.jpg
         rating:
           type: number
           description: The rating of the experience
-          examples: [5]
+          examples:
+            - 5
         numReview:
           type: number
           description: The number of the reviews of the experience
-          examples: [2.1]
+          examples:
+            - 2.1
         redeemStart:
           type: string
           description: The redeem start date of the experience
-          examples: ["2021-01-01"]
+          examples:
+            - '2021-01-01'
         redeemEnd:
           type: string
           description: The redeem end date of the experience
-          examples: ["2021-12-31"]
+          examples:
+            - '2021-12-31'
         isPrivate:
           type: boolean
           description: Wether the experience is private or not
-          examples: [true]
+          examples:
+            - true
         prices:
-          $ref: "#/components/schemas/PricesObject"
+          $ref: '#/components/schemas/PricesObject'
     HowToUseObject:
       type: object
       description: The how to use of the package
@@ -2255,13 +2531,15 @@ components:
         header:
           type: string
           description: The header of the how to use
-          examples: ["How to use header"]
+          examples:
+            - How to use header
         list:
           type: array
           description: The list of the how to use
           items:
             type: string
-            examples: ["How to use one"]
+            examples:
+              - How to use one
     TermsAndConditionsObject:
       type: object
       description: The terms and conditions of the package
@@ -2269,13 +2547,15 @@ components:
         title:
           type: string
           description: The title of the terms and conditions
-          examples: ["Terms and conditions header"]
+          examples:
+            - Terms and conditions header
         description:
           type: array
           description: The list of the terms and conditions
           items:
             type: string
-            examples: ["Terms and conditions one"]
+            examples:
+              - Terms and conditions one
     MeetingPointObject:
       description: meeting point for the experience
       type: object
@@ -2283,15 +2563,18 @@ components:
         id:
           type: number
           description: The id of the meeting point
-          examples: [1]
+          examples:
+            - 1
         name:
           type: string
           description: The name of the meeting point
-          examples: ["Meeting Point Name"]
+          examples:
+            - Meeting Point Name
         address:
           type: string
           description: The address of the meeting point
-          examples: ["Meeting Point Address"]
+          examples:
+            - Meeting Point Address
         location:
           type: object
           description: The location of the meeting point
@@ -2299,15 +2582,18 @@ components:
             latitude:
               type: number
               description: The latitude of the meeting point
-              examples: [13.7563]
+              examples:
+                - 13.7563
             longitude:
               type: number
               description: The longitude of the meeting point
-              examples: [100.5018]
+              examples:
+                - 100.5018
         isCustom:
           type: boolean
           description: Wether the meeting point is custom or not
-          examples: [true]
+          examples:
+            - true
     ExperienceDetailObject:
       description: Experience detail object
       type: object
@@ -2315,9 +2601,10 @@ components:
         id:
           type: number
           description: The id of the experience
-          examples: [3794]
+          examples:
+            - 3794
         ticketType:
-          $ref: "#/components/schemas/TicketType"
+          $ref: '#/components/schemas/TicketType'
         category:
           type: object
           description: The category of the experience
@@ -2325,11 +2612,13 @@ components:
             name:
               type: string
               description: The name of the category
-              examples: ["Theme Park"]
+              examples:
+                - Theme Park
             slug:
               type: string
               description: The slug of the category
-              examples: ["theme-park"]
+              examples:
+                - theme-park
         klubCategory:
           type: object
           description: The klub category of the experience
@@ -2337,39 +2626,48 @@ components:
             name:
               type: string
               description: The name of the category
-              examples: ["diving"]
+              examples:
+                - diving
             slug:
               type: string
               description: The slug of the category
-              examples: ["diving"]
+              examples:
+                - diving
         name:
           type: string
           description: The name of the experience
-          examples: ["ทดลองดำน้ำ Scuba ด้วยอุปกรณ์ระดับมืออาชีพ"]
+          examples:
+            - ทดลองดำน้ำ Scuba ด้วยอุปกรณ์ระดับมืออาชีพ
         description:
           type: string
           description: The description of the experience
-          examples: ["ทดลองดำน้ำ Scuba ด้วยอุปกรณ์ระดับมืออาชีพ"]
+          examples:
+            - ทดลองดำน้ำ Scuba ด้วยอุปกรณ์ระดับมืออาชีพ
         tel:
           type: string
           description: The phone number of the contact person
-          examples: ["0812345678"]
+          examples:
+            - '0812345678'
         address:
           type: string
           description: The address of the experience
-          examples: ["แสมสาร, สัตหีบ, ชลบุรี"]
+          examples:
+            - แสมสาร, สัตหีบ, ชลบุรี
         areaName:
           type: string
           description: The area name of the experience
-          examples: ["สัตหีบ"]
+          examples:
+            - สัตหีบ
         cityName:
           type: string
           description: The city name of the experience
-          examples: ["ชลบุรี"]
+          examples:
+            - ชลบุรี
         countryName:
           type: string
           description: The country name of the experience
-          examples: ["ประเทศไทย"]
+          examples:
+            - ประเทศไทย
         tier:
           type: string
           description: The tier of the experience
@@ -2377,25 +2675,31 @@ components:
             - exclusive
             - handpick
             - general
-          examples: ["exclusive"]
+          examples:
+            - exclusive
         timeDuration:
           type: string
           description: The time duration of when the experience will need to be booked in advance
-          examples: ["1 hour", "4 Hours - 1 Day"]
+          examples:
+            - 1 hour
+            - 4 Hours - 1 Day
         transportation:
           type: string
           description: The transportation of the experience
-          examples: ["รถยนต์ส่วนตัว"]
+          examples:
+            - รถยนต์ส่วนตัว
         isFavourite:
           type: boolean
           description: Wether the experience is favorite or not
-          examples: [true]
+          examples:
+            - true
         photos:
           type: array
           description: The photos of the experience
           items:
             type: string
-            examples: ["https://www.example.com/photo.jpg"]
+            examples:
+              - https://www.example.com/photo.jpg
         location:
           type: object
           description: The location of the experience
@@ -2403,11 +2707,13 @@ components:
             lat:
               type: number
               description: The latitude of the experience
-              examples: [13.7563]
+              examples:
+                - 13.7563
             long:
               type: number
               description: The longitude of the experience
-              examples: [100.5018]
+              examples:
+                - 100.5018
         sponsor:
           type: object
           description: The sponsor of the experience
@@ -2415,33 +2721,41 @@ components:
             logo:
               type: string
               description: The logo of the sponsor
-              examples: ["https://www.example.com/logo.jpg"]
+              examples:
+                - https://www.example.com/logo.jpg
             title:
               type: string
               description: The title of the sponsor
-              examples: ["Sponsor Title"]
+              examples:
+                - Sponsor Title
             description:
               type: string
               description: The description of the sponsor
-              examples: ["Sponsor Description"]
+              examples:
+                - Sponsor Description
         availableLauguage:
           type: string
           description: The available language of the experience
-          examples: ["th", "en"]
+          examples:
+            - th
+            - en
         ticketInclude:
           type: array
           description: The things that are included in the ticket
           items:
             type: string
-            examples: ["Free Food"]
+            examples:
+              - Free Food
         rating:
           type: number
           description: The rating of the experience
-          examples: [5]
+          examples:
+            - 5
         numReview:
           type: number
           description: The number of reviews of the experience
-          examples: [2.1]
+          examples:
+            - 2.1
         experience:
           type: array
           description: the description of the experience with images
@@ -2451,13 +2765,15 @@ components:
               detail:
                 type: string
                 description: The description of the experience with html format
-                examples: ["<p>Experience Description</p>"]
+                examples:
+                  - <p>Experience Description</p>
               photo_path:
                 type: array
                 items:
                   type: string
                   description: The photo path of the experience
-                  examples: ["https://www.example.com/photo.jpg"]
+                  examples:
+                    - https://www.example.com/photo.jpg
         preparation:
           type: object
           description: The preparation of things to bring for the experience
@@ -2465,13 +2781,15 @@ components:
             title:
               type: string
               description: The title of the preparation
-              examples: ["Preparation Title"]
+              examples:
+                - Preparation Title
             title_detail:
               type: array
               items:
                 type: string
                 description: The title detail of the preparation
-                examples: ["Preparation Title Detail"]
+                examples:
+                  - Preparation Title Detail
         priceCondition:
           type: object
           description: The price condition of the experience
@@ -2479,29 +2797,33 @@ components:
             title:
               type: string
               description: The title of the price condition
-              examples: ["Price Condition Title"]
+              examples:
+                - Price Condition Title
             title_detail:
               type: array
               items:
                 type: string
                 description: The title detail of the price condition
-                examples: ["Price Condition Title Detail"]
+                examples:
+                  - Price Condition Title Detail
         slug:
           type: string
           description: The slug of the experience
-          examples: ["experience-slug"]
+          examples:
+            - experience-slug
         isExclusive:
           type: boolean
           description: Wether the experience is exclusive or not
-          examples: [true]
+          examples:
+            - true
         type:
-          $ref: "#/components/schemas/KlubCategory"
+          $ref: '#/components/schemas/KlubCategory'
         banner:
-          $ref: "#/components/schemas/BannerObjectExclusive"
+          $ref: '#/components/schemas/BannerObjectExclusive'
         exclusiveContainer:
-          $ref: "#/components/schemas/ExclusiveContainerObject"
+          $ref: '#/components/schemas/ExclusiveContainerObject'
         buttonBanner:
-          $ref: "#/components/schemas/ButtonBannerObject"
+          $ref: '#/components/schemas/ButtonBannerObject'
         cardInfluencer:
           type: object
           description: The influencer card of the experience
@@ -2509,15 +2831,18 @@ components:
             imgInflu:
               type: string
               description: The image of the influencer
-              examples: ["https://www.example.com/influ.jpg"]
+              examples:
+                - https://www.example.com/influ.jpg
             nameInflu:
               type: string
               description: The name of the influencer
-              examples: ["Influencer Name"]
+              examples:
+                - Influencer Name
             detailInflu:
               type: string
               description: The detail of the influencer
-              examples: ["Influencer Detail"]
+              examples:
+                - Influencer Detail
         gallery:
           type: object
           description: The gallery of the experience
@@ -2525,37 +2850,45 @@ components:
             id:
               type: number
               description: The id of the gallery
-              examples: [1]
+              examples:
+                - 1
             photos:
               type: array
               description: The photos of the gallery
               items:
                 type: string
-                examples: ["https://www.example.com/photo.jpg"]
+                examples:
+                  - https://www.example.com/photo.jpg
             starRating:
               type: number
               description: The star rating of the gallery
-              examples: [5]
+              examples:
+                - 5
             numReviews:
               type: number
               description: The number of reviews of the gallery
-              examples: [2.1]
+              examples:
+                - 2.1
             isFavourite:
               type: boolean
               description: Wether the gallery is favorite or not
-              examples: [true]
+              examples:
+                - true
             nameExp:
               type: string
               description: The name of the experience
-              examples: ["Experience Name"]
+              examples:
+                - Experience Name
             locationExp:
               type: string
               description: The location of the experience
-              examples: ["Bangkok"]
+              examples:
+                - Bangkok
             description:
               type: string
               description: The description of the gallery
-              examples: ["Gallery Description"]
+              examples:
+                - Gallery Description
         experienceBlog:
           type: array
           description: The experience blog of the experience
@@ -2567,11 +2900,13 @@ components:
                 items:
                   type: string
                   description: The image of the blog
-                  examples: ["https://www.example.com/blog.jpg"]
+                  examples:
+                    - https://www.example.com/blog.jpg
               description:
                 type: string
                 description: The description of the blog
-                examples: ["Blog Description"]
+                examples:
+                  - Blog Description
         prepare:
           type: object
           description: The prepare of the experience
@@ -2579,11 +2914,13 @@ components:
             titlePrepare:
               type: string
               description: The title of the prepare
-              examples: ["Prepare Title"]
+              examples:
+                - Prepare Title
             bodyPrepare:
               type: string
               description: The body of the prepare
-              examples: ["Prepare Body"]
+              examples:
+                - Prepare Body
         condition:
           type: object
           description: The condition of the experience
@@ -2591,11 +2928,13 @@ components:
             titleCondition:
               type: string
               description: The title of the condition
-              examples: ["Condition Title"]
+              examples:
+                - Condition Title
             bodyCondition:
               type: string
               description: The body of the condition
-              examples: ["Condition Body"]
+              examples:
+                - Condition Body
         map:
           type: object
           description: The map of the experience
@@ -2603,27 +2942,33 @@ components:
             address:
               type: string
               description: The address of the map
-              examples: ["Bangkok"]
+              examples:
+                - Bangkok
             latitude:
               type: number
               description: The latitude of the map
-              examples: [13.7563]
+              examples:
+                - 13.7563
             longitude:
               type: number
               description: The longitude of the map
-              examples: [100.5018]
+              examples:
+                - 100.5018
             areaName:
               type: string
               description: The area name of the map
-              examples: ["Bangkok"]
+              examples:
+                - Bangkok
             cityName:
               type: string
               description: The city name of the map
-              examples: ["Bangkok"]
+              examples:
+                - Bangkok
             countryName:
               type: string
               description: The country name of the map
-              examples: ["Thailand"]
+              examples:
+                - Thailand
         highlights:
           description: The highlights of the experience
           type: array
@@ -2633,15 +2978,18 @@ components:
               icon:
                 type: string
                 description: The icon of the highlight
-                examples: ["https://www.example.com/icon.jpg"]
+                examples:
+                  - https://www.example.com/icon.jpg
               title:
                 type: string
                 description: The title of the highlight
-                examples: ["Highlight Title"]
+                examples:
+                  - Highlight Title
               body:
                 type: string
                 description: The body of the highlight
-                examples: ["Highlight Body"]
+                examples:
+                  - Highlight Body
     CancellationPolicyObject:
       description: Cancellation policy object
       type: object
@@ -2649,7 +2997,9 @@ components:
       properties:
         chargeType:
           type: string
-          enum: ["NonRefundable", "FreeCancel"]
+          enum:
+            - NonRefundable
+            - FreeCancel
     PreAllocationObject:
       description: The pre allocation object provides the summary of the order
       type: object
@@ -2657,108 +3007,128 @@ components:
         id:
           type: string
           description: The id of the pre allocation
-          examples: ["1"]
+          examples:
+            - '1'
         ticket_name:
           type: string
           description: The name of the ticket
-          examples: ["Ticket Name"]
+          examples:
+            - Ticket Name
         ticket_slug:
           type: string
           description: The slug of the ticket
-          examples: ["ticket-slug"]
+          examples:
+            - ticket-slug
         tier:
-          $ref: "#/components/schemas/TierType"
+          $ref: '#/components/schemas/TierType'
         mobile_number:
           type: string
           description: The mobile number
-          examples: ["0812345678"]
+          examples:
+            - '0812345678'
         photo_cover_path:
           type: string
           description: The photo cover path for the ticket summary
-          examples: ["https://www.example.com/photo.jpg"]
+          examples:
+            - https://www.example.com/photo.jpg
         expired:
           type: string
           format: date-time
           description: The expiry date of the ticket
-          examples: ["2024-05-30 12:52:14"]
+          examples:
+            - '2024-05-30 12:52:14'
         questions:
           type: array
           description: The questions of the ticket
           default: []
           items:
-            $ref: "#/components/schemas/QuestionObject"
+            $ref: '#/components/schemas/QuestionObject'
         itineraryDetail:
-          $ref: "#/components/schemas/ItineraryDetailObject"
+          $ref: '#/components/schemas/ItineraryDetailObject'
         meetingPoint:
-          $ref: "#/components/schemas/MeetingPointObject"
+          $ref: '#/components/schemas/MeetingPointObject'
         freeCancellation:
           type: boolean
           description: Wether the ticket is free cancellation or not
           default: false
         cancellationPolicy:
-          $ref: "#/components/schemas/CancellationPolicyObject"
+          $ref: '#/components/schemas/CancellationPolicyObject'
         photoPath:
           type: string
           description: The photo path of the ticket
-          examples: ["https://www.example.com/photo.jpg"]
+          examples:
+            - https://www.example.com/photo.jpg
           default: null
         howToUse:
-          $ref: "#/components/schemas/HowToUseObject"
+          $ref: '#/components/schemas/HowToUseObject'
         termsAndConditions:
-          $ref: "#/components/schemas/TermsAndConditionsObject"
+          $ref: '#/components/schemas/TermsAndConditionsObject'
         redeemStart:
           type: string
           description: The redeem start date of the ticket
-          examples: ["2021-01-01"]
+          examples:
+            - '2021-01-01'
         redeemEnd:
           type: string
           description: The redeem end date of the ticket will be future date from redeem start
-          examples: ["2021-12-31"]
+          examples:
+            - '2021-12-31'
         area_slug:
           type: string
           description: The area slug of the ticket
-          examples: ["area-slug"]
+          examples:
+            - area-slug
         city_slug:
           type: string
           description: The city slug of the ticket
-          examples: ["city-slug"]
+          examples:
+            - city-slug
         country_slug:
           type: string
           description: The country slug of the ticket
-          examples: ["country-slug"]
+          examples:
+            - country-slug
         totalAdult:
           type: number
           description: The total adult of the ticket
-          examples: [1]
+          examples:
+            - 1
         totalChild:
           type: number
           description: The total child of the ticket
-          examples: [1]
+          examples:
+            - 1
         totalSenior:
           type: number
           description: The total senior of the ticket
-          examples: [1]
+          examples:
+            - 1
         totalPrepack:
           type: number
           description: The total prepack of the ticket
-          examples: [1]
+          examples:
+            - 1
         totalAmount:
           type: number
           description: The total amount of the ticket
-          examples: [100]
+          examples:
+            - 100
         totalPrice:
           type: number
           description: The total price of the ticket
-          examples: [100]
+          examples:
+            - 100
         currency:
           type: string
           description: The currency of the ticket prices
-          examples: ["THB"]
+          examples:
+            - THB
         keySearchTimeExpire:
           type: number
           description: The duration of the key search time to expire
           default: 3600
-          examples: [3600]
+          examples:
+            - 3600
     TicketObject:
       type: array
       description: The tickets of the package
@@ -2768,11 +3138,14 @@ components:
           type:
             type: string
             description: The type of the ticket
-            examples: ["ADULT", "CHILD"]
+            examples:
+              - ADULT
+              - CHILD
           amount:
             type: number
             description: The amount of the ticket
-            examples: [1]
+            examples:
+              - 1
     AllocationTicketObject:
       type: object
       description: The ticket object
@@ -2780,140 +3153,180 @@ components:
         ticket_id:
           type: string
           description: The ticket id
-          examples: ["1"]
+          examples:
+            - '1'
         ticket_category_id:
           type: string
           description: The ticket category id
-          examples: ["1"]
+          examples:
+            - '1'
         ticket_supplier_id:
           type: string
           description: The ticket supplier id
-          examples: ["1"]
+          examples:
+            - '1'
         wholesale_id:
           type: string
           description: The wholesale id
-          examples: ["1"]
+          examples:
+            - '1'
         ticket_wholesale_id:
           type: string
           description: The ticket wholesale id
-          examples: ["1"]
+          examples:
+            - '1'
         klub_category_id:
           type: string
           description: The klub category id
-          examples: ["1"]
+          examples:
+            - '1'
         klub_category_name:
           type: string
           description: The klub category name
-          examples: ["diving"]
+          examples:
+            - diving
         klub_category_slug:
           type: string
           description: The klub category slug
-          examples: ["diving"]
+          examples:
+            - diving
         ticket_name:
           type: string
           description: The ticket name
-          examples: ["Ticket Name"]
+          examples:
+            - Ticket Name
         ticket_description:
           type: string
           description: The ticket description
-          examples: ["Ticket Description"]
+          examples:
+            - Ticket Description
         ticket_description_details:
           type: string
           description: The ticket description details (JSON string)
-          examples: ["Ticket Description Details"]
+          examples:
+            - Ticket Description Details
         address:
           type: string
           description: The address of the event
-          examples: ["Address"]
+          examples:
+            - Address
         area_id:
           type: string
           description: The area id
-          examples: ["1"]
+          examples:
+            - '1'
         area_name:
           type: string
           description: The area name
-          examples: ["Area Name"]
+          examples:
+            - Area Name
         city_id:
           type: string
           description: The city id
-          examples: ["1"]
+          examples:
+            - '1'
         city_name:
           type: string
           description: The city name
-          examples: ["City Name"]
+          examples:
+            - City Name
         country_id:
           type: string
           description: The country id
-          examples: ["1"]
+          examples:
+            - '1'
         country_name:
           type: string
           description: The country name
-          examples: ["Country Name"]
+          examples:
+            - Country Name
         ticket_slug:
           type: string
           description: The ticket slug
-          examples: ["ticket-slug"]
+          examples:
+            - ticket-slug
         latitude:
           default: null
           type: number
           description: The latitude of the hotel
-          examples: [13.7563]
+          examples:
+            - 13.7563
         longitude:
           default: null
           type: number
           description: The longitude of the hotel
-          examples: [100.5018]
+          examples:
+            - 100.5018
         mobile_number:
           type: string
           description: The mobile number
-          examples: ["0812345678"]
+          examples:
+            - '0812345678'
         tier:
-          $ref: "#/components/schemas/TierType"
+          $ref: '#/components/schemas/TierType'
         ticket_type:
           type: string
           description: The ticket type
-          examples: ["ticket", "daytrip", "event", "voucher"]
+          examples:
+            - ticket
+            - daytrip
+            - event
+            - voucher
         time_duration:
           type: string
           description: The time duration
-          examples: ["1 hour", "4 Hours - 1 Day"]
+          examples:
+            - 1 hour
+            - 4 Hours - 1 Day
         available_language:
           type: string
           description: The available language (JSON string)
-          examples: ['["th"]', '["en"]']
+          examples:
+            - '["th"]'
+            - '["en"]'
         transportation_detail:
           type: string
           default: null
           description: The transportation detail
-          examples: ["Transportation Detail"]
+          examples:
+            - Transportation Detail
         experience_detail:
           type: string
           description: The experience detail JSON string
-          examples: ["Experience Detail"]
+          examples:
+            - Experience Detail
         preparation_detail:
           type: string
           description: The preparation detail JSON string
-          examples: ["Preparation Detail"]
+          examples:
+            - Preparation Detail
         price_condition:
           type: string
           description: The price condition JSON string
-          examples: ["Price Condition"]
+          examples:
+            - Price Condition
         ticket_include:
           type: string
           description: The ticket include JSON string
-          examples: ["Ticket Include"]
+          examples:
+            - Ticket Include
         photo_cover_path:
           type: string
           description: The photo cover path
-          examples: ["https://www.example.com/photo.jpg"]
+          examples:
+            - https://www.example.com/photo.jpg
         is_best_selling:
           type: string
           description: Wether the ticket is best selling or not
-          examples: ["1", "0"]
+          examples:
+            - '1'
+            - '0'
         is_top_rating:
           type: string
           description: Wether the ticket is top rating or not
-          examples: ["1", "0"]
+          examples:
+            - '1'
+            - '0'
     AllocationObject:
       description: The allocation object provides the summary of the order with payment url
       type: object
@@ -2921,29 +3334,35 @@ components:
         bookingInternalNo:
           type: string
           description: The booking internal number
-          examples: ["123456"]
+          examples:
+            - '123456'
         rsvnId:
           type: string
           description: The reservation id
-          examples: ["123456"]
+          examples:
+            - '123456'
         currency:
           type: string
           description: The currency of the order
-          examples: ["THB"]
+          examples:
+            - THB
         tickets:
-          $ref: "#/components/schemas/AllocationTicketObject"
+          $ref: '#/components/schemas/AllocationTicketObject'
         totalAmount:
           type: number
           description: The total amount of the order
-          examples: [10]
+          examples:
+            - 10
         totalPrice:
           type: number
           description: The total price of the order
-          examples: [10]
+          examples:
+            - 10
         paymentUrl:
           type: string
           description: The payment url of the order
-          examples: ["https://www.example.com/payment"]
+          examples:
+            - https://www.example.com/payment
     ExperienceCategoryObject:
       description: Experience category object
       type: object
@@ -2951,29 +3370,35 @@ components:
         id:
           type: number
           description: The id of the category
-          examples: [1]
+          examples:
+            - 1
         icon:
           type: string
           description: The icon of the category
-          examples: ["https://www.example.com/icon.jpg"]
+          examples:
+            - https://www.example.com/icon.jpg
         name:
           type: string
           description: The name of the category
-          examples: ["Theme Park"]
+          examples:
+            - Theme Park
         group:
-          $ref: "#/components/schemas/TicketType"
+          $ref: '#/components/schemas/TicketType'
         groupName:
           type: string
           description: The name of the group
-          examples: ["Theme Park"]
+          examples:
+            - Theme Park
         ordering:
           type: number
           description: The ordering of the category
-          examples: [1]
+          examples:
+            - 1
         slug:
           type: string
           description: The slug of the category
-          examples: ["theme-park"]
+          examples:
+            - theme-park
         isRecommend:
           type: boolean
           description: Wether the category is recommended or not
@@ -2984,68 +3409,77 @@ components:
         background:
           type: string
           description: The background of the banner
-          examples: ["https://www.example.com/banner.jpg"]
+          examples:
+            - https://www.example.com/banner.jpg
         bannerImage:
           type: string
           description: The banner image of the banner
-          examples: ["https://www.example.com/banner.jpg"]
+          examples:
+            - https://www.example.com/banner.jpg
         textTitleBanner1:
           type: string
           description: The text title banner 1 of the banner
-          examples: ["Banner Title 1"]
+          examples:
+            - Banner Title 1
         textTitleBanner2:
           type: string
           description: The text title banner 2 of the banner
-          examples: ["Banner Title 2"]
+          examples:
+            - Banner Title 2
         textDescriptBanner1:
           type: string
           description: The text description banner 1 of the banner
-          examples: ["Banner Description 1"]
+          examples:
+            - Banner Description 1
         textDescriptBanner2:
           type: string
           description: The text description banner 2 of the banner
-          examples: ["Banner Description 2"]
+          examples:
+            - Banner Description 2
         textDescriptBanner3:
           type: string
           description: The text description banner 3 of the banner
-          examples: ["Banner Description 3"]
+          examples:
+            - Banner Description 3
     ExclusiveHeaderObject:
       type: object
       properties:
         banner:
-          $ref: "#/components/schemas/BannerObjectExclusive"
+          $ref: '#/components/schemas/BannerObjectExclusive'
         exclusiveContainer:
-          $ref: "#/components/schemas/ExclusiveContainerObject"
+          $ref: '#/components/schemas/ExclusiveContainerObject'
         buttonBanner:
-          $ref: "#/components/schemas/ButtonBannerObject"
+          $ref: '#/components/schemas/ButtonBannerObject'
         cardInfluencer:
-          $ref: "#/components/schemas/CardInfluencerObject"
+          $ref: '#/components/schemas/CardInfluencerObject'
         airline:
           type: object
           properties:
             logoAirline:
               type: string
               description: The title logo of the airline
-              examples: ["https://www.example.com/logo.jpg"]
+              examples:
+                - https://www.example.com/logo.jpg
             textTitleLogo:
               type: string
               description: The title of the logo
-              examples: ["Airline Title"]
+              examples:
+                - Airline Title
             textDescriptLogo:
               type: string
               description: The description of the logo
-              examples: ["Airline Description"]
-
+              examples:
+                - Airline Description
     ExclusiveContainerObject:
       type: object
       description: The exclusive container of the experience
       properties:
         quota:
-          $ref: "#/components/schemas/QuotaObject"
+          $ref: '#/components/schemas/QuotaObject'
         exclusiveBanner:
-          $ref: "#/components/schemas/ExclusiveBanner"
+          $ref: '#/components/schemas/ExclusiveBanner'
         media:
-          $ref: "#/components/schemas/MediaObject"
+          $ref: '#/components/schemas/MediaObject'
     ButtonBannerObject:
       type: object
       description: The button banner of the experience
@@ -3053,11 +3487,13 @@ components:
         icon:
           type: string
           description: The icon of the button
-          examples: ["https://www.example.com/icon.jpg"]
+          examples:
+            - https://www.example.com/icon.jpg
         klubName:
           type: string
           description: The klub name of the button
-          examples: ["Klub Name"]
+          examples:
+            - Klub Name
     CardInfluencerObject:
       type: object
       description: The influencer card of the experience
@@ -3065,15 +3501,18 @@ components:
         imgInflu:
           type: string
           description: The image of the influencer
-          examples: ["https://www.example.com/influ.jpg"]
+          examples:
+            - https://www.example.com/influ.jpg
         nameInflu:
           type: string
           description: The name of the influencer
-          examples: ["Influencer Name"]
+          examples:
+            - Influencer Name
         detailInflu:
           type: string
           description: The detail of the influencer
-          examples: ["Influencer Detail"]
+          examples:
+            - Influencer Detail
     ExclusiveExperienceObject:
       type: object
       description: Exclusive experience object
@@ -3081,68 +3520,83 @@ components:
         experienceId:
           type: number
           description: The id of the experience
-          examples: [1]
+          examples:
+            - 1
         name:
           type: string
           description: The name of the experience
-          examples: ["Experience Name"]
+          examples:
+            - Experience Name
         slug:
           type: string
           description: The slug of the experience
-          examples: ["experience-slug"]
+          examples:
+            - experience-slug
         areaName:
           type: string
           description: The area name of the experience
           default: null
-          examples: ["Area Name"]
+          examples:
+            - Area Name
         areaSlug:
           type: string
           description: The area slug of the experience
           default: null
-          examples: ["area-slug"]
+          examples:
+            - area-slug
         cityName:
           type: string
           description: The city name of the experience
           default: null
-          examples: ["City Name"]
+          examples:
+            - City Name
         citySlug:
           type: string
           description: The city slug of the experience
           default: null
-          examples: ["city-slug"]
+          examples:
+            - city-slug
         countryName:
           type: string
           description: The country name of the experience
           default: null
-          examples: ["Country Name"]
+          examples:
+            - Country Name
         countrySlug:
           type: string
           description: The country slug of the experience
           default: null
-          examples: ["country-slug"]
+          examples:
+            - country-slug
         tier:
-          $ref: "#/components/schemas/TierType"
+          $ref: '#/components/schemas/TierType'
         ticketType:
-          $ref: "#/components/schemas/TicketType"
+          $ref: '#/components/schemas/TicketType'
         isFavourite:
           type: boolean
           description: The status of the experience
-          examples: [true, false]
+          examples:
+            - true
+            - false
         isExclusive:
           type: boolean
           description: The status of the experience
-          examples: [true, false]
+          examples:
+            - true
+            - false
         klubCategory:
           type: object
           properties:
             name:
               type: string
               description: The name of the klub category
-              examples: ["Klub Category Name"]
+              examples:
+                - Klub Category Name
             slug:
               type: string
               description: The slug of the klub category
-              examples: ["klub-category-slug"]
+              examples:
+                - klub-category-slug
         category:
           type: array
           items:
@@ -3151,56 +3605,66 @@ components:
               name:
                 type: string
                 description: The name of the category
-                examples: ["Category Name"]
+                examples:
+                  - Category Name
               slug:
                 type: string
                 description: The slug of the category
-                examples: ["category-slug"]
+                examples:
+                  - category-slug
         location:
           type: object
           properties:
             lat:
               type: number
               description: The latitude of the location
-              examples: [13.7563]
+              examples:
+                - 13.7563
             long:
               type: number
               description: The longitude of the location
-              examples: [100.5018]
+              examples:
+                - 100.5018
         photos:
           type: array
           items:
             type: string
             description: The photos of the experience
-            examples: ["https://klub-image.com/klub-photo.jpg"]
+            examples:
+              - https://klub-image.com/klub-photo.jpg
         rating:
           type: number
           description: The rating of the experience
           default: null
-          examples: [5]
+          examples:
+            - 5
         numReview:
           type: number
           description: The number of reviews of the experience
           default: null
-          examples: [2.1]
+          examples:
+            - 2.1
         redeemStart:
           type: string
           description: The redeem start date of the experience
-          examples: ["2021-01-01"]
+          examples:
+            - '2021-01-01'
         redeemEnd:
           type: string
           default: null
           description: The redeem end date of the experience
-          examples: ["2021-12-31"]
+          examples:
+            - '2021-12-31'
         isPrivate:
           type: boolean
           description: The status of the experience
-          examples: [true, false]
+          examples:
+            - true
+            - false
         prices:
-          $ref: "#/components/schemas/PricesObject"
+          $ref: '#/components/schemas/PricesObject'
         exclusiveHeader:
-          $ref: "#/components/schemas/ExclusiveHeaderObject"
-
+          $ref: '#/components/schemas/ExclusiveHeaderObject'
   parameters:
     limit:
       name: limit
@@ -3216,7 +3680,9 @@ components:
       required: false
       schema:
         type: string
-        enum: [en, th]
+        enum:
+          - en
+          - th
         default: th
     preferred-currency:
       name: preferred-currency
@@ -3261,7 +3727,6 @@ components:
       description: The slug of the experience
       schema:
         type: string
-
   responses:
     UnauthorizedError:
       description: Unauthorized
@@ -3323,7 +3788,6 @@ components:
                 type: string
                 description: The error message
                 default: Unknow method
-
   requestBodies:
     PreAllocateRequest:
       content:
@@ -3334,9 +3798,10 @@ components:
               key:
                 type: string
                 description: The key of the package used as reference in the payment process
-                examples: ["someKey"]
+                examples:
+                  - someKey
               tickets:
-                $ref: "#/components/schemas/TicketObject"
+                $ref: '#/components/schemas/TicketObject'
             required:
               - key
               - tickets
@@ -3349,36 +3814,45 @@ components:
               key:
                 type: string
                 description: The key of the package used as reference in the payment process
-                examples: ["someKey"]
+                examples:
+                  - someKey
               contactTitle:
                 type: string
                 description: The title of the contact person
-                examples: ["Mr", "Mrs", "Ms"]
+                examples:
+                  - Mr
+                  - Mrs
+                  - Ms
               contactFirstname:
                 type: string
                 description: The first name of the contact person
-                examples: ["John"]
+                examples:
+                  - John
               contactLastname:
                 type: string
                 description: The last name of the contact person
-                examples: ["Doe"]
+                examples:
+                  - Doe
               contactEmail:
                 type: string
                 description: The email of the contact person
-                examples: ["someOne@somemail.com"]
+                examples:
+                  - someOne@somemail.com
               contactPhone:
                 type: string
                 description: The phone number of the contact person
-                examples: ["0812345678"]
+                examples:
+                  - '0812345678'
               date:
                 type: string
                 format: date
                 description: The date of the ticket
-                examples: ["2021-01-01"]
+                examples:
+                  - '2021-01-01'
               tickets:
-                $ref: "#/components/schemas/TicketObject"
+                $ref: '#/components/schemas/TicketObject'
               meetingPoint:
-                $ref: "#/components/schemas/MeetingPointObject"
+                $ref: '#/components/schemas/MeetingPointObject'
               answers:
                 type: array
                 description: The answers of the ticket
@@ -3389,12 +3863,13 @@ components:
                     id:
                       type: number
                       description: The id of the question
-                      examples: [1]
+                      examples:
+                        - 1
                     detail:
                       type: string
                       description: The detail of the answer
-                      examples: ["Answer Detail"]
-
+                      examples:
+                        - Answer Detail
   securitySchemes:
     bearerAuth:
       type: http
@@ -3404,6 +3879,3 @@ components:
       type: apiKey
       in: header
       name: data-token
-
-security:
-  - bearerAuth: []

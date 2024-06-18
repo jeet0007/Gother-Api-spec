@@ -1,13 +1,14 @@
 {
   "name": "gother",
-  "version": "1.2.5",
+  "version": "1.2.4",
   "description": "",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "redocly bundle swagger.yaml --output _build/openapi.yaml",
     "build:swagger": "swagger-cli bundle -o _build/openapi.yaml swagger.yaml",
-    "preview": "npm run build && redocly preview-docs _build/openapi.yaml"
+    "preview": "npm run build && redocly preview-docs _build/openapi.yaml",
+    "prepare": "husky"
   },
   "keywords": [],
   "author": "",

@@ -5,7 +5,7 @@ info:
     This is the GoApi documentation. You can find out more about the project on the [GoApi Repository](https://gl.traveligo.com/t1/go-api).
     Some useful links:
     - [GoApi Repository](https://gl.traveligo.com/t1/go-api)
-  version: 1.3.9
+  version: 1.3.10
   license:
     name: Internal
     url: "https://gl.traveligo.com/"
@@ -21,12 +21,12 @@ tags:
     description: The promotion is a special offer that is available for a limited time
   - name: experience
     description: The experience is a special event that is a bunch of activities that are available for a limited time
-  - name: utility
-    description: The utility is a set of tools that are available for the user to use
   - name: hotel
     description: The hotel is a place where the user can stay for a limited time
   - name: flight
     description: The flight is a mode of transportation that is available for the user to use
+  - name: utility
+    description: The utility is a set of tools that are available for the user to use
 paths:
   /auth/token:
     post:
@@ -1004,7 +1004,7 @@ paths:
                           examples:
                             - THA
         "401":
-          $ref: "#/components/responses/TokenExpiredError"
+          $ref: "#/components/responses/UnauthorizedError"
         "405":
           $ref: "#/components/responses/MethodNotAllowedError"
   /v2/hotel/hotelsAvailable:
@@ -1732,28 +1732,7 @@ paths:
                         cancellationPolicy:
                           type: array
                           items:
-                            type: object
-                            properties:
-                              date:
-                                type: string
-                                description: The date
-                                examples:
-                                  - "Jul 18 2024 23:59"
-                              chargeType:
-                                type: string
-                                description: The charge type
-                                examples:
-                                  - FreeCancel
-                              chargeAmount:
-                                type: number
-                                description: The charge amount
-                                examples:
-                                  - 0
-                              currency:
-                                type: string
-                                description: The currency
-                                examples:
-                                  - USD
+                            $ref: "#/paths/~1v2~1hotel~1allocate/post/responses/200/content/application~1json/schema/properties/cancellationPolicyChanged/properties/cancellationPolicy/items"
                         cancellationPolicyDetail:
                           type: array
                           items:
@@ -2167,6 +2146,312 @@ paths:
                       description: The tourist object area slug
                       examples:
                         - pathum-wan
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "405":
+          $ref: "#/components/responses/MethodNotAllowedError"
+  /v2/hotel/hotelsNearby:
+    post:
+      description: |
+        Get a list of hotels nearby a given the hotel id
+      summary: Get hotels nearby
+      tags:
+        - hotel
+      operationId: getHotelsNearby
+      security:
+        - bearerAuth: []
+        - dataToken: []
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                hotel_id:
+                  type: integer
+                  description: The hotel id
+                  examples:
+                    - 1
+              required:
+                - hotel_id
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  properties:
+                    header:
+                      type: string
+                      description: The header
+                      examples:
+                        - ระยะทางจากโรงแรม
+                    icon:
+                      type: string
+                      description: The icon
+                      examples:
+                        - "https://static2.tacdn.com/img2/icons/hotel_nearby.png"
+                    contents:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          label:
+                            type: string
+                            description: The label
+                            examples:
+                              - สถานที่ท่องเที่ยว
+                          distance:
+                            type: string
+                            description: The distance
+                            examples:
+                              - 0.1 กม.
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "405":
+          $ref: "#/components/responses/MethodNotAllowedError"
+  /v2/hotel/allocate:
+    post:
+      security:
+        - bearerAuth: []
+      tags:
+        - hotel
+      operationId: allocateRoom
+      summary: Allocate a room
+      description: Allocate rooms for the user in the hotel
+      parameters:
+        - $ref: "#/components/parameters/accept-Language"
+        - $ref: "#/components/parameters/preferred-currency"
+        - name: account-id
+          in: header
+          description: The account ID
+          schema:
+            type: number
+            example: 1
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                roomKey:
+                  type: string
+                  description: The room key can get from available rooms route
+                  examples:
+                    - 349flshdlshd43903931
+                contactTitle:
+                  type: string
+                  description: The contact title
+                  enum:
+                    - Mr
+                    - Ms
+                  examples:
+                    - Mr
+                contactFirstname:
+                  type: string
+                  description: The contact first name
+                  examples:
+                    - John
+                contactLastname:
+                  type: string
+                  description: The contact last name
+                  examples:
+                    - Doe
+                contactEmail:
+                  type: string
+                  description: The contact email
+                  format: email
+                  examples:
+                    - john.doe@mail.com
+                contactPhonePrefix:
+                  type: string
+                  description: The contact phone prefix
+                  examples:
+                    - 66
+                contactPhone:
+                  type: string
+                  description: The contact phone
+                  examples:
+                    - 123456789
+                countryOfPassport:
+                  type: string
+                  description: The country of passport
+                  examples:
+                    - TH
+                "guest[title]":
+                  type: string
+                  description: The guest title
+                  enum:
+                    - Mr
+                    - Ms
+                  examples:
+                    - Mr
+                "guest[firstname]":
+                  type: string
+                  description: The guest first name
+                  examples:
+                    - John
+                "guest[smoking]":
+                  type: string
+                  description: The guest smoking status
+                  enum:
+                    - "1"
+                    - "0"
+                  examples:
+                    - "1"
+                    - "0"
+                "guest[countryOfPassport]":
+                  type: string
+                  description: The guest country of passport ISO code 2a
+                  examples:
+                    - TH
+                specialRequest:
+                  type: string
+                  description: The special request
+                  examples:
+                    - No smoking room
+                preferredCurrency:
+                  type: string
+                  description: The preferred currency
+                  examples:
+                    - USD
+                itemListName:
+                  type: string
+                  description: The item list name
+                  examples:
+                    - Room
+              required:
+                - roomKey
+                - contactTitle
+                - contactFirstname
+                - contactLastname
+                - contactEmail
+                - contactPhonePrefix
+                - contactPhone
+                - countryOfPassport
+                - "guest[title]"
+                - "guest[firstname]"
+                - "guest[smoking]"
+                - "guest[countryOfPassport]"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  bookingInternalNo:
+                    type: string
+                    description: The booking internal number
+                    example: 1234564dFIND
+                  rsvnId:
+                    type: number
+                    description: The reservation ID
+                    example: 2134
+                  expired:
+                    type: string
+                    format: date-time
+                    description: The expiry date
+                  price:
+                    type: object
+                    properties:
+                      amount:
+                        type: number
+                        description: The amount
+                        example: 1000
+                      currency:
+                        type: string
+                        description: The currency
+                        example: THB
+                  pricechanged:
+                    type: object
+                    properties:
+                      oldPrice:
+                        type: number
+                        description: The old price
+                        example: 2000
+                      newPrice:
+                        type: number
+                        description: The new price
+                        example: 1000
+                      currency:
+                        type: string
+                        description: The currency
+                        example: THB
+                  cancellationPolicyChanged:
+                    type: object
+                    properties:
+                      isChange:
+                        type: boolean
+                        description: Whether the cancellation policy has changed
+                        example: true
+                      cancellationPolicy:
+                        type: array
+                        items:
+                          description: The cancellation policy
+                          type: object
+                          properties:
+                            date:
+                              type: string
+                              description: The date
+                              examples:
+                                - "Jul 18 2024 23:59"
+                            chargeType:
+                              type: string
+                              description: The charge type
+                              examples:
+                                - FreeCancel
+                            chargeAmount:
+                              type: number
+                              description: The charge amount
+                              examples:
+                                - 0
+                            currency:
+                              type: string
+                              description: The currency
+                              examples:
+                                - USD
+                      cancellationPolicyDetail:
+                        type: array
+                        items:
+                          type: string
+                      payAtHotelcancellationPolicy:
+                        $ref: "#/paths/~1v2~1hotel~1allocate/post/responses/200/content/application~1json/schema/properties/cancellationPolicyChanged/properties/cancellationPolicy/items"
+                        examples:
+                          - "null"
+                      payAtHotelcancellationPolicyDetail:
+                        type: array
+                        items:
+                          type: string
+                      freeCancellation:
+                        type: string
+                        description: Whether free cancellation
+                        enum:
+                          - "1"
+                          - "0"
+                        examples:
+                          - "1"
+                          - "0"
+                      remark:
+                        type: array
+                        items:
+                          type: string
+                      alert:
+                        type: array
+                        items:
+                          type: string
+                  payAtHotel:
+                    type: boolean
+                    description: Whether to pay at the hotel
+                  paymentUrl:
+                    type: string
+                    description: The payment URL
+                    example: "https://payment.example.com"
         "401":
           $ref: "#/components/responses/UnauthorizedError"
         "405":

@@ -963,50 +963,6 @@ paths:
           $ref: "#/components/responses/TokenExpiredError"
         "405":
           $ref: "#/components/responses/MethodNotAllowedError"
-  /v2/countryOfPassportList:
-    get:
-      tags:
-        - utility
-      summary: Get the country of passport list
-      description: Get the country of passport list master data
-      operationId: getCountryOfPassportList
-      responses:
-        "200":
-          description: Get the country of passport list
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  countryOfPassport:
-                    type: array
-                    items:
-                      type: object
-                      properties:
-                        id:
-                          type: number
-                          description: The id of the country
-                          examples:
-                            - 1
-                        name:
-                          type: string
-                          description: The name of the country
-                          examples:
-                            - Thailand
-                        code2A:
-                          type: string
-                          description: The 2 char code of the country
-                          examples:
-                            - TH
-                        code3A:
-                          type: string
-                          description: The 3 char code of the country
-                          examples:
-                            - THA
-        "401":
-          $ref: "#/components/responses/UnauthorizedError"
-        "405":
-          $ref: "#/components/responses/MethodNotAllowedError"
   /v2/hotel/hotelsAvailable:
     get:
       tags:
@@ -1390,86 +1346,15 @@ paths:
                         usefulDetail:
                           type: array
                           items:
-                            type: object
-                            properties:
-                              groupId:
-                                type: number
-                                description: The hotel useful group id can be mapped with useful group
-                                examples:
-                                  - 1
-                              groupName:
-                                type: string
-                                description: The hotel useful group name
-                                examples:
-                                  - อินเทอร์เน็ต
-                              details:
-                                type: array
-                                items:
-                                  type: object
-                                  properties:
-                                    id:
-                                      type: number
-                                      description: The hotel useful detail id
-                                      examples:
-                                        - 2
-                                    name:
-                                      type: string
-                                      description: The hotel useful detail name
-                                      examples:
-                                        - ฟรี Wifi
+                            $ref: "#/paths/~1v2~1hotel~1detailBySlug/post/responses/200/content/application~1json/schema/properties/usefulDetail/items"
                         facilitiesDetail:
                           type: array
                           items:
-                            type: object
-                            description: The hotel facilities detail
-                            properties:
-                              groupId:
-                                type: number
-                                description: The hotel useful group id can be mapped with useful group
-                                examples:
-                                  - 1
-                              groupName:
-                                type: string
-                                description: The hotel useful group name
-                                examples:
-                                  - อินเทอร์เน็ต
-                              details:
-                                type: array
-                                items:
-                                  type: object
-                                  properties:
-                                    id:
-                                      type: number
-                                      description: The hotel useful detail id
-                                      examples:
-                                        - 2
-                                    name:
-                                      type: string
-                                      description: The hotel useful detail name
-                                      examples:
-                                        - ฟรี Wifi
-                                    image:
-                                      type: string
-                                      description: The hotel useful detail image
-                                      examples:
-                                        - "https://domain.net/images/id/4696.jpg"
+                            $ref: "#/paths/~1v2~1hotel~1detailBySlug/post/responses/200/content/application~1json/schema/properties/facilitiesDetail/items"
                         amenitiesDetail:
                           type: array
                           items:
-                            type: object
-                            description: The hotel amenities detail
-                            properties:
-                              id:
-                                type: number
-                                description: The hotel amenities detail id
-                                examples:
-                                  - 2
-                              name:
-                                type: string
-                                description: The hotel amenities detail name
-                                examples:
-                                  - ฟรี Wifi
-                                default: ""
+                            $ref: "#/paths/~1v2~1hotel~1detailBySlug/post/responses/200/content/application~1json/schema/properties/amenitiesDetail/items"
                         shareUrl:
                           type: string
                           description: The hotel share URL
@@ -2452,6 +2337,740 @@ paths:
                     type: string
                     description: The payment URL
                     example: "https://payment.example.com"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "405":
+          $ref: "#/components/responses/MethodNotAllowedError"
+  /v2/hotel/detailBySlug:
+    post:
+      tags:
+        - hotel
+      operationId: getHotelDetailBySlug
+      summary: Get the hotel detail by slug
+      description: |
+        Get the hotel detail by slug given all the location slugs
+      parameters:
+        - $ref: "#/components/parameters/accept-Language"
+        - $ref: "#/components/parameters/preferred-currency"
+        - $ref: "#/paths/~1v2~1hotel~1allocate/post/parameters/2"
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                countrySlug:
+                  type: string
+                  description: The country slug
+                  examples:
+                    - thailand
+                citySlug:
+                  type: string
+                  description: The city slug
+                  examples:
+                    - bangkok
+                areaSlug:
+                  type: string
+                  description: The area slug
+                  examples:
+                    - pathum-wan
+                hotelSlug:
+                  type: string
+                  description: The hotel slug
+                  examples:
+                    - phuket-graceland-resort-and-spa
+              required:
+                - countrySlug
+                - citySlug
+                - areaSlug
+                - hotelSlug
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                description: hotel details
+                type: object
+                properties:
+                  id:
+                    type: number
+                    description: The hotel id
+                    examples:
+                      - 1
+                  name:
+                    type: string
+                    description: The hotel name
+                    examples:
+                      - โรงแรม 88 ถนนรองเมือง
+                  slug:
+                    type: string
+                    description: The hotel slug
+                    examples:
+                      - 88-ถนนรองเมือง
+                  description:
+                    type: string
+                    description: The hotel description
+                    examples:
+                      - โรงแรม 88 ถนนรองเมือง ตั้งอยู่ในกรุงเทพ ใกล้กับสถานีรถไฟใต้ดิน
+                  starRating:
+                    type: number
+                    description: The hotel star rating
+                    examples:
+                      - 4
+                  latitude:
+                    type: number
+                    description: The hotel latitude
+                    examples:
+                      - 13.74613952636719
+                  longitude:
+                    type: number
+                    description: The hotel longitude
+                    examples:
+                      - 100.51983642578125
+                  phoneNumber:
+                    type: string
+                    description: The hotel phone number
+                    examples:
+                      - 6622169555
+                  faxNumber:
+                    type: string
+                    description: The hotel fax number
+                    examples:
+                      - 6622169544
+                  address:
+                    type: string
+                    description: The hotel address
+                    examples:
+                      - 88 ถนนรองเมือง
+                      - ปทุมวัน
+                      - กรุงเทพ
+                      - 10330
+                      - ไทย
+                  countryName:
+                    type: string
+                    description: The hotel country name
+                    examples:
+                      - ไทย
+                  countrySlug:
+                    type: string
+                    description: The hotel country slug
+                    examples:
+                      - thailand
+                  cityId:
+                    type: number
+                    description: The hotel city id
+                    examples:
+                      - 1
+                  cityName:
+                    type: string
+                    description: The hotel city name
+                    examples:
+                      - กรุงเทพ
+                  citySlug:
+                    type: string
+                    description: The hotel city slug
+                    examples:
+                      - bangkok
+                  areaName:
+                    type: string
+                    description: The hotel area name
+                    examples:
+                      - ปทุมวัน
+                  areaSlug:
+                    type: string
+                    description: The hotel area slug
+                    examples:
+                      - pathum-wan
+                  destinationId:
+                    type: number
+                    description: The hotel destination id
+                    examples:
+                      - 1
+                  photoGallery:
+                    type: array
+                    description: The hotel photo gallery
+                    items:
+                      type: string
+                      examples:
+                        - "https://domain.net/images/hotels/id/123/name.jpg"
+                  useful:
+                    type: array
+                    description: The hotel useful will have multiple groups and details keys are indexes can be more then "1"
+                    items:
+                      type: object
+                      properties:
+                        "1":
+                          type: object
+                          properties:
+                            group:
+                              type: string
+                              description: The hotel useful group
+                              examples:
+                                - Hotel Info
+                            detail:
+                              type: array
+                              items:
+                                type: string
+                                example:
+                                  - สร้างปี ค.ศ. 2019
+                  facilities:
+                    type: array
+                    description: The hotel facilities
+                    items:
+                      type: string
+                  amenities:
+                    type: array
+                    description: The hotel amenities
+                    items:
+                      type: string
+                  usefulDetail:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        groupId:
+                          type: number
+                          description: The hotel useful group id can be mapped with useful group
+                          examples:
+                            - 1
+                        groupName:
+                          type: string
+                          description: The hotel useful group name
+                          examples:
+                            - อินเทอร์เน็ต
+                        details:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              id:
+                                type: number
+                                description: The hotel useful detail id
+                                examples:
+                                  - 2
+                              name:
+                                type: string
+                                description: The hotel useful detail name
+                                examples:
+                                  - ฟรี Wifi
+                  facilitiesDetail:
+                    type: array
+                    items:
+                      type: object
+                      description: The hotel facilities detail
+                      properties:
+                        groupId:
+                          type: number
+                          description: The hotel useful group id can be mapped with useful group
+                          examples:
+                            - 1
+                        groupName:
+                          type: string
+                          description: The hotel useful group name
+                          examples:
+                            - อินเทอร์เน็ต
+                        details:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              id:
+                                type: number
+                                description: The hotel useful detail id
+                                examples:
+                                  - 2
+                              name:
+                                type: string
+                                description: The hotel useful detail name
+                                examples:
+                                  - ฟรี Wifi
+                              image:
+                                type: string
+                                description: The hotel useful detail image
+                                examples:
+                                  - "https://domain.net/images/id/4696.jpg"
+                  amenitiesDetail:
+                    type: array
+                    items:
+                      type: object
+                      description: The hotel amenities detail
+                      properties:
+                        id:
+                          type: number
+                          description: The hotel amenities detail id
+                          examples:
+                            - 2
+                        name:
+                          type: string
+                          description: The hotel amenities detail name
+                          examples:
+                            - ฟรี Wifi
+                          default: ""
+                  important_note:
+                    type: string
+                    description: The hotel important note
+                    examples:
+                      - สำหรับเด็กอายุไม่เกิน 12 ปี ที่พักฟรี 1 คน
+                  observation:
+                    type: string
+                    description: The hotel observation
+                    examples:
+                      - observation
+                    default: ""
+                  isRegister:
+                    type: boolean
+                    description: The hotel is register
+                    examples:
+                      - true
+                      - false
+                  isThaiHotelMember:
+                    type: boolean
+                    description: The hotel is thai hotel member
+                    examples:
+                      - true
+                      - false
+                  shaPlus:
+                    type: boolean
+                    description: The hotel is SHA Plus certified or not
+                    examples:
+                      - true
+                      - false
+                  shaExtraPlus:
+                    type: boolean
+                    description: The hotel is SHA Extra Plus certified or not
+                    examples:
+                      - true
+                      - false
+                  is_top100:
+                    type: boolean
+                    description: The hotel is in top 100 or not
+                    examples:
+                      - true
+                      - false
+                  review:
+                    description: The hotel review object
+                    type: object
+                    properties:
+                      address_obj:
+                        type: object
+                        properties:
+                          street1:
+                            type: string
+                            description: The hotel address street1
+                            examples:
+                              - 88 ถนนรองเมือง
+                          street2:
+                            type: string
+                            description: The hotel address street2
+                            examples:
+                              - ปทุมวัน
+                          city:
+                            type: string
+                            description: The hotel address city
+                            examples:
+                              - กรุงเทพ
+                          state:
+                            type: string
+                            description: The hotel address state
+                            examples:
+                              - กรุงเทพ
+                          country:
+                            type: string
+                            description: The hotel address country
+                            examples:
+                              - ไทย
+                          postalcode:
+                            type: string
+                            description: The hotel address postalcode
+                            examples:
+                              - 10330
+                          address_string:
+                            type: string
+                            description: The hotel address string
+                            examples:
+                              - 88 ถนนรองเมือง
+                              - ปทุมวัน
+                              - กรุงเทพ
+                              - 10330
+                              - ไทย
+                      timezone:
+                        type: string
+                        description: The hotel timezone
+                        examples:
+                          - Asia/Bangkok
+                      latitude:
+                        type: number
+                        description: The hotel latitude
+                        examples:
+                          - 13.74613952636719
+                      longitude:
+                        type: number
+                        description: The hotel longitude
+                        examples:
+                          - 100.51983642578125
+                      rating:
+                        type: number
+                        description: The hotel rating
+                        examples:
+                          - 4.5
+                      location_id:
+                        type: number
+                        description: The hotel location id
+                        examples:
+                          - 1
+                      api_detail_url:
+                        type: string
+                        description: The hotel api detail url
+                        examples:
+                          - "https://www.example.com"
+                      write_review:
+                        type: string
+                        description: The hotel write review
+                        examples:
+                          - "https://www.example.com"
+                      ancestors:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            abbrv:
+                              type: string
+                              description: The hotel ancestors abbreviation
+                              examples:
+                                - TH
+                            level:
+                              type: string
+                              description: The hotel ancestors level
+                              examples:
+                                - Municipality
+                            name:
+                              type: string
+                              description: The hotel ancestors name
+                              examples:
+                                - กรุงเทพ
+                            location_id:
+                              type: number
+                              description: The hotel ancestors location id
+                              examples:
+                                - 1
+                      hotel_booking:
+                        type: object
+                        properties:
+                          bookable:
+                            type: boolean
+                            description: The hotel booking bookable
+                            examples:
+                              - true
+                          booking_url:
+                            type: string
+                            description: The hotel booking booking_url
+                            examples:
+                              - "https://www.example.com"
+                      ranking_data:
+                        type: object
+                        properties:
+                          ranking_string:
+                            type: string
+                            description: The hotel ranking string
+                            examples:
+                              - Ranked \#1 of 100 hotels in กรุงเทพ
+                          ranking_out_of:
+                            type: number
+                            description: The hotel ranking out of how many hotels
+                            examples:
+                              - 100
+                          geo_location_id:
+                            type: number
+                            description: The hotel ranking geo location id
+                            examples:
+                              - 1
+                          geo_location_name:
+                            type: string
+                            description: The hotel ranking geo location name
+                            examples:
+                              - กรุงเทพ
+                          ranking:
+                            type: number
+                            description: The hotel ranking
+                            examples:
+                              - 1
+                          ranking_string_detail:
+                            type: string
+                            description: The hotel ranking string detail
+                            examples:
+                              - Ranked \#1 of 100 hotels in กรุงเทพ
+                              - "null"
+                      location_string:
+                        type: string
+                        description: The hotel location string
+                        examples:
+                          - กรุงเทพ
+                      web_url:
+                        type: string
+                        description: The hotel web url
+                        examples:
+                          - "https://www.example.com"
+                      price_level:
+                        type: string
+                        description: The hotel price level
+                        examples:
+                          - $$$$
+                      rating_image_url:
+                        type: string
+                        description: The hotel rating image url
+                        examples:
+                          - "https://www.example.com"
+                      name:
+                        type: string
+                        description: The hotel name
+                        examples:
+                          - Hotel Name
+                      num_reviews:
+                        type: number
+                        description: The hotel number of reviews
+                        examples:
+                          - 1000
+                      category:
+                        type: object
+                        properties:
+                          name:
+                            type: string
+                            description: The hotel category name
+                            examples:
+                              - Hotel
+                          localized_name:
+                            type: string
+                            description: The hotel category localized name
+                            examples:
+                              - โรงแรม
+                      sub_category:
+                        type: object
+                        properties:
+                          name:
+                            type: string
+                            description: The hotel sub category name
+                            examples:
+                              - Hotel
+                          localized_name:
+                            type: string
+                            description: The hotel sub category localized name
+                            examples:
+                              - โรงแรม
+                      see_all_photos:
+                        type: string
+                        description: The hotel see all photos
+                        examples:
+                          - "https://www.example.com"
+                      more_reviews_url:
+                        type: string
+                        description: The hotel more reviews url
+                        examples:
+                          - "https://www.example.com"
+                      url_img_review_mini:
+                        type: string
+                        description: The hotel url img review mini
+                        examples:
+                          - "https://www.example.com"
+                      text_num_reviews:
+                        type: string
+                        description: The hotel text number of reviews
+                        examples:
+                          - Based On <a>1000</a> Reviews
+                      text_review_header:
+                        type: string
+                        description: The hotel text review header
+                        examples:
+                          - Hotel Name Reviews
+                      text_review_default:
+                        type: string
+                        description: The hotel text review default
+                        examples:
+                          - 1000 Reviews
+                      text_review_report_head:
+                        type: string
+                        description: The hotel text review report head
+                        examples:
+                          - Report
+                      text_review_default_head:
+                        type: string
+                        description: The hotel text review default head
+                        examples:
+                          - 1000 Reviews
+                      text_rating_result:
+                        type: string
+                        description: The hotel text rating result
+                        examples:
+                          - Result rating
+                      text_review_type:
+                        type: string
+                        description: The hotel text review type
+                        examples:
+                          - Review type
+                      text_rating:
+                        type: string
+                        description: The hotel text rating
+                        examples:
+                          - Rating
+                      text_rating_5:
+                        type: string
+                        description: The hotel text rating 5
+                        examples:
+                          - ดีเยี่ยม
+                      text_rating_4:
+                        type: string
+                        description: The hotel text rating 4
+                        examples:
+                          - ดีมาก
+                      text_rating_3:
+                        type: string
+                        description: The hotel text rating 3
+                        examples:
+                          - ธรรมดา
+                      text_rating_2:
+                        type: string
+                        description: The hotel text rating 2
+                        examples:
+                          - ควรปรับปรุง
+                      text_rating_1:
+                        type: string
+                        description: The hotel text rating 1
+                        examples:
+                          - ควรปรับปรุงอย่างยิ่ง
+                      text_traveler_type_family:
+                        type: string
+                        description: The hotel text traveler type family
+                        examples:
+                          - Families
+                      text_traveler_type_couples:
+                        type: string
+                        description: The hotel text traveler type couples
+                        examples:
+                          - Couples
+                      text_traveler_type_solo:
+                        type: string
+                        description: The hotel text traveler type solo
+                        examples:
+                          - Solo
+                      text_traveler_type_business:
+                        type: string
+                        description: The hotel text traveler type business
+                        examples:
+                          - Business
+                      text_traveler_type_friends:
+                        type: string
+                        description: The hotel text traveler type friends
+                        examples:
+                          - Friends
+                      text_rate_location:
+                        type: string
+                        description: The hotel text rate location
+                        examples:
+                          - Location
+                      text_rate_room:
+                        type: string
+                        description: The hotel text rate room
+                        examples:
+                          - Rooms
+                      text_rate_service:
+                        type: string
+                        description: The hotel text rate service
+                        examples:
+                          - Service
+                      text_rate_value:
+                        type: string
+                        description: The hotel text rate value
+                        examples:
+                          - Value
+                      text_rate_cleanliness:
+                        type: string
+                        description: The hotel text rate cleanliness
+                        examples:
+                          - Cleanliness
+                      text_rate_sleep:
+                        type: string
+                        description: The hotel text rate sleep
+                        examples:
+                          - Sleep Quality
+                      text_other_all_review:
+                        type: string
+                        description: The hotel text other all review
+                        examples:
+                          - See other reviews
+                      text_write_review:
+                        type: string
+                        description: The hotel text write review
+                        examples:
+                          - Write a review
+                      text_term:
+                        type: string
+                        description: The hotel text term
+                        examples:
+                          - something 2016
+                      rating_row_label_class:
+                        type: string
+                        description: The hotel rating row label class
+                        examples:
+                          - row_label_w100px
+                      rating_result_row_label_class:
+                        type: string
+                        description: The hotel rating result row label class
+                        examples:
+                          - row_label_w85px
+                      detail:
+                        type: array
+                        examples: []
+                  isFavourite:
+                    type: boolean
+                    description: The hotel is favourite or not
+                    examples:
+                      - true
+                      - false
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "405":
+          $ref: "#/components/responses/MethodNotAllowedError"
+  /v2/countryOfPassportList:
+    get:
+      tags:
+        - utility
+      summary: Get the country of passport list
+      description: Get the country of passport list master data
+      operationId: getCountryOfPassportList
+      responses:
+        "200":
+          description: Get the country of passport list
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  countryOfPassport:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: number
+                          description: The id of the country
+                          examples:
+                            - 1
+                        name:
+                          type: string
+                          description: The name of the country
+                          examples:
+                            - Thailand
+                        code2A:
+                          type: string
+                          description: The 2 char code of the country
+                          examples:
+                            - TH
+                        code3A:
+                          type: string
+                          description: The 3 char code of the country
+                          examples:
+                            - THA
         "401":
           $ref: "#/components/responses/UnauthorizedError"
         "405":

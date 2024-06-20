@@ -1025,62 +1025,12 @@ paths:
           description: The destination id can be found from dexter search
           schema:
             type: integer
-        - in: query
-          name: checkin
-          required: true
-          description: The check-in date
-          schema:
-            type: string
-            format: date
-            examples:
-              - "2021-12-01"
-        - in: query
-          name: checkout
-          required: true
-          description: The check-out date
-          schema:
-            type: string
-            format: date
-            examples:
-              - "2021-12-02"
-        - in: query
-          name: totalRooms
-          required: true
-          description: The total rooms
-          schema:
-            type: integer
-            examples:
-              - 1
-            minimum: 1
-            maximum: 9
-        - in: query
-          name: totalAdults
-          required: true
-          description: "Total adult, value must between number of total room to number of total room * 4 Such as (total room = 1 value must be in 1 to 4)"
-          schema:
-            type: integer
-            examples:
-              - 1
-            minimum: 1
-            maximum: 36
-        - in: query
-          name: totalChild
-          required: true
-          description: "Total child, value must between 0 to number of total room*2 Such as (total room = 1 value must be in 0 to 2)"
-          schema:
-            type: integer
-            examples:
-              - 0
-            minimum: 0
-            maximum: 18
-        - in: query
-          name: countryOfPassport
-          required: false
-          description: The country of passport 2 letter code
-          schema:
-            type: string
-            examples:
-              - TH
+        - $ref: "#/paths/~1v2~1hotel~1roomsAvailable/get/parameters/1"
+        - $ref: "#/paths/~1v2~1hotel~1roomsAvailable/get/parameters/2"
+        - $ref: "#/paths/~1v2~1hotel~1roomsAvailable/get/parameters/3"
+        - $ref: "#/paths/~1v2~1hotel~1roomsAvailable/get/parameters/4"
+        - $ref: "#/paths/~1v2~1hotel~1roomsAvailable/get/parameters/5"
+        - $ref: "#/paths/~1v2~1hotel~1roomsAvailable/get/parameters/6"
         - in: query
           name: page
           required: true
@@ -1231,16 +1181,17 @@ paths:
                             - 11921
                         photoGallery:
                           type: array
+                          description: The hotel photo gallery
                           items:
                             type: string
-                          description: The hotel photo gallery
-                          examples:
-                            - "https://domain.net/images/id/4696.jpg"
+                            examples:
+                              - "https://domain.net/images/id/4696.jpg"
+                              - "https://domain.net/images/id/4696.jpg"
                         useful:
                           type: array
+                          description: The hotel useful will have multiple groups and details keys are indexes can be more then "1"
                           items:
                             type: object
-                            description: The hotel useful will have multiple groups and details keys are indexes can be more then "1"
                             properties:
                               "1":
                                 type: object
@@ -1256,25 +1207,16 @@ paths:
                                       type: string
                                       example:
                                         - สร้างปี ค.ศ. 2019
-                          description: The hotel useful info
-                          examples:
-                            - useful info
                         facilities:
                           type: array
+                          description: The hotel facilities
                           items:
                             type: string
-                          description: The hotel facilities
-                          examples:
-                            - facility 1
-                            - facility 2
                         amenities:
                           type: array
+                          description: The hotel amenities
                           items:
                             type: string
-                          description: The hotel amenities
-                          examples:
-                            - amenity 1
-                            - amenity 2
                         specialDeal:
                           type: boolean
                           description: The hotel special deal
@@ -1539,6 +1481,547 @@ paths:
                           examples:
                             - true
                             - false
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "405":
+          $ref: "#/components/responses/MethodNotAllowedError"
+  /v2/hotel/roomsAvailable:
+    get:
+      description: Get the available rooms of the hotel
+      tags:
+        - hotel
+      operationId: getRoomsAvailable
+      summary: Get the available rooms
+      parameters:
+        - in: query
+          name: hotelId
+          required: true
+          description: The hotel id
+          schema:
+            type: integer
+            examples:
+              - 1
+            minimum: 1
+        - in: query
+          name: checkin
+          required: true
+          description: The check-in date
+          schema:
+            type: string
+            format: date
+            examples:
+              - "2021-12-01"
+        - in: query
+          name: checkout
+          required: true
+          description: The check-out date
+          schema:
+            type: string
+            format: date
+            examples:
+              - "2021-12-02"
+        - in: query
+          name: totalRooms
+          required: true
+          description: The total rooms
+          schema:
+            type: integer
+            examples:
+              - 1
+            minimum: 1
+            maximum: 9
+        - in: query
+          name: totalAdults
+          required: true
+          description: "Total adult, value must between number of total room to number of total room * 4 Such as (total room = 1 value must be in 1 to 4)"
+          schema:
+            type: integer
+            examples:
+              - 1
+            minimum: 1
+            maximum: 36
+        - in: query
+          name: totalChild
+          required: true
+          description: "Total child, value must between 0 to number of total room*2 Such as (total room = 1 value must be in 0 to 2)"
+          schema:
+            type: integer
+            examples:
+              - 0
+            minimum: 0
+            maximum: 18
+        - in: query
+          name: countryOfPassport
+          required: false
+          description: The country of passport 2 letter code
+          schema:
+            type: string
+            examples:
+              - TH
+        - $ref: "#/components/parameters/accept-Language"
+        - $ref: "#/components/parameters/preferred-currency"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  roomAvailables:
+                    type: array
+                    items:
+                      description: Available Rooms
+                      type: object
+                      properties:
+                        roomKey:
+                          type: string
+                          description: The room key
+                          examples:
+                            - 6672a7890fcba00c862b7684
+                        roomId:
+                          type: number
+                          description: The room ID
+                          examples:
+                            - 0
+                        roomName:
+                          type: string
+                          description: The room name
+                          examples:
+                            - Superior Classic Double Room
+                        roomBoardName:
+                          type: string
+                          description: The room board name
+                          examples:
+                            - Room Only
+                        currencyCode:
+                          type: string
+                          description: The currency code
+                          examples:
+                            - USD
+                        rackRateMarkup:
+                          type: number
+                          description: The rack rate markup
+                          examples:
+                            - 43
+                        price:
+                          type: number
+                          description: The price
+                          examples:
+                            - 76
+                        rackRatePrice:
+                          type: number
+                          description: The rack rate price
+                          examples:
+                            - 133.33
+                        vat:
+                          type: number
+                          description: The VAT
+                          examples:
+                            - 11.7
+                        priceWithoutVat:
+                          type: number
+                          description: The price without VAT
+                          examples:
+                            - 64.3
+                        rackRatepriceWithoutVat:
+                          type: number
+                          description: The rack rate price without VAT
+                          examples:
+                            - 112.81
+                        payAtHotel:
+                          type: boolean
+                          description: Whether pay at hotel
+                          default: false
+                        payAtHotelPrice:
+                          type: string
+                          description: The pay at hotel price
+                          examples:
+                            - "2300"
+                        payAtHotelCurrency:
+                          type: string
+                          description: The pay at hotel currency
+                          examples:
+                            - THB
+                        payAtHotelPaymentDetails:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              payment_id:
+                                type: number
+                                description: The payment ID
+                                examples:
+                                  - 1
+                              name:
+                                type: string
+                                description: The description
+                                examples:
+                                  - JCB
+                        payAtHotelExtraCharge:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              type:
+                                type: string
+                                description: The type
+                                examples:
+                                  - ExtraCharge
+                              amount:
+                                type: number
+                                description: The amount
+                                examples:
+                                  - 0
+                              excluded:
+                                type: boolean
+                                description: Whether excluded
+                                default: false
+                              charge_amount:
+                                type: number
+                                description: The charge amount
+                                examples:
+                                  - 0
+                              charge_price_mode:
+                                type: number
+                                description: The charge price mode
+                                examples:
+                                  - 1
+                                  - 2
+                                  - 3
+                              name:
+                                type: string
+                                description: The name
+                                examples:
+                                  - ExtraCharge
+                              currency:
+                                type: string
+                                description: The currency
+                                examples:
+                                  - USD
+                        minAdult:
+                          type: number
+                          description: The minimum adult
+                          examples:
+                            - 1
+                        maxAdult:
+                          type: number
+                          description: The maximum adult
+                          examples:
+                            - 2
+                        minChild:
+                          type: number
+                          description: The minimum child
+                          examples:
+                            - 0
+                        maxChild:
+                          type: number
+                          description: The maximum child
+                          examples:
+                            - 0
+                        minRoom:
+                          type: number
+                          description: The minimum room
+                          examples:
+                            - 1
+                        maxRoom:
+                          type: number
+                          description: The maximum room
+                          examples:
+                            - 1
+                        cancellationPolicy:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              date:
+                                type: string
+                                description: The date
+                                examples:
+                                  - "Jul 18 2024 23:59"
+                              chargeType:
+                                type: string
+                                description: The charge type
+                                examples:
+                                  - FreeCancel
+                              chargeAmount:
+                                type: number
+                                description: The charge amount
+                                examples:
+                                  - 0
+                              currency:
+                                type: string
+                                description: The currency
+                                examples:
+                                  - USD
+                        cancellationPolicyDetail:
+                          type: array
+                          items:
+                            type: string
+                            description: The cancellation policy detail
+                            examples:
+                              - "ฟรี!!! ค่าธรรมเนียมยกเลิกการจองห้องพัก หากท่านทำการยกเลิกก่อนวันที่ July 18, 2024 เวลา 23:59 น."
+                        freeCancellation:
+                          type: number
+                          description: The free cancellation
+                          examples:
+                            - 1
+                        manualGetCancellation:
+                          type: number
+                          description: The manual get cancellation
+                          examples:
+                            - 0
+                        remark:
+                          type: array
+                          items:
+                            type: string
+                            description: The remark
+                            examples:
+                              - Remark
+                        alert:
+                          type: array
+                          items:
+                            type: string
+                            description: The alert
+                            examples:
+                              - Alert
+                        specialDeal:
+                          type: object
+                          properties:
+                            status:
+                              type: boolean
+                              description: The status
+                              examples:
+                                - true
+                            detail:
+                              type: string
+                              description: The detail
+                              examples:
+                                - Special Deal
+                        roomsLeft:
+                          type: number
+                          description: The rooms left
+                          examples:
+                            - 18
+                        roomSize:
+                          type: string
+                          description: The room size
+                          examples:
+                            - Room Size
+                        smokingRoom:
+                          type: string
+                          description: The smoking room
+                          examples:
+                            - Smoking Room
+                        roomAmenity:
+                          type: array
+                          items:
+                            type: string
+                            description: The room amenity
+                            examples:
+                              - Room Amenity
+                        roomPhoto:
+                          type: array
+                          items:
+                            type: string
+                            description: The room photo
+                            examples:
+                              - "https://gother.co.th/some-url"
+                        extraCharge:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              type:
+                                type: string
+                                description: The type
+                                examples:
+                                  - ExtraCharge
+                              amount:
+                                type: number
+                                description: The amount
+                                examples:
+                                  - 0
+                              excluded:
+                                type: boolean
+                                description: Whether excluded
+                                default: false
+                              name:
+                                type: string
+                                description: The name
+                                examples:
+                                  - ExtraCharge
+                              currency:
+                                type: string
+                                description: The currency
+                                examples:
+                                  - USD
+                        extraChargeTotal:
+                          type: number
+                          description: The extra charge total
+                          format: double
+                          examples:
+                            - 0
+                        utmLandingPage:
+                          type: string
+                          description: The UTM landing page
+                          examples:
+                            - "https://www.travels.network/hotel-booking/validate?roomToken=nX4FQbYE8"
+                  total:
+                    type: number
+                    description: The total number of rooms available
+                    examples:
+                      - 1
+                  cache:
+                    type: boolean
+                    description: Whether the response is from cache
+                    default: false
+                  totalNonSmoking:
+                    type: number
+                    description: The total number of non-smoking rooms available
+                    examples:
+                      - 1
+                  totalPayAtHotel:
+                    type: number
+                    description: The total number of pay-at-hotel rooms available
+                    examples:
+                      - 1
+                  totalFreeCancellation:
+                    type: number
+                    description: The total number of free-cancellation rooms available
+                    examples:
+                      - 1
+                  totalCityView:
+                    type: number
+                    description: The total number of city-view rooms available
+                    examples:
+                      - 1
+                  shareUrl:
+                    type: string
+                    description: The share URL
+                    examples:
+                      - "https://gother.co.th/some-url"
+                  keySearchTimeExpire:
+                    type: number
+                    description: The key search time expire
+                    examples:
+                      - 1
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "405":
+          $ref: "#/components/responses/MethodNotAllowedError"
+  /v2/hotel/recommended:
+    get:
+      tags:
+        - hotel
+      operationId: getRecommendedHotels
+      description: Get the recommended hotels
+      summary: Get the recommended hotels
+      parameters:
+        - $ref: "#/components/parameters/accept-Language"
+        - $ref: "#/components/parameters/utmId"
+        - $ref: "#/components/parameters/limit"
+        - $ref: "#/components/parameters/data-Token"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  hotels:
+                    type: array
+                    items:
+                      description: The recommend hotel object
+                      type: object
+                      properties:
+                        id:
+                          type: number
+                          description: The hotel id
+                          examples:
+                            - 192307
+                        hotelSlug:
+                          type: string
+                          description: The hotel slug
+                          examples:
+                            - phuket-graceland-resort-and-spa
+                        images:
+                          type: array
+                          description: The hotel images
+                          items:
+                            type: string
+                            examples:
+                              - "https://someDomain.net/images/hotels/id/123/name.jpg"
+                        title:
+                          type: string
+                          description: The hotel title
+                          examples:
+                            - ภูเก็ต เกรซแลนด์ รีสอร์ท แอนด์สปา
+                        hotel_star:
+                          type: number
+                          description: The hotel star
+                          examples:
+                            - 4
+                        review:
+                          type: object
+                          properties:
+                            rating:
+                              type: number
+                              description: The hotel rating
+                              examples:
+                                - 4.5
+                            text_rating_detail:
+                              type: string
+                              description: The hotel rating detail
+                              examples:
+                                - Excellent
+                            num_reviews:
+                              type: number
+                              description: The hotel number of reviews
+                              examples:
+                                - 100
+                        location:
+                          type: string
+                          description: The hotel location
+                          examples:
+                            - ป่าตอง
+                            - ภูเก็ต
+                            - ไทย
+                        latitude:
+                          type: number
+                          description: The hotel latitude
+                          examples:
+                            - 7.9031229019165
+                        longitude:
+                          type: number
+                          description: The hotel longitude
+                          examples:
+                            - 98.29741668701172
+                        countrySlug:
+                          type: string
+                          description: The hotel country slug
+                          examples:
+                            - thailand
+                        citySlug:
+                          type: string
+                          description: The hotel city slug
+                          examples:
+                            - phuket
+                        areaSlug:
+                          type: string
+                          description: The hotel area slug
+                          examples:
+                            - patong
+                        isFavourite:
+                          type: boolean
+                          description: The hotel is favourite or not
+                          examples:
+                            - false
+                  total:
+                    type: integer
+                    description: The total number of hotels
+                    example: 1
         "401":
           $ref: "#/components/responses/UnauthorizedError"
         "405":

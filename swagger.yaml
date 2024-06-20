@@ -5,7 +5,7 @@ info:
     This is the GoApi documentation. You can find out more about the project on the [GoApi Repository](https://gl.traveligo.com/t1/go-api).
     Some useful links:
     - [GoApi Repository](https://gl.traveligo.com/t1/go-api)
-  version: 1.2.6
+  version: 1.3.6
   license:
     name: Internal
     url: "https://gl.traveligo.com/"
@@ -182,27 +182,13 @@ paths:
       tags:
         - klub
       parameters:
-        - in: query
-          name: klubCategory
-          schema:
-            type: string
-            enum:
-              - diving
-              - family
-              - coffee
-              - mutalu
+        - $ref: "#/components/parameters/klubCategory"
           required: true
           description: The category id of the klub
         - $ref: "#/components/parameters/accept-Language"
           required: false
           description: The language of the response
-        - in: header
-          name: Data-Token
-          schema:
-            type: string
-            format: JWT
-            description: The token of the user to get the data specific to the user
-          required: false
+        - $ref: "#/components/parameters/data-Token"
       responses:
         "200":
           description: Klub by category id
@@ -224,24 +210,9 @@ paths:
       tags:
         - klub
       parameters:
-        - in: query
-          name: klubCategory
-          schema:
-            type: string
-            enum:
-              - diving
-              - family
-              - coffee
-              - mutalu
-          required: false
-          description: The category of the klub you want to get
-        - in: header
-          name: Data-Token
-          schema:
-            type: string
-            format: JWT
-            description: The token of the user to get the data specific to the user
-          required: false
+        - $ref: "#/components/parameters/klubCategory"
+        - $ref: "#/components/parameters/accept-Language"
+        - $ref: "#/components/parameters/data-Token"
       responses:
         "200":
           description: The exclusive experience
@@ -280,12 +251,7 @@ paths:
             type: number
           required: false
           description: The page number of the promotion list
-        - in: query
-          name: limit
-          schema:
-            type: number
-          required: false
-          description: The limit of the promotion list
+        - $ref: "#/components/parameters/limit"
         - in: query
           name: type
           schema:
@@ -381,12 +347,8 @@ paths:
             type: number
           required: true
           description: The promotion id
-        - name: slug
-          in: query
-          schema:
-            type: string
-          required: false
-          description: The promotion slug
+        - $ref: "#/components/parameters/accept-Language"
+        - $ref: "#/components/parameters/slug"
       responses:
         "200":
           description: The promotion detail
@@ -419,18 +381,8 @@ paths:
       description: Gets the data required to render the story list
       operationId: getStoryList
       parameters:
-        - name: klubCategory
-          in: query
-          schema:
-            type: string
-            enum:
-              - diving
-              - family
-              - coffee
-              - mutalu
+        - $ref: "#/components/parameters/klubCategory"
         - $ref: "#/components/parameters/accept-Language"
-          required: false
-          description: The language of the response
       responses:
         "200":
           description: The story list
@@ -486,12 +438,10 @@ paths:
       description: Gets the data required to render the story by slug
       operationId: getStoryBySlug
       parameters:
-        - name: slug
-          in: query
-          schema:
-            type: string
+        - $ref: "#/components/parameters/slug"
           required: true
-          description: The slug of the story
+        - $ref: "#/components/parameters/accept-Language"
+          required: false
       responses:
         "200":
           description: The story by slug
@@ -761,12 +711,8 @@ paths:
           schema:
             type: number
             description: Experience id
-        - name: slug
-          in: query
-          description: Experience slug
-          schema:
-            type: string
-            description: Experience slug
+        - $ref: "#/components/parameters/accept-Language"
+        - $ref: "#/components/parameters/slug"
       responses:
         "200":
           description: Get available experience
@@ -1073,8 +1019,86 @@ paths:
         - $ref: "#/components/parameters/accept-Language"
         - $ref: "#/components/parameters/preferred-currency"
         - $ref: "#/components/parameters/data-Token"
+        - in: query
+          name: destinationId
           required: true
-          description: The data token if user logged in
+          description: The destination id can be found from dexter search
+          schema:
+            type: integer
+        - in: query
+          name: checkin
+          required: true
+          description: The check-in date
+          schema:
+            type: string
+            format: date
+            examples:
+              - "2021-12-01"
+        - in: query
+          name: checkout
+          required: true
+          description: The check-out date
+          schema:
+            type: string
+            format: date
+            examples:
+              - "2021-12-02"
+        - in: query
+          name: totalRooms
+          required: true
+          description: The total rooms
+          schema:
+            type: integer
+            examples:
+              - 1
+            minimum: 1
+            maximum: 9
+        - in: query
+          name: totalAdults
+          required: true
+          description: "Total adult, value must between number of total room to number of total room * 4 Such as (total room = 1 value must be in 1 to 4)"
+          schema:
+            type: integer
+            examples:
+              - 1
+            minimum: 1
+            maximum: 36
+        - in: query
+          name: totalChild
+          required: true
+          description: "Total child, value must between 0 to number of total room*2 Such as (total room = 1 value must be in 0 to 2)"
+          schema:
+            type: integer
+            examples:
+              - 0
+            minimum: 0
+            maximum: 18
+        - in: query
+          name: countryOfPassport
+          required: false
+          description: The country of passport 2 letter code
+          schema:
+            type: string
+            examples:
+              - TH
+        - in: query
+          name: page
+          required: true
+          description: The page number can set 0 for for all hotels
+          schema:
+            type: integer
+            examples:
+              - 1
+            minimum: 0
+        - in: query
+          name: limit
+          description: "Limit for get all hotels, if set 0 is get all"
+          required: true
+          schema:
+            type: integer
+            examples:
+              - 10
+            minimum: 0
       responses:
         "200":
           description: OK
@@ -4268,7 +4292,7 @@ components:
       description: The utm id of the experience to ignore
       schema:
         type: string
-        example:
+        examples:
           - "1"
           - "2"
   responses:

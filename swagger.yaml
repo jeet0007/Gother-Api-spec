@@ -5,7 +5,7 @@ info:
     This is the GoApi documentation. You can find out more about the project on the [GoApi Repository](https://gl.traveligo.com/t1/go-api).
     Some useful links:
     - [GoApi Repository](https://gl.traveligo.com/t1/go-api)
-  version: 1.3.8
+  version: 1.3.9
   license:
     name: Internal
     url: "https://gl.traveligo.com/"
@@ -2022,6 +2022,151 @@ paths:
                     type: integer
                     description: The total number of hotels
                     example: 1
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "405":
+          $ref: "#/components/responses/MethodNotAllowedError"
+  /v2/hotel/tourist:
+    get:
+      tags:
+        - hotel
+      operationId: getTourist
+      description: Get the tourist data for the website
+      summary: Get the tourist data
+      parameters:
+        - $ref: "#/components/parameters/accept-Language"
+        - $ref: "#/components/parameters/data-Token"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  description: Tourist object
+                  type: object
+                  properties:
+                    imageForCard:
+                      type: string
+                      description: The tourist object image for card
+                      examples:
+                        - "https://domain.net/images/id/4696.jpg"
+                    displayNameForCard:
+                      type: string
+                      description: The tourist object display name for card
+                      examples:
+                        - สวนสัตว์เปิดเขาเขียว
+                    cityId:
+                      type: number
+                      description: The tourist object city id
+                      examples:
+                        - 1
+                    cityName:
+                      type: string
+                      description: The tourist object city name
+                      examples:
+                        - กรุงเทพ
+                    countryId:
+                      type: number
+                      description: The tourist object country id
+                      examples:
+                        - 1
+                    countryName:
+                      type: string
+                      description: The tourist object country name
+                      examples:
+                        - ไทย
+                    cssClass:
+                      type: string
+                      description: The tourist object css class
+                      examples:
+                        - zoo
+                    destinationId:
+                      type: number
+                      description: The tourist object destination id
+                      examples:
+                        - 1
+                    displayName:
+                      type: string
+                      description: The tourist object display name
+                      examples:
+                        - สวนสัตว์เปิดเขาเขียว
+                    id:
+                      type: number
+                      description: The tourist object id
+                      examples:
+                        - 1
+                    imgIcon:
+                      type: string
+                      description: The tourist object image icon
+                      examples:
+                        - "https://domain.net/images/id/4696.jpg"
+                    keywordId:
+                      type: number
+                      description: The tourist object keyword id
+                      examples:
+                        - 1
+                    language:
+                      type: string
+                      description: The tourist object language
+                      examples:
+                        - th
+                    latitude:
+                      type: number
+                      description: The tourist object latitude
+                      examples:
+                        - 13.746
+                    longitude:
+                      type: number
+                      description: The tourist object longitude
+                      examples:
+                        - 100.535
+                    locationId:
+                      type: number
+                      description: The tourist object location id
+                      examples:
+                        - 1
+                    slug:
+                      type: string
+                      description: The tourist object slug
+                      examples:
+                        - zoo
+                    sort:
+                      type: number
+                      description: The tourist object sort
+                      examples:
+                        - 1
+                    tableSlug:
+                      type: string
+                      description: The tourist object table slug
+                      examples:
+                        - city
+                    tableSlugText:
+                      type: string
+                      description: The tourist object table slug text
+                      examples:
+                        - กรุงเทพ
+                    totalCount:
+                      type: number
+                      description: The tourist object total count
+                      examples:
+                        - 1
+                    countrySlug:
+                      type: string
+                      description: The tourist object country slug
+                      examples:
+                        - thailand
+                    citySlug:
+                      type: string
+                      description: The tourist object city slug
+                      examples:
+                        - bangkok
+                    areaSlug:
+                      type: string
+                      description: The tourist object area slug
+                      examples:
+                        - pathum-wan
         "401":
           $ref: "#/components/responses/UnauthorizedError"
         "405":

@@ -5,7 +5,7 @@ info:
     This is the GoApi documentation. You can find out more about the project on the [GoApi Repository](https://gl.traveligo.com/t1/go-api).
     Some useful links:
     - [GoApi Repository](https://gl.traveligo.com/t1/go-api)
-  version: 1.3.11
+  version: 1.3.12
   license:
     name: Internal
     url: "https://gl.traveligo.com/"
@@ -25,6 +25,8 @@ tags:
     description: The hotel is a place where the user can stay for a limited time
   - name: flight
     description: The flight is a mode of transportation that is available for the user to use
+  - name: reward
+    description: The reward is a special game or campaign that is available for the user to play or join
   - name: utility
     description: The utility is a set of tools that are available for the user to use
 paths:
@@ -3124,8 +3126,579 @@ paths:
                     examples:
                       - Cancellation is completed
                       - Cancellation is not completed
+                      - Access denied . This reservation no have bookingNumber.
         "401":
           $ref: "#/components/responses/UnauthorizedError"
+        "405":
+          $ref: "#/components/responses/MethodNotAllowedError"
+  /v2/flight/flightSeo:
+    get:
+      tags:
+        - flight
+      summary: Get flight SEO
+      description: Get flight SEO
+      operationId: getFlightSeo
+      parameters:
+        - $ref: "#/components/parameters/accept-Language"
+        - $ref: "#/components/parameters/limit"
+        - in: query
+          name: citySlug
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: boolean
+                    description: The status of the response
+                    examples:
+                      - true
+                      - false
+                  breadcrumbs:
+                    description: Flight breadcrumb Object
+                    type: object
+                    properties:
+                      countryName:
+                        type: string
+                        description: The country name
+                        example: Thailand
+                      countrySlug:
+                        type: string
+                        description: The country slug
+                        example: thailand
+                      cityName:
+                        type: string
+                        description: The city name
+                        example: Bangkok
+                      citySlug:
+                        type: string
+                        description: The city slug
+                        example: bangkok
+                  total:
+                    type: number
+                    description: The total number of flights
+                    example: 1
+                  totalPage:
+                    type: number
+                    description: The total number of pages
+                    example: 1
+                  flightOffer:
+                    type: array
+                    items:
+                      description: Flight offer Object
+                      type: object
+                      properties:
+                        flightOfferId:
+                          type: string
+                          description: The flight offer id
+                          examples:
+                            - "123456"
+                        price:
+                          type: number
+                          description: The flight price
+                          examples:
+                            - 1000
+                        flightType:
+                          type: string
+                          description: The flight type
+                          enum:
+                            - domestic
+                            - international
+                          examples:
+                            - domestic
+                        ticketingPeriod:
+                          type: string
+                          description: The ticketing period
+                          examples:
+                            - 2021-01-01 - 2021-01-31
+                        travelPeriod:
+                          type: string
+                          description: The travel period
+                          examples:
+                            - 2021-02-01 - 2021-02-28
+                        slug:
+                          type: string
+                          description: The flight slug
+                          examples:
+                            - flight-slug
+                        intro:
+                          type: string
+                          description: The flight intro
+                          examples:
+                            - flight intro
+                        photoPath:
+                          type: string
+                          description: The flight photo path
+                          examples:
+                            - flight-photo-path
+                        fromAirportCode:
+                          type: string
+                          description: The flight from airport code
+                          examples:
+                            - BKK
+                        toAirportCode:
+                          type: string
+                          description: The flight to airport code
+                          examples:
+                            - HND
+                        airlineSlug:
+                          type: string
+                          description: The flight airline slug
+                          examples:
+                            - airline-slug
+                        airlineName:
+                          type: string
+                          description: The flight airline name
+                          examples:
+                            - airline name
+                        cityFromName:
+                          type: string
+                          description: The flight city from name
+                          examples:
+                            - city from name
+                        cityToName:
+                          type: string
+                          description: The flight city to name
+                          examples:
+                            - city to name
+                        cityFromSlug:
+                          type: string
+                          description: The flight city from slug
+                          examples:
+                            - city-from-slug
+                        cityToSlug:
+                          type: string
+                          description: The flight city to slug
+                          examples:
+                            - city-to-slug
+                        airlineLogo:
+                          type: string
+                          description: The flight airline logo
+                          examples:
+                            - airline-logo
+                  flightCity:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        areaName:
+                          type: string
+                          description: The area name
+                          example: Bangkok
+                        areaSlug:
+                          type: string
+                          description: The area slug
+                          example: bangkok
+                  cityDescription:
+                    description: Flight city description Object
+                    type: object
+                    allOf:
+                      - $ref: "#/paths/~1v2~1flight~1flightSeo/get/responses/200/content/application~1json/schema/properties/breadcrumbs"
+                      - type: object
+                        properties:
+                          cityLatitude:
+                            type: string
+                            description: The city latitude
+                            example: 13.7563
+                          cityLongitude:
+                            type: string
+                            description: The city longitude
+                            example: 100.5018
+                  airportCity:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        airportName:
+                          type: string
+                          description: The airport name
+                          example: Suvarnabhumi
+                        airportSlug:
+                          type: string
+                          description: The airport slug
+                          example: suvarnabhumi
+                        airportCode:
+                          type: string
+                          description: The airport code
+                          example: BKK
+                  hotelData:
+                    description: Flight hotel data Object
+                    type: object
+                    properties:
+                      breadcrumbs:
+                        allOf:
+                          - $ref: "#/paths/~1v2~1flight~1flightSeo/get/responses/200/content/application~1json/schema/properties/breadcrumbs"
+                          - type: object
+                            properties:
+                              areaName:
+                                type: string
+                                description: The area name
+                                example: Bangkok
+                              areaSlug:
+                                type: string
+                                description: The area slug
+                                example: bangkok
+                      allCity:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            name:
+                              type: string
+                              description: The city name
+                              example: Bangkok
+                            slug:
+                              type: string
+                              description: The city slug
+                              example: bangkok
+                      allArea:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            name:
+                              type: string
+                              description: The area name
+                              example: Bangkok
+                            slug:
+                              type: string
+                              description: The area slug
+                              example: bangkok
+                      latitude:
+                        type: string
+                        description: The city latitude
+                        example: 13.7563
+                      longitude:
+                        type: string
+                        description: The city longitude
+                        example: 100.5018
+                      total:
+                        type: number
+                        description: The total number of hotels
+                        example: 1
+                      page:
+                        type: number
+                        description: The current page
+                        example: 1
+                      limit:
+                        type: number
+                        description: The limit of hotels per page
+                        example: 10
+                      hotels:
+                        type: array
+                        items:
+                          description: Flight hotel detail Object
+                          type: object
+                          properties:
+                            id:
+                              type: number
+                              description: The hotel id
+                              examples:
+                                - 1
+                            hotelName:
+                              type: string
+                              description: The hotel name
+                              examples:
+                                - โรงแรม 88 ถนนรองเมือง
+                            hotelSlug:
+                              type: string
+                              description: The hotel slug
+                              examples:
+                                - 88-ถนนรองเมือง
+                            hotelStar:
+                              type: number
+                              description: The hotel star rating
+                              examples:
+                                - 4
+                            countryName:
+                              type: string
+                              description: The hotel country name
+                              examples:
+                                - ไทย
+                            countrySlug:
+                              type: string
+                              description: The hotel country slug
+                              examples:
+                                - thailand
+                            countryUrl:
+                              type: string
+                              description: The hotel country url
+                              examples:
+                                - thailand
+                            cityToName:
+                              type: string
+                              description: The hotel city name
+                              examples:
+                                - กรุงเทพ
+                            citySlug:
+                              type: string
+                              description: The hotel city slug
+                              examples:
+                                - bangkok
+                            cityUrl:
+                              type: string
+                              description: The hotel city url
+                              examples:
+                                - www.google.com/maps/place/กรุงเทพ
+                            areaName:
+                              type: string
+                              description: The hotel area name
+                              examples:
+                                - สุขุมวิท
+                            areaSlug:
+                              type: string
+                              description: The hotel area slug
+                              examples:
+                                - sukhumvit
+                            areaUrl:
+                              type: string
+                              description: The hotel area url
+                              examples:
+                                - www.google.com/maps/place/สุขุมวิท
+                            latitude:
+                              type: number
+                              description: The hotel latitude
+                              examples:
+                                - 13.74613952636719
+                            longitude:
+                              type: number
+                              description: The hotel longitude
+                              examples:
+                                - 100.51983642578125
+                            isFreeWifi:
+                              type: number
+                              description: The hotel free wifi status
+                              examples:
+                                - 1
+                                - 0
+                            isFreeParking:
+                              type: number
+                              description: The hotel free parking status
+                              examples:
+                                - 1
+                                - 0
+                            facilities:
+                              type: array
+                              items:
+                                type: string
+                                description: The hotel facilities
+                                examples:
+                                  - wifi
+                                  - parking
+                            facilitiesDetail:
+                              type: array
+                              items:
+                                $ref: "#/paths/~1v2~1hotel~1detailBySlug/post/responses/200/content/application~1json/schema/properties/facilitiesDetail/items"
+                            images:
+                              type: array
+                              items:
+                                type: string
+                                description: The hotel images
+                                examples:
+                                  - www.google.com/images/1.jpg
+                            review:
+                              type: object
+                              properties:
+                                rating:
+                                  type: number
+                                  description: The hotel rating
+                                  examples:
+                                    - 4.5
+                                text_rating_detail:
+                                  type: string
+                                  description: The hotel rating detail
+                                  examples:
+                                    - Excellent
+                                num_reviews:
+                                  type: number
+                                  description: The hotel number of reviews
+                                  examples:
+                                    - 100
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "405":
+          $ref: "#/components/responses/MethodNotAllowedError"
+  /v2/reward/prize:
+    get:
+      tags:
+        - reward
+      summary: Get a prize list
+      operationId: getPrizeList
+      description: Get a prize list given a registered user
+      parameters:
+        - $ref: "#/components/parameters/accept-Language"
+        - $ref: "#/components/parameters/data-Token"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: boolean
+                    description: The status of the prize
+                    examples:
+                      - true
+                      - false
+                  message:
+                    type: string
+                    description: The message of the prize
+                    examples:
+                      - null
+                  data:
+                    type: object
+                    properties:
+                      rewardPrizes:
+                        type: array
+                        items:
+                          description: Reward object
+                          type: object
+                          properties:
+                            "no":
+                              type: number
+                              description: The reward number
+                              examples:
+                                - 1
+                            created:
+                              type: string
+                              description: The reward creation date
+                              format: date-time
+                              examples:
+                                - 2021-01-01T00:00:00.000Z
+                            isJackpot:
+                              type: boolean
+                              description: The jackpot status of the reward
+                              examples:
+                                - true
+                                - false
+                            isPublish:
+                              type: boolean
+                              description: The publish status of the reward
+                              examples:
+                                - true
+                                - false
+                            prizeType:
+                              type: string
+                              description: The prize type of the reward
+                              examples:
+                                - big
+                                - small
+                            reward:
+                              type: object
+                              properties:
+                                coupon:
+                                  type: object
+                                  properties:
+                                    id:
+                                      type: number
+                                      description: The coupon id
+                                      examples:
+                                        - 1
+                                    for:
+                                      type: string
+                                      description: The coupon format
+                                      examples:
+                                        - klub
+                                        - experience
+                                    discount:
+                                      type: number
+                                      description: The coupon discount
+                                      examples:
+                                        - 10
+                                    code:
+                                      type: string
+                                      description: The coupon code
+                                      examples:
+                                        - COUPON10
+                                flight:
+                                  type: object
+                                  properties:
+                                    pax:
+                                      type: number
+                                      description: The flight passenger
+                                      examples:
+                                        - 1
+                                    departure:
+                                      type: object
+                                      properties:
+                                        code:
+                                          type: string
+                                          description: The flight departure code
+                                          examples:
+                                            - IST
+                                        th:
+                                          type: string
+                                          description: Thai name for the flight departure
+                                          examples:
+                                            - สุวรรณภูมิ
+                                        en:
+                                          type: string
+                                          description: English name for the flight departure
+                                          examples:
+                                            - Suvarnabhumi
+                                    arrival:
+                                      type: object
+                                      properties:
+                                        code:
+                                          type: string
+                                          description: The flight arrival code
+                                          examples:
+                                            - HKT
+                                        th:
+                                          type: string
+                                          description: Thai name for the flight arrival
+                                          examples:
+                                            - ภูเก็ต
+                                        en:
+                                          type: string
+                                          description: English name for the flight arrival
+                                          examples:
+                                            - Phuket
+                            rewardType:
+                              type: string
+                              description: The reward type of the reward
+                              examples:
+                                - coupon
+                                - flight
+                                - klub
+                            size:
+                              type: string
+                              description: The size of the reward
+                              examples:
+                                - S
+                                - M
+                                - L
+                            updated:
+                              type: string
+                              description: The reward update date
+                              format: date-time
+                              examples:
+                                - 2021-01-01T00:00:00.000Z
+                            isReward:
+                              type: boolean
+                              description: The reward status of the reward
+                              examples:
+                                - true
+                                - false
+                            title:
+                              type: string
+                              description: The reward title
+                              examples:
+                                - Reward Title
+                            description:
+                              type: string
+                              description: The reward description
+                              examples:
+                                - Reward Description
+        "401":
+          $ref: "#/components/responses/AuthSuccessResponse"
         "405":
           $ref: "#/components/responses/MethodNotAllowedError"
   /v2/countryOfPassportList:

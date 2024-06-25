@@ -5,7 +5,7 @@ info:
     This is the GoApi documentation. You can find out more about the project on the [GoApi Repository](https://gl.traveligo.com/t1/go-api).
     Some useful links:
     - [GoApi Repository](https://gl.traveligo.com/t1/go-api)
-  version: 1.3.14
+  version: 1.3.15
   license:
     name: Internal
     url: "https://gl.traveligo.com/"
@@ -4038,6 +4038,11 @@ paths:
                                     description: The flight stop time
                                     examples:
                                       - 0
+                                  Thumbnail:
+                                    type: string
+                                    description: The thumbnail
+                                    examples:
+                                      - "https://www.example.com/logo.jpg"
                                   TimeUnit:
                                     type: string
                                     description: The time unit
@@ -4122,6 +4127,202 @@ paths:
                         type: number
                         examples:
                           - 1616428800
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "405":
+          $ref: "#/components/responses/MethodNotAllowedError"
+  /v2/flight/searchRecommended:
+    get:
+      tags:
+        - flight
+      summary: Search recommended flights
+      description: Search recommended flights
+      operationId: searchRecommendedFlights
+      parameters:
+        - in: query
+          name: type
+          schema:
+            type: string
+            enum:
+              - flight
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: boolean
+                    description: The status of the response
+                    examples:
+                      - true
+                      - false
+                  message:
+                    type: string
+                    description: The message of the response
+                    examples:
+                      - Success
+                      - null
+                  data:
+                    type: array
+                    items:
+                      description: Search recommended flights
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          description: The ID of the recommended flight
+                          examples:
+                            - "123"
+                        keyword_id:
+                          type: string
+                          description: The keyword ID of the recommended flight
+                          examples:
+                            - "123"
+                        table_slug:
+                          type: string
+                          description: The table slug of the recommended flight
+                          examples:
+                            - airport code
+                        table_slug_text:
+                          type: string
+                          description: The table slug text of the recommended flight
+                          examples:
+                            - airport code
+                        latitude:
+                          type: string
+                          description: The latitude of the recommended flight
+                          examples:
+                            - "0"
+                        longtitude:
+                          type: string
+                          description: The longtitude of the recommended flight
+                          examples:
+                            - "0"
+                        display_name:
+                          type: string
+                          description: The display name of the recommended flight
+                          examples:
+                            - Bangkok
+                        css_class:
+                          type: string
+                          description: The CSS class of the recommended flight
+                          examples:
+                            - searcharea
+                        img_icon:
+                          type: string
+                          description: The image icon of the recommended flight
+                          examples:
+                            - "https://cloudfront.net/images/top-destinations/bangkok.webp"
+                        language:
+                          type: string
+                          description: The language of the recommended flight
+                          examples:
+                            - en
+                        sort:
+                          type: string
+                          description: The sort of the recommended flight
+                          examples:
+                            - "1"
+                        location_id:
+                          type: string
+                          description: The location ID of the recommended flight
+                          examples:
+                            - "123"
+                            - null
+                        iso_code_2a:
+                          type: string
+                          description: The ISO code 2a of the recommended flight
+                          examples:
+                            - TH
+                        airport_nearby:
+                          type: string
+                          description: The nearby airport of the recommended flight
+                          examples:
+                            - null
+                        country_id:
+                          type: number
+                          description: The country ID of the recommended flight
+                          examples:
+                            - 0
+                        city_id:
+                          type: number
+                          description: The city ID of the recommended flight
+                          examples:
+                            - 0
+                        area_id:
+                          type: string
+                          description: The area ID of the recommended flight
+                          examples:
+                            - null
+                        area_alias:
+                          type: string
+                          description: The area alias of the recommended flight
+                          examples:
+                            - null
+                        city_name:
+                          type: string
+                          description: The city name of the recommended flight
+                          examples:
+                            - Bangkok
+                            - null
+                        city_alias:
+                          type: string
+                          description: The city alias of the recommended flight
+                          examples:
+                            - null
+                        country_name:
+                          type: string
+                          description: The country name of the recommended flight
+                          examples:
+                            - Thailand
+                            - null
+                        country_alias:
+                          type: string
+                          description: The country alias of the recommended flight
+                          examples:
+                            - null
+                        country_slug:
+                          type: string
+                          description: The country slug of the recommended flight
+                          examples:
+                            - thailand
+                        slug:
+                          type: string
+                          description: The slug of the recommended flight
+                          examples:
+                            - bkka
+                        airport_name:
+                          type: string
+                          description: The airport name of the recommended flight
+                          examples:
+                            - Bangkok All Airports
+                        airport:
+                          type: object
+                          properties:
+                            type:
+                              type: string
+                              description: The type of the airport
+                              examples:
+                                - null
+                            descriptor:
+                              type: string
+                              description: The descriptor of the airport
+                              examples:
+                                - BKKA
+                        destination_id:
+                          type: string
+                          description: The destination ID of the recommended flight
+                          examples:
+                            - "1234"
+                            - null
+                        totalcount:
+                          type: number
+                          description: The total count of the recommended flight
+                          examples:
+                            - 1
         "401":
           $ref: "#/components/responses/UnauthorizedError"
         "405":

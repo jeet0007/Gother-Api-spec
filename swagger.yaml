@@ -183,6 +183,7 @@ paths:
         - klub
       parameters:
         - $ref: "#/components/parameters/klubCategory"
+          required: true
           description: The category id of the klub
         - $ref: "#/components/parameters/accept-Language"
           description: The language of the response
@@ -247,7 +248,6 @@ paths:
           name: page
           schema:
             type: number
-          required: false
           description: The page number of the promotion list
         - $ref: "#/components/parameters/limit"
         - in: query
@@ -278,7 +278,6 @@ paths:
                   - ticket
                   - transfer
                   - insurance
-          required: false
         - in: query
           name: category
           schema:
@@ -297,7 +296,6 @@ paths:
                   - "1"
                   - "2"
                   - "3"
-          required: false
         - $ref: "#/components/parameters/utmId"
       responses:
         "200":
@@ -437,6 +435,7 @@ paths:
       operationId: getStoryBySlug
       parameters:
         - $ref: "#/components/parameters/slug"
+          required: true
         - $ref: "#/components/parameters/accept-Language"
       responses:
         "200":
@@ -460,6 +459,7 @@ paths:
         - bearerAuth: []
       parameters:
         - $ref: "#/components/parameters/klubCategory"
+          required: true
         - $ref: "#/components/parameters/accept-Language"
       responses:
         "200":
@@ -505,6 +505,7 @@ paths:
         - bearerAuth: []
       parameters:
         - $ref: "#/components/parameters/klubCategory"
+          required: true
         - $ref: "#/components/parameters/accept-Language"
         - $ref: "#/components/parameters/preferred-currency"
       responses:
@@ -551,6 +552,7 @@ paths:
         - $ref: "#/components/parameters/accept-Language"
         - $ref: "#/components/parameters/preferred-currency"
         - $ref: "#/components/parameters/klubCategory"
+          required: true
         - $ref: "#/components/parameters/data-Token"
       responses:
         "200":
@@ -743,7 +745,6 @@ paths:
         - name: experienceId
           in: query
           description: Experience id
-          required: false
           schema:
             type: number
             description: Experience id
@@ -755,7 +756,6 @@ paths:
         - name: slug
           in: query
           description: Experience slug
-          required: false
           schema:
             type: string
             description: Experience slug
@@ -764,7 +764,6 @@ paths:
         - name: citySlug
           in: query
           description: City slug
-          required: false
           schema:
             type: string
             description: City slug
@@ -773,7 +772,6 @@ paths:
         - name: countrySlug
           in: query
           description: Country slug
-          required: false
           schema:
             type: string
             description: Country slug
@@ -4307,6 +4305,83 @@ paths:
                           description: The total count of the recommended flight
                           examples:
                             - 1
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "405":
+          $ref: "#/components/responses/MethodNotAllowedError"
+  /v2/flight/faresMultiDestination:
+    get:
+      tags:
+        - flight
+      summary: Get flight fares for multiple destinations
+      description: Get flight fares for multiple destinations
+      operationId: getFlightFaresMultiDestination
+      parameters:
+        - $ref: "#/components/parameters/accept-Language"
+        - $ref: "#/components/parameters/preferred-currency"
+        - $ref: "#/components/parameters/data-Token"
+        - in: query
+          name: adult
+          required: true
+          schema:
+            type: number
+            minimum: 1
+        - in: query
+          name: child
+          required: true
+          schema:
+            type: number
+            minimum: 0
+        - in: query
+          name: infant
+          required: true
+          schema:
+            type: number
+            minimum: 0
+        - in: query
+          name: bookingClass
+          description: The booking class for the flight
+          required: true
+          schema:
+            $ref: "#/paths/~1v2~1flight~1fares/get/parameters/8/schema"
+        - in: query
+          name: "route[0][departureAirport]"
+          required: true
+          description: The departure airport code (IATA)
+          schema:
+            type: string
+        - in: query
+          name: "route[0][arrivalAirport]"
+          required: true
+          description: The arrival airport code (IATA)
+          schema:
+            type: string
+        - in: query
+          name: "route[0][departureDate]"
+          required: true
+          description: The departure date in YYYY-MM-DD format
+          schema:
+            type: string
+            format: date
+        - in: query
+          name: "route[1][departureAirport]"
+          description: The departure airport code (IATA)
+          schema:
+            type: string
+        - in: query
+          name: "route[1][arrivalAirport]"
+          description: The arrival airport code (IATA)
+          schema:
+            type: string
+        - in: query
+          name: "route[1][departureDate]"
+          description: The departure date in YYYY-MM-DD format
+          schema:
+            type: string
+            format: date
+      responses:
+        "200":
+          $ref: "#/paths/~1v2~1flight~1fares/get/responses/200"
         "401":
           $ref: "#/components/responses/UnauthorizedError"
         "405":

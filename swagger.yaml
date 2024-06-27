@@ -5,7 +5,7 @@ info:
     This is the GoApi documentation. You can find out more about the project on the [GoApi Repository](https://gl.traveligo.com/t1/go-api).
     Some useful links:
     - [GoApi Repository](https://gl.traveligo.com/t1/go-api)
-  version: 1.3.16
+  version: 1.3.17
   license:
     name: Internal
     url: "https://gl.traveligo.com/"
@@ -3611,470 +3611,7 @@ paths:
                       Fares:
                         type: array
                         items:
-                          description: Fares object
-                          type: object
-                          properties:
-                            Leg:
-                              oneOf:
-                                - type: string
-                                - type: integer
-                                  discriminator:
-                                    propertyName: TypeOfFares
-                            Currency:
-                              type: string
-                              example: THB
-                            Departure:
-                              type: string
-                              description: The departure airport code (IATA)
-                              examples:
-                                - BKK
-                            Arrival:
-                              type: string
-                              description: The arrival airport code (IATA)
-                              examples:
-                                - HND
-                            Packages:
-                              type: array
-                              items:
-                                description: Fares packages object
-                                type: object
-                                properties:
-                                  Name:
-                                    type: string
-                                    description: The name of the package
-                                    examples:
-                                      - Economy
-                                  FareBase:
-                                    type: string
-                                    description: The base fare of the package
-                                    examples:
-                                      - WebFare
-                                  NumberOfStops:
-                                    type: string
-                                    description: The number of stops
-                                    examples:
-                                      - "0"
-                                      - "1"
-                                  SeatAvailable:
-                                    type: string
-                                    description: The number seat availability
-                                    examples:
-                                      - "3"
-                                      - "2"
-                                  FreeMeal:
-                                    type: string
-                                    description: The free meal availability
-                                    enum:
-                                      - "True"
-                                      - "False"
-                                    examples:
-                                      - "True"
-                                      - "False"
-                                  FreeMealDesc:
-                                    type: string
-                                    description: The free meal description
-                                    examples:
-                                      - dinner meal
-                                      - breakfast meal
-                                  SeatSelection:
-                                    type: string
-                                    description: The seat selection availability
-                                    enum:
-                                      - "True"
-                                      - "False"
-                                    examples:
-                                      - "True"
-                                      - "False"
-                                  FlexiblePolicy:
-                                    description: Flexible policy object
-                                    type: object
-                                    properties:
-                                      Flexible:
-                                        type: string
-                                        enum:
-                                          - "True"
-                                          - "False"
-                                        examples:
-                                          - "True"
-                                          - "False"
-                                      Price:
-                                        type: number
-                                        description: The price of the flexible policy
-                                        examples:
-                                          - 1000
-                                          - 2000
-                                      ChargeType:
-                                        type: string
-                                        description: The charge type of the flexible policy
-                                        examples:
-                                          - Amount
-                                      MaxChange:
-                                        type: string
-                                        description: The maximum change of the flexible policy
-                                        examples:
-                                          - "1"
-                                      Desc:
-                                        type: string
-                                        description: The description of the flexible policy
-                                        examples:
-                                          - Free change
-                                  DeviceStreaming:
-                                    type: string
-                                    description: The device streaming availability
-                                    enum:
-                                      - "True"
-                                      - "False"
-                                    examples:
-                                      - "True"
-                                      - "False"
-                                  Wifi:
-                                    type: string
-                                    description: The wifi availability
-                                    enum:
-                                      - "True"
-                                      - "False"
-                                    examples:
-                                      - "True"
-                                      - "False"
-                                  PowerOrUSBOutlet:
-                                    type: string
-                                    description: The power or USB outlet availability
-                                    enum:
-                                      - "True"
-                                      - "False"
-                                    examples:
-                                      - "True"
-                                      - "False"
-                                  RefundPolicy:
-                                    description: Refund Policy object
-                                    type: object
-                                    properties:
-                                      Refundable:
-                                        type: string
-                                        enum:
-                                          - "True"
-                                          - "False"
-                                        examples:
-                                          - "True"
-                                          - "False"
-                                      RefundFee:
-                                        type: number
-                                        description: The refund fee
-                                        default: 0
-                                        examples:
-                                          - 1000
-                                          - 2000
-                                      RefundDesc:
-                                        type: string
-                                        description: The refund description
-                                        examples:
-                                          - Free refund
-                                  isGoPack:
-                                    type: string
-                                    description: The go pack availability
-                                    enum:
-                                      - "True"
-                                      - "False"
-                                    examples:
-                                      - "True"
-                                      - "False"
-                                  RecordSet:
-                                    type: string
-                                    description: The record set of package
-                                  LowCostAirline:
-                                    type: string
-                                    description: The low cost airline availability
-                                    enum:
-                                      - "True"
-                                      - "False"
-                                    examples:
-                                      - "True"
-                                      - "False"
-                                  AdultOriginalPrice:
-                                    type: number
-                                    description: The adult original price
-                                    examples:
-                                      - 1943.08
-                                  AdultPrice:
-                                    type: number
-                                    description: The adult price
-                                    examples:
-                                      - 1943.08
-                                  AdultFare:
-                                    type: number
-                                    description: The adult fare
-                                    examples:
-                                      - 1813.08
-                                  AdultTax:
-                                    type: number
-                                    description: The adult tax
-                                    examples:
-                                      - 130
-                                  ChildOriginalPrice:
-                                    type: number
-                                    description: The child original price
-                                    examples:
-                                      - 0
-                                  ChildPrice:
-                                    type: number
-                                    description: The child price
-                                    examples:
-                                      - 0
-                                  ChildFare:
-                                    type: number
-                                    description: The child fare
-                                    examples:
-                                      - 0
-                                  ChildTax:
-                                    type: number
-                                    description: The child tax
-                                    examples:
-                                      - 0
-                                  InfantOriginalPrice:
-                                    type: number
-                                    description: The infant original price
-                                    examples:
-                                      - 0
-                                  InfantPrice:
-                                    type: number
-                                    description: The infant price
-                                    examples:
-                                      - 0
-                                  InfantFare:
-                                    type: number
-                                    description: The infant fare
-                                    examples:
-                                      - 0
-                                  InfantTax:
-                                    type: number
-                                    description: The infant tax
-                                    examples:
-                                      - 0
-                                  BookingClass:
-                                    type: string
-                                    description: The booking class of the package
-                                    examples:
-                                      - B
-                                  EquivalentBookingClass:
-                                    type: string
-                                    description: The equivalent booking class of the package
-                                    examples:
-                                      - "Y"
-                                  BaggageFees:
-                                    type: array
-                                    items:
-                                      $ref: "#/paths/~1v2~1flight~1searchFaresDetail/post/responses/200/content/application~1json/schema/oneOf/0/properties/departure/properties/BaggageFeesList/items/allOf/0"
-                                  isGoPackKeys:
-                                    type: array
-                                  Key:
-                                    type: string
-                                    description: The key of the package
-                                  PackageCurrency:
-                                    type: string
-                                    description: The currency of the package
-                                    examples:
-                                      - THB
-                            segments:
-                              type: array
-                              items:
-                                description: Fare segment object
-                                type: object
-                                properties:
-                                  Departure:
-                                    type: string
-                                    description: The departure airport code (IATA)
-                                    examples:
-                                      - BKK
-                                  DepartureDateTime:
-                                    type: string
-                                    format: date-time
-                                    description: The departure date and time
-                                  Arrival:
-                                    type: string
-                                    description: The arrival airport code (IATA)
-                                    examples:
-                                      - HND
-                                  ArrivalDateTime:
-                                    type: string
-                                    format: date-time
-                                    description: The arrival date and time
-                                  Duration:
-                                    type: string
-                                    description: The duration of the flight
-                                    examples:
-                                      - 2H
-                                      - 2H30M
-                                  Operator:
-                                    type: string
-                                    description: The operator of the flight
-                                    examples:
-                                      - PG
-                                  MajorCarrierCode:
-                                    type: string
-                                    description: The major carrier code
-                                    examples:
-                                      - PG
-                                  CarrierCode:
-                                    type: string
-                                    description: The major carrier code
-                                    examples:
-                                      - PG
-                                  CodeShare:
-                                    type: string
-                                    description: The code share status
-                                    examples:
-                                      - true
-                                      - false
-                                  EquipmentCode:
-                                    type: string
-                                    description: The equipment code
-                                    examples:
-                                      - 320
-                                  EquipmentName:
-                                    type: string
-                                    description: The equipment name
-                                    examples:
-                                      - Airbus A320
-                                  CabinClass:
-                                    type: string
-                                    description: "The cabin class Y(Economy), C(Business), F(First)"
-                                    examples:
-                                      - "Y"
-                                  CabinClassName:
-                                    type: string
-                                    description: The cabin class name
-                                    examples:
-                                      - Economy
-                                  FlightNumber:
-                                    type: string
-                                    description: The flight number
-                                    examples:
-                                      - PG215
-                                  TravelTime:
-                                    type: string
-                                    description: The travel time
-                                    examples:
-                                      - 1H20M
-                                  Mileage:
-                                    type: integer
-                                    description: The mileage
-                                    examples:
-                                      - 369
-                                  TechStop:
-                                    type: string
-                                    description: Whether there is a technical stop
-                                    examples:
-                                      - false
-                                      - true
-                                  TechStopLocation:
-                                    type: string
-                                    description: The technical stop location
-                                    examples:
-                                      - ""
-                                  TechStopArrivalDateTime:
-                                    type: string
-                                    format: date-time
-                                    description: The technical stop arrival date and time
-                                  TechStopDepartureDateTime:
-                                    type: string
-                                    format: date-time
-                                    description: The technical stop departure date and time
-                                  FlightTravelTime:
-                                    type: integer
-                                    description: The flight travel time
-                                    examples:
-                                      - 80
-                                  FlightStopDuration:
-                                    type: string
-                                    description: The flight stop duration
-                                  FlightStopTime:
-                                    type: integer
-                                    description: The flight stop time
-                                    examples:
-                                      - 0
-                                  Thumbnail:
-                                    type: string
-                                    description: The thumbnail
-                                    examples:
-                                      - "https://www.example.com/logo.jpg"
-                                  TimeUnit:
-                                    type: string
-                                    description: The time unit
-                                    examples:
-                                      - minutes
-                                  DepartureAirportName:
-                                    type: string
-                                    description: The departure airport name
-                                    examples:
-                                      - กรุงเทพ สุวรรณภูมิ
-                                  DepartureAirportCityName:
-                                    type: string
-                                    description: The departure airport city name
-                                    examples:
-                                      - กรุงเทพ
-                                  ArrivalAirportName:
-                                    type: string
-                                    description: The arrival airport name
-                                    examples:
-                                      - เชียงใหม่
-                                  ArrivalAirportCityName:
-                                    type: string
-                                    description: The arrival airport city name
-                                    examples:
-                                      - เชียงใหม่
-                                  CarrierName:
-                                    type: string
-                                    description: The carrier name
-                                    examples:
-                                      - บางกอกแอร์เวย์
-                                  CarrierNameEn:
-                                    type: string
-                                    description: The carrier name in English
-                                    examples:
-                                      - Bangkok Airways
-                                  TechStopDuration:
-                                    type: string
-                                    description: The technical stop duration
-                                  TechStopTotalTime:
-                                    type: integer
-                                    description: The technical stop total time
-                                    examples:
-                                      - 0
-                                  TechStopAirportName:
-                                    type: string
-                                    description: The technical stop airport name
-                                  TechStopAirportCityName:
-                                    type: string
-                                    description: The technical stop airport city name
-                            FlightCode:
-                              type: string
-                              examples:
-                                - PG215
-                            FlightTotalTime:
-                              type: number
-                              examples:
-                                - 120
-                                - 150
-                            FlightTotalDuration:
-                              type: string
-                              examples:
-                                - 2H
-                                - 2H30M
-                            FlightTotalStop:
-                              type: integer
-                              examples:
-                                - 0
-                                - 1
-                            TimeUnit:
-                              type: string
-                              examples:
-                                - minutes
-                                - hours
-                            IsDomestic:
-                              type: boolean
-                              examples:
-                                - true
-                                - false
+                          $ref: "#/paths/~1v2~1flight~1faresUpsell/post/responses/200/content/application~1json/schema/properties/Fares/items"
                       keySearch:
                         type: string
                       keySearchDateTime:
@@ -4439,11 +3976,11 @@ paths:
                                 type: string
                                 description: The fare rules
                           Packages:
-                            $ref: "#/paths/~1v2~1flight~1fares/get/responses/200/content/application~1json/schema/properties/result/properties/Fares/items/properties/Packages/items"
+                            $ref: "#/paths/~1v2~1flight~1faresUpsell/post/responses/200/content/application~1json/schema/properties/Fares/items/properties/Packages/items"
                           Segments:
                             type: array
                             items:
-                              $ref: "#/paths/~1v2~1flight~1fares/get/responses/200/content/application~1json/schema/properties/result/properties/Fares/items/properties/segments/items"
+                              $ref: "#/paths/~1v2~1flight~1faresUpsell/post/responses/200/content/application~1json/schema/properties/Fares/items/properties/segments/items"
                           BaggageFeesList:
                             type: array
                             items:
@@ -4659,6 +4196,7 @@ paths:
                             type: string
                       AirlineMembers:
                         type: object
+                        description: Airline Members Object
                         properties:
                           status:
                             type: boolean
@@ -4817,7 +4355,7 @@ paths:
                                 Fares:
                                   type: array
                                   items:
-                                    $ref: "#/paths/~1v2~1flight~1fares/get/responses/200/content/application~1json/schema/properties/result/properties/Fares/items"
+                                    $ref: "#/paths/~1v2~1flight~1faresUpsell/post/responses/200/content/application~1json/schema/properties/Fares/items"
                                 keySearch:
                                   type: string
                                   examples:
@@ -4860,32 +4398,7 @@ paths:
                         $ref: "#/paths/~1v2~1flight~1searchFaresDetail/post/responses/200/content/application~1json/schema/oneOf/0/properties/BaggageTrackingService"
                         default: null
                       AirlineMembers:
-                        type: object
-                        properties:
-                          status:
-                            type: boolean
-                            examples:
-                              - true
-                              - false
-                          alliances:
-                            type: array
-                            items:
-                              type: object
-                              properties:
-                                airlineToken:
-                                  type: string
-                                  examples:
-                                    - someLongToken
-                                airlineText:
-                                  type: string
-                                  examples:
-                                    - Airline Name
-                                airlineGroup:
-                                  type:
-                                    - "null"
-                                    - array
-                          passengers:
-                            $ref: "#/paths/~1v2~1flight~1searchFaresDetail/post/responses/200/content/application~1json/schema/oneOf/0/properties/Passengers"
+                        $ref: "#/paths/~1v2~1flight~1searchFaresDetail/post/responses/200/content/application~1json/schema/oneOf/0/properties/AirlineMembers"
                       TypeOfFares:
                         type: string
                         examples:
@@ -4904,6 +4417,533 @@ paths:
                           - someLongToken
                 discriminator:
                   propertyName: departure
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "405":
+          $ref: "#/components/responses/MethodNotAllowedError"
+  /v2/flight/faresUpsell:
+    post:
+      tags:
+        - flight
+      summary: Get flight fares with upsell
+      description: Get flight fares given the destinations with upsell
+      operationId: getFlightFaresUpsell
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                keyDeparture:
+                  type: string
+                  description: The key of the departure flight (optional if multi destination)
+                keyReturn:
+                  type: string
+                  description: The key of the return flight (required if round trip)
+                keySearch:
+                  type: string
+                  description: The key of the search
+                keySearchDateTime:
+                  type: number
+                  description: The key search date time for the search
+                "legs[0][key]":
+                  type: string
+                  description: The key of the leg (required if multi destination)
+                "legs[1][key]":
+                  type: string
+                  description: The key of the leg (required if multi destination)
+              required:
+                - keySearch
+                - keySearchDateTime
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  Adult:
+                    type: integer
+                    examples:
+                      - 1
+                  Child:
+                    type: integer
+                    examples:
+                      - 0
+                  Infant:
+                    type: integer
+                    examples:
+                      - 0
+                  Fares:
+                    type: array
+                    items:
+                      description: Fares object
+                      type: object
+                      properties:
+                        Leg:
+                          oneOf:
+                            - type: string
+                            - type: integer
+                        Currency:
+                          type: string
+                          example: THB
+                        Departure:
+                          type: string
+                          description: The departure airport code (IATA)
+                          examples:
+                            - BKK
+                        Arrival:
+                          type: string
+                          description: The arrival airport code (IATA)
+                          examples:
+                            - HND
+                        Packages:
+                          type: array
+                          items:
+                            description: Fares packages object
+                            type: object
+                            properties:
+                              Name:
+                                type: string
+                                description: The name of the package
+                                examples:
+                                  - Economy
+                              FareBase:
+                                type: string
+                                description: The base fare of the package
+                                examples:
+                                  - WebFare
+                              NumberOfStops:
+                                type: string
+                                description: The number of stops
+                                examples:
+                                  - "0"
+                                  - "1"
+                              SeatAvailable:
+                                type: string
+                                description: The number seat availability
+                                examples:
+                                  - "3"
+                                  - "2"
+                              FreeMeal:
+                                type: string
+                                description: The free meal availability
+                                enum:
+                                  - "True"
+                                  - "False"
+                                examples:
+                                  - "True"
+                                  - "False"
+                              FreeMealDesc:
+                                type: string
+                                description: The free meal description
+                                examples:
+                                  - dinner meal
+                                  - breakfast meal
+                              SeatSelection:
+                                type: string
+                                description: The seat selection availability
+                                enum:
+                                  - "True"
+                                  - "False"
+                                examples:
+                                  - "True"
+                                  - "False"
+                              FlexiblePolicy:
+                                description: Flexible policy object
+                                type: object
+                                properties:
+                                  Flexible:
+                                    type: string
+                                    enum:
+                                      - "True"
+                                      - "False"
+                                    examples:
+                                      - "True"
+                                      - "False"
+                                  Price:
+                                    type: number
+                                    description: The price of the flexible policy
+                                    examples:
+                                      - 1000
+                                      - 2000
+                                  ChargeType:
+                                    type: string
+                                    description: The charge type of the flexible policy
+                                    examples:
+                                      - Amount
+                                  MaxChange:
+                                    type: string
+                                    description: The maximum change of the flexible policy
+                                    examples:
+                                      - "1"
+                                  Desc:
+                                    type: string
+                                    description: The description of the flexible policy
+                                    examples:
+                                      - Free change
+                              DeviceStreaming:
+                                type: string
+                                description: The device streaming availability
+                                enum:
+                                  - "True"
+                                  - "False"
+                                examples:
+                                  - "True"
+                                  - "False"
+                              Wifi:
+                                type: string
+                                description: The wifi availability
+                                enum:
+                                  - "True"
+                                  - "False"
+                                examples:
+                                  - "True"
+                                  - "False"
+                              PowerOrUSBOutlet:
+                                type: string
+                                description: The power or USB outlet availability
+                                enum:
+                                  - "True"
+                                  - "False"
+                                examples:
+                                  - "True"
+                                  - "False"
+                              RefundPolicy:
+                                description: Refund Policy object
+                                type: object
+                                properties:
+                                  Refundable:
+                                    type: string
+                                    enum:
+                                      - "True"
+                                      - "False"
+                                    examples:
+                                      - "True"
+                                      - "False"
+                                  RefundFee:
+                                    type: number
+                                    description: The refund fee
+                                    default: 0
+                                    examples:
+                                      - 1000
+                                      - 2000
+                                  RefundDesc:
+                                    type: string
+                                    description: The refund description
+                                    examples:
+                                      - Free refund
+                              isGoPack:
+                                type: string
+                                description: The go pack availability
+                                enum:
+                                  - "True"
+                                  - "False"
+                                examples:
+                                  - "True"
+                                  - "False"
+                              RecordSet:
+                                type: string
+                                description: The record set of package
+                              LowCostAirline:
+                                type: string
+                                description: The low cost airline availability
+                                enum:
+                                  - "True"
+                                  - "False"
+                                examples:
+                                  - "True"
+                                  - "False"
+                              AdultOriginalPrice:
+                                type: number
+                                description: The adult original price
+                                examples:
+                                  - 1943.08
+                              AdultPrice:
+                                type: number
+                                description: The adult price
+                                examples:
+                                  - 1943.08
+                              AdultFare:
+                                type: number
+                                description: The adult fare
+                                examples:
+                                  - 1813.08
+                              AdultTax:
+                                type: number
+                                description: The adult tax
+                                examples:
+                                  - 130
+                              ChildOriginalPrice:
+                                type: number
+                                description: The child original price
+                                examples:
+                                  - 0
+                              ChildPrice:
+                                type: number
+                                description: The child price
+                                examples:
+                                  - 0
+                              ChildFare:
+                                type: number
+                                description: The child fare
+                                examples:
+                                  - 0
+                              ChildTax:
+                                type: number
+                                description: The child tax
+                                examples:
+                                  - 0
+                              InfantOriginalPrice:
+                                type: number
+                                description: The infant original price
+                                examples:
+                                  - 0
+                              InfantPrice:
+                                type: number
+                                description: The infant price
+                                examples:
+                                  - 0
+                              InfantFare:
+                                type: number
+                                description: The infant fare
+                                examples:
+                                  - 0
+                              InfantTax:
+                                type: number
+                                description: The infant tax
+                                examples:
+                                  - 0
+                              BookingClass:
+                                type: string
+                                description: The booking class of the package
+                                examples:
+                                  - B
+                              EquivalentBookingClass:
+                                type: string
+                                description: The equivalent booking class of the package
+                                examples:
+                                  - "Y"
+                              BaggageFees:
+                                type: array
+                                items:
+                                  $ref: "#/paths/~1v2~1flight~1searchFaresDetail/post/responses/200/content/application~1json/schema/oneOf/0/properties/departure/properties/BaggageFeesList/items/allOf/0"
+                              isGoPackKeys:
+                                type: array
+                              Key:
+                                type: string
+                                description: The key of the package
+                              PackageCurrency:
+                                type: string
+                                description: The currency of the package
+                                examples:
+                                  - THB
+                        segments:
+                          type: array
+                          items:
+                            description: Fare segment object
+                            type: object
+                            properties:
+                              Departure:
+                                type: string
+                                description: The departure airport code (IATA)
+                                examples:
+                                  - BKK
+                              DepartureDateTime:
+                                type: string
+                                format: date-time
+                                description: The departure date and time
+                              Arrival:
+                                type: string
+                                description: The arrival airport code (IATA)
+                                examples:
+                                  - HND
+                              ArrivalDateTime:
+                                type: string
+                                format: date-time
+                                description: The arrival date and time
+                              Duration:
+                                type: string
+                                description: The duration of the flight
+                                examples:
+                                  - 2H
+                                  - 2H30M
+                              Operator:
+                                type: string
+                                description: The operator of the flight
+                                examples:
+                                  - PG
+                              MajorCarrierCode:
+                                type: string
+                                description: The major carrier code
+                                examples:
+                                  - PG
+                              CarrierCode:
+                                type: string
+                                description: The major carrier code
+                                examples:
+                                  - PG
+                              CodeShare:
+                                type: string
+                                description: The code share status
+                                examples:
+                                  - true
+                                  - false
+                              EquipmentCode:
+                                type: string
+                                description: The equipment code
+                                examples:
+                                  - 320
+                              EquipmentName:
+                                type: string
+                                description: The equipment name
+                                examples:
+                                  - Airbus A320
+                              CabinClass:
+                                type: string
+                                description: "The cabin class Y(Economy), C(Business), F(First)"
+                                examples:
+                                  - "Y"
+                              CabinClassName:
+                                type: string
+                                description: The cabin class name
+                                examples:
+                                  - Economy
+                              FlightNumber:
+                                type: string
+                                description: The flight number
+                                examples:
+                                  - PG215
+                              TravelTime:
+                                type: string
+                                description: The travel time
+                                examples:
+                                  - 1H20M
+                              Mileage:
+                                type: integer
+                                description: The mileage
+                                examples:
+                                  - 369
+                              TechStop:
+                                type: string
+                                description: Whether there is a technical stop
+                                examples:
+                                  - false
+                                  - true
+                              TechStopLocation:
+                                type: string
+                                description: The technical stop location
+                                examples:
+                                  - ""
+                              TechStopArrivalDateTime:
+                                type: string
+                                format: date-time
+                                description: The technical stop arrival date and time
+                              TechStopDepartureDateTime:
+                                type: string
+                                format: date-time
+                                description: The technical stop departure date and time
+                              FlightTravelTime:
+                                type: integer
+                                description: The flight travel time
+                                examples:
+                                  - 80
+                              FlightStopDuration:
+                                type: string
+                                description: The flight stop duration
+                              FlightStopTime:
+                                type: integer
+                                description: The flight stop time
+                                examples:
+                                  - 0
+                              Thumbnail:
+                                type: string
+                                description: The thumbnail
+                                examples:
+                                  - "https://www.example.com/logo.jpg"
+                              TimeUnit:
+                                type: string
+                                description: The time unit
+                                examples:
+                                  - minutes
+                              DepartureAirportName:
+                                type: string
+                                description: The departure airport name
+                                examples:
+                                  - กรุงเทพ สุวรรณภูมิ
+                              DepartureAirportCityName:
+                                type: string
+                                description: The departure airport city name
+                                examples:
+                                  - กรุงเทพ
+                              ArrivalAirportName:
+                                type: string
+                                description: The arrival airport name
+                                examples:
+                                  - เชียงใหม่
+                              ArrivalAirportCityName:
+                                type: string
+                                description: The arrival airport city name
+                                examples:
+                                  - เชียงใหม่
+                              CarrierName:
+                                type: string
+                                description: The carrier name
+                                examples:
+                                  - บางกอกแอร์เวย์
+                              CarrierNameEn:
+                                type: string
+                                description: The carrier name in English
+                                examples:
+                                  - Bangkok Airways
+                              TechStopDuration:
+                                type: string
+                                description: The technical stop duration
+                              TechStopTotalTime:
+                                type: integer
+                                description: The technical stop total time
+                                examples:
+                                  - 0
+                              TechStopAirportName:
+                                type: string
+                                description: The technical stop airport name
+                              TechStopAirportCityName:
+                                type: string
+                                description: The technical stop airport city name
+                        FlightCode:
+                          type: string
+                          examples:
+                            - PG215
+                        FlightTotalTime:
+                          type: number
+                          examples:
+                            - 120
+                            - 150
+                        FlightTotalDuration:
+                          type: string
+                          examples:
+                            - 2H
+                            - 2H30M
+                        FlightTotalStop:
+                          type: integer
+                          examples:
+                            - 0
+                            - 1
+                        TimeUnit:
+                          type: string
+                          examples:
+                            - minutes
+                            - hours
+                        IsDomestic:
+                          type: boolean
+                          examples:
+                            - true
+                            - false
+                  TypeOfFares:
+                    type: string
+                    description: The number of fares M(multi destination)
         "401":
           $ref: "#/components/responses/UnauthorizedError"
         "405":

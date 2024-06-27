@@ -5,7 +5,7 @@ info:
     This is the GoApi documentation. You can find out more about the project on the [GoApi Repository](https://gl.traveligo.com/t1/go-api).
     Some useful links:
     - [GoApi Repository](https://gl.traveligo.com/t1/go-api)
-  version: 1.3.15
+  version: 1.3.16
   license:
     name: Internal
     url: "https://gl.traveligo.com/"
@@ -3556,7 +3556,12 @@ paths:
           description: The booking class for the departure flight
           schema:
             type: string
-            description: The booking class
+            description: |
+              The booking class 
+              Y - Economy Class
+              W - Premium Economy Class
+              J - Business Class
+              F - First Class
             enum:
               - "Y"
               - W
@@ -3610,10 +3615,11 @@ paths:
                           type: object
                           properties:
                             Leg:
-                              type: string
-                              examples:
-                                - Departure
-                                - Return
+                              oneOf:
+                                - type: string
+                                - type: integer
+                                  discriminator:
+                                    propertyName: TypeOfFares
                             Currency:
                               type: string
                               example: THB
@@ -3857,41 +3863,7 @@ paths:
                                   BaggageFees:
                                     type: array
                                     items:
-                                      description: Baggage fees object
-                                      type: object
-                                      properties:
-                                        BaggageKey:
-                                          type: string
-                                          examples:
-                                            - ""
-                                        BaggageType:
-                                          type: string
-                                          examples:
-                                            - Adult
-                                        BaggageName:
-                                          type: string
-                                          examples:
-                                            - 20kg (THB 0.00)
-                                        BaggagePrice:
-                                          type: number
-                                          examples:
-                                            - 0
-                                        BaggagePiece:
-                                          type: integer
-                                          examples:
-                                            - 1
-                                        BaggageUnit:
-                                          type: string
-                                          examples:
-                                            - kg
-                                        BaggageTotalWeight:
-                                          type: integer
-                                          examples:
-                                            - 20
-                                        BaggageCurrency:
-                                          type: string
-                                          examples:
-                                            - THB
+                                      $ref: "#/paths/~1v2~1flight~1searchFaresDetail/post/responses/200/content/application~1json/schema/oneOf/0/properties/departure/properties/BaggageFeesList/items/allOf/0"
                                   isGoPackKeys:
                                     type: array
                                   Key:
@@ -4382,6 +4354,556 @@ paths:
       responses:
         "200":
           $ref: "#/paths/~1v2~1flight~1fares/get/responses/200"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "405":
+          $ref: "#/components/responses/MethodNotAllowedError"
+  /v2/flight/searchFaresDetail:
+    post:
+      tags:
+        - flight
+      summary: Get flight fares detail
+      description: |
+        Get flight fares detail given the destination keys
+        All the keys are from the fares response
+      operationId: getFlightFaresDetail
+      parameters:
+        - $ref: "#/components/parameters/accept-Language"
+        - $ref: "#/components/parameters/preferred-currency"
+        - $ref: "#/components/parameters/data-Token"
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                keyDeparture:
+                  type: string
+                  description: The key of the departure flight (optional if multi destination)
+                keyReturn:
+                  type: string
+                  description: The key of the return flight (required if round trip)
+                keySearch:
+                  type: string
+                  description: The key of the search
+                keySearchDateTime:
+                  type: number
+                  description: The key search date time for the search
+                "legs[0][key]":
+                  type: string
+                  description: The key of the leg (required if multi destination)
+                "legs[1][key]":
+                  type: string
+                  description: The key of the leg (required if multi destination)
+              required:
+                - keySearch
+                - keySearchDateTime
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - description: One Way flight Search Fares Response
+                    type: object
+                    properties:
+                      departure:
+                        type: object
+                        properties:
+                          searchPriceId:
+                            type: string
+                            description: The search price id
+                            examples:
+                              - "124169"
+                          supplierCode:
+                            type: string
+                            description: The supplier code
+                            examples:
+                              - PG
+                          supplierName:
+                            type: string
+                            description: The supplier name
+                            examples:
+                              - Bangkok Airways
+                          CustomerAgreements:
+                            description: Customer Agreements Object
+                            type: object
+                            properties:
+                              TermAndConditions:
+                                type: string
+                                description: The term and conditions
+                                examples:
+                                  - "https://www.google.com"
+                              FareRules:
+                                type: string
+                                description: The fare rules
+                          Packages:
+                            $ref: "#/paths/~1v2~1flight~1fares/get/responses/200/content/application~1json/schema/properties/result/properties/Fares/items/properties/Packages/items"
+                          Segments:
+                            type: array
+                            items:
+                              $ref: "#/paths/~1v2~1flight~1fares/get/responses/200/content/application~1json/schema/properties/result/properties/Fares/items/properties/segments/items"
+                          BaggageFeesList:
+                            type: array
+                            items:
+                              allOf:
+                                - description: Baggage fees object
+                                  type: object
+                                  properties:
+                                    BaggageKey:
+                                      type: string
+                                      examples:
+                                        - ""
+                                    BaggageType:
+                                      type: string
+                                      examples:
+                                        - Adult
+                                    BaggageName:
+                                      type: string
+                                      examples:
+                                        - 20kg (THB 0.00)
+                                    BaggagePrice:
+                                      type: number
+                                      examples:
+                                        - 0
+                                    BaggagePiece:
+                                      type: integer
+                                      examples:
+                                        - 1
+                                    BaggageUnit:
+                                      type: string
+                                      examples:
+                                        - kg
+                                    BaggageTotalWeight:
+                                      type: integer
+                                      examples:
+                                        - 20
+                                    BaggageCurrency:
+                                      type: string
+                                      examples:
+                                        - THB
+                                - type: object
+                                  properties:
+                                    BaggageLeg:
+                                      type:
+                                        - string
+                                        - integer
+                                      description: The baggage leg
+                                    BaggageIcon:
+                                      type: string
+                                      description: The baggage icon
+                                      examples:
+                                        - "https://static.tiket.photos/image/upload/flight/baggage/PG.png"
+                          MealFeesList:
+                            type: array
+                            items:
+                              type: object
+                              properties:
+                                mealDetail:
+                                  description: Meal Detail Object
+                                  type: object
+                                  properties:
+                                    seatMapLeg:
+                                      type: string
+                                      description: The seat map leg
+                                    departureAirport:
+                                      type: string
+                                      description: The departure airport
+                                      examples:
+                                        - CGK
+                                    arrivalAirport:
+                                      type: string
+                                      description: The arrival airport
+                                      examples:
+                                        - DPS
+                                    departureDateTime:
+                                      type: string
+                                      format: date-time
+                                      description: The departure date time
+                                    FlightNumber:
+                                      type: string
+                                      description: The flight number
+                                      example: PG123
+                                    meals:
+                                      type: array
+                                      items:
+                                        description: Meal Object
+                                        type: object
+                                        properties:
+                                          MealKey:
+                                            type: string
+                                            format: uuid
+                                            description: The meal key
+                                          SSRCode:
+                                            type: string
+                                            description: The SSR code
+                                            examples:
+                                              - BEV1
+                                              - BEV2
+                                              - BEV3
+                                          Name:
+                                            type: string
+                                            description: The name of the meal
+                                            examples:
+                                              - Beverage 1
+                                              - Beverage 2
+                                              - Beverage 3
+                                          Price:
+                                            type: number
+                                            description: The price of the meal
+                                            example: 10000
+                                          ImageUrl:
+                                            type: string
+                                            description: The image URL of the meal
+                                            examples:
+                                              - "https://static.tiket.photos/image/upload/flight/meal/BEV1.png"
+                                          FlightNumber:
+                                            type: string
+                                            description: The flight number
+                                            example: PG123
+                                    dateTime:
+                                      type: string
+                                      format: date-time
+                      Passengers:
+                        description: Passengers Object
+                        type: object
+                        properties:
+                          adult:
+                            type: integer
+                            example: 1
+                          child:
+                            type: integer
+                            example: 0
+                          infant:
+                            type: integer
+                            example: 0
+                      PricePerPassenger:
+                        type: array
+                        items:
+                          description: Price per passenger object
+                          type: object
+                          properties:
+                            amount:
+                              type: number
+                              examples:
+                                - 2500
+                            vat:
+                              type: number
+                              examples:
+                                - 700
+                            priceWithVat:
+                              type: number
+                              examples:
+                                - 3200
+                            type:
+                              type: string
+                              examples:
+                                - Adult
+                            currency:
+                              type: string
+                              examples:
+                                - THB
+                      priceIncrease:
+                        type: number
+                        examples:
+                          - 0
+                      isPriceIncrease:
+                        type: boolean
+                        examples:
+                          - false
+                          - true
+                      TotalVat:
+                        type: number
+                        format: float
+                        examples:
+                          - 70
+                      SellingPrice:
+                        type: number
+                        examples:
+                          - 2500
+                      Currency:
+                        type: string
+                        examples:
+                          - THB
+                      BaggageTrackingService:
+                        default: null
+                        description: Baggage Tracking Service Object
+                        type: object
+                        properties:
+                          productcode:
+                            type: string
+                            examples:
+                              - BTS
+                          wholesale:
+                            type: string
+                          priceUSD:
+                            type: number
+                            examples:
+                              - 10
+                          price:
+                            type: number
+                            examples:
+                              - 300
+                          currency:
+                            type: string
+                            examples:
+                              - THB
+                          benefit:
+                            type: string
+                            examples:
+                              - Baggage Tracking Service
+                          benefitUSD:
+                            type: string
+                          benefitTHB:
+                            type: string
+                      AirlineMembers:
+                        type: object
+                        properties:
+                          status:
+                            type: boolean
+                            examples:
+                              - true
+                              - false
+                          alliances:
+                            type: array
+                            items:
+                              type: object
+                              properties:
+                                airlineToken:
+                                  type: string
+                                  examples:
+                                    - someLongToken
+                                airlineText:
+                                  type: string
+                                  examples:
+                                    - Airline Name
+                                airlineGroup:
+                                  type:
+                                    - "null"
+                                    - array
+                          passengers:
+                            $ref: "#/paths/~1v2~1flight~1searchFaresDetail/post/responses/200/content/application~1json/schema/oneOf/0/properties/Passengers"
+                      TypeOfFares:
+                        type: string
+                        examples:
+                          - M
+                      TypeOfFlight:
+                        type: string
+                        examples:
+                          - domestic
+                      keySearchTimeExpire:
+                        type: number
+                        examples:
+                          - 1616428800
+                      keyFareDetail:
+                        type: string
+                        examples:
+                          - someLongToken
+                  - description: Round Trip Fares Response
+                    type: object
+                    allOf:
+                      - type: object
+                        properties:
+                          return:
+                            $ref: "#/paths/~1v2~1flight~1searchFaresDetail/post/responses/200/content/application~1json/schema/oneOf/0/properties/departure"
+                      - $ref: "#/paths/~1v2~1flight~1searchFaresDetail/post/responses/200/content/application~1json/schema/oneOf/0"
+                  - description: Multi destination fare object
+                    type: object
+                    properties:
+                      departure:
+                        type: array
+                        items:
+                          allOf:
+                            - $ref: "#/paths/~1v2~1flight~1searchFaresDetail/post/responses/200/content/application~1json/schema/oneOf/0/properties/departure"
+                            - type: object
+                              properties:
+                                price:
+                                  type: number
+                                  examples:
+                                    - 2500
+                                currency:
+                                  type: string
+                                  examples:
+                                    - THB
+                                pricePerPassenger:
+                                  $ref: "#/paths/~1v2~1flight~1searchFaresDetail/post/responses/200/content/application~1json/schema/oneOf/0/properties/PricePerPassenger/items"
+                                route:
+                                  type: object
+                                  properties:
+                                    departure:
+                                      type: array
+                                      items:
+                                        type: object
+                                        properties:
+                                          segment:
+                                            type: number
+                                            examples:
+                                              - 1
+                                          airlineCode:
+                                            type: string
+                                            examples:
+                                              - TG
+                                          departureDate:
+                                            type: string
+                                            format: date-time
+                                          arrivalDate:
+                                            type: string
+                                            format: date-time
+                                          departureAirportCode:
+                                            type: string
+                                            examples:
+                                              - BKK
+                                          flightNumber:
+                                            type: string
+                                            examples:
+                                              - "123"
+                                          flightType:
+                                            type: string
+                                            examples:
+                                              - Departure
+                                          rbd:
+                                            type: string
+                                            examples:
+                                              - A
+                                          optionData:
+                                            type: string
+                                            description: json string for the available options
+                                            examples:
+                                              - 'a:1:{s:12:"BookingClass";a:2:{s:5:"class";s:1:"A";s:12:"flightNumber";s:3:"215";}}'
+                                priceChange:
+                                  description: Price Change Object
+                                  type: object
+                                  properties:
+                                    isPriceChange:
+                                      type: boolean
+                                      description: |
+                                        Indicates if the price has changed
+                                      examples:
+                                        - true
+                                        - false
+                                    amount:
+                                      type: number
+                                      description: |
+                                        The amount of the price change
+                                      examples:
+                                        - 2500
+                                    currency:
+                                      type: string
+                                      description: |
+                                        The currency of the price change
+                                      examples:
+                                        - THB
+                                NumberOfFares:
+                                  type: integer
+                                  examples:
+                                    - 1
+                                TypeOfFares:
+                                  type: string
+                                  examples:
+                                    - M
+                                Adult:
+                                  type: integer
+                                  examples:
+                                    - 1
+                                Child:
+                                  type: integer
+                                  examples:
+                                    - 0
+                                Infant:
+                                  type: integer
+                                  examples:
+                                    - 0
+                                Fares:
+                                  type: array
+                                  items:
+                                    $ref: "#/paths/~1v2~1flight~1fares/get/responses/200/content/application~1json/schema/properties/result/properties/Fares/items"
+                                keySearch:
+                                  type: string
+                                  examples:
+                                    - longTokenString
+                                keySearchDateTime:
+                                  type: number
+                                  examples:
+                                    - 1234567890
+                      Passengers:
+                        type: array
+                        items:
+                          $ref: "#/paths/~1v2~1flight~1searchFaresDetail/post/responses/200/content/application~1json/schema/oneOf/0/properties/Passengers"
+                      PricePerPassenger:
+                        type: array
+                        items:
+                          $ref: "#/paths/~1v2~1flight~1searchFaresDetail/post/responses/200/content/application~1json/schema/oneOf/0/properties/PricePerPassenger/items"
+                      priceIncrease:
+                        type: number
+                        examples:
+                          - 0
+                      isPriceIncrease:
+                        type: boolean
+                        examples:
+                          - false
+                          - true
+                      TotalVat:
+                        type: number
+                        format: float
+                        examples:
+                          - 70
+                      SellingPrice:
+                        type: number
+                        examples:
+                          - 2500
+                      Currency:
+                        type: string
+                        examples:
+                          - THB
+                      BaggageTrackingService:
+                        $ref: "#/paths/~1v2~1flight~1searchFaresDetail/post/responses/200/content/application~1json/schema/oneOf/0/properties/BaggageTrackingService"
+                        default: null
+                      AirlineMembers:
+                        type: object
+                        properties:
+                          status:
+                            type: boolean
+                            examples:
+                              - true
+                              - false
+                          alliances:
+                            type: array
+                            items:
+                              type: object
+                              properties:
+                                airlineToken:
+                                  type: string
+                                  examples:
+                                    - someLongToken
+                                airlineText:
+                                  type: string
+                                  examples:
+                                    - Airline Name
+                                airlineGroup:
+                                  type:
+                                    - "null"
+                                    - array
+                          passengers:
+                            $ref: "#/paths/~1v2~1flight~1searchFaresDetail/post/responses/200/content/application~1json/schema/oneOf/0/properties/Passengers"
+                      TypeOfFares:
+                        type: string
+                        examples:
+                          - M
+                      TypeOfFlight:
+                        type: string
+                        examples:
+                          - domestic
+                      keySearchTimeExpire:
+                        type: number
+                        examples:
+                          - 1616428800
+                      keyFareDetail:
+                        type: string
+                        examples:
+                          - someLongToken
+                discriminator:
+                  propertyName: departure
         "401":
           $ref: "#/components/responses/UnauthorizedError"
         "405":

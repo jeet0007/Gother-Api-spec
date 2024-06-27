@@ -5,7 +5,7 @@ info:
     This is the GoApi documentation. You can find out more about the project on the [GoApi Repository](https://gl.traveligo.com/t1/go-api).
     Some useful links:
     - [GoApi Repository](https://gl.traveligo.com/t1/go-api)
-  version: 1.3.17
+  version: 1.3.18
   license:
     name: Internal
     url: "https://gl.traveligo.com/"
@@ -183,7 +183,6 @@ paths:
         - klub
       parameters:
         - $ref: "#/components/parameters/klubCategory"
-          required: true
           description: The category id of the klub
         - $ref: "#/components/parameters/accept-Language"
           description: The language of the response
@@ -434,8 +433,12 @@ paths:
       description: Gets the data required to render the story by slug
       operationId: getStoryBySlug
       parameters:
-        - $ref: "#/components/parameters/slug"
+        - name: slug
+          in: query
+          description: The slug of the experience
           required: true
+          schema:
+            type: string
         - $ref: "#/components/parameters/accept-Language"
       responses:
         "200":
@@ -458,7 +461,16 @@ paths:
       security:
         - bearerAuth: []
       parameters:
-        - $ref: "#/components/parameters/klubCategory"
+        - name: klubCategory
+          in: query
+          description: The klub category of the experience
+          schema:
+            type: string
+            enum:
+              - diving
+              - family
+              - coffee
+              - mutalu
           required: true
         - $ref: "#/components/parameters/accept-Language"
       responses:
@@ -504,8 +516,17 @@ paths:
       security:
         - bearerAuth: []
       parameters:
-        - $ref: "#/components/parameters/klubCategory"
+        - name: klubCategory
+          in: query
+          description: The klub category of the experience
           required: true
+          schema:
+            type: string
+            enum:
+              - diving
+              - family
+              - coffee
+              - mutalu
         - $ref: "#/components/parameters/accept-Language"
         - $ref: "#/components/parameters/preferred-currency"
       responses:
@@ -551,9 +572,18 @@ paths:
       parameters:
         - $ref: "#/components/parameters/accept-Language"
         - $ref: "#/components/parameters/preferred-currency"
-        - $ref: "#/components/parameters/klubCategory"
-          required: true
         - $ref: "#/components/parameters/data-Token"
+        - name: klubCategory
+          in: query
+          required: true
+          description: The klub category of the experience
+          schema:
+            type: string
+            enum:
+              - diving
+              - family
+              - coffee
+              - mutalu
       responses:
         "200":
           description: The cross sell experience

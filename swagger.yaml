@@ -5,7 +5,7 @@ info:
     This is the GoApi documentation. You can find out more about the project on the [GoApi Repository](https://gl.traveligo.com/t1/go-api).
     Some useful links:
     - [GoApi Repository](https://gl.traveligo.com/t1/go-api)
-  version: 1.4.20
+  version: 1.4.21
   license:
     name: Internal
     url: "https://gl.traveligo.com/"
@@ -470,7 +470,7 @@ paths:
               - diving
               - family
               - coffee
-              - mutalu
+              - mutelu
           required: true
         - $ref: "#/components/parameters/accept-Language"
         - $ref: "#/components/parameters/preferred-currency"
@@ -527,7 +527,7 @@ paths:
               - diving
               - family
               - coffee
-              - mutalu
+              - mutelu
         - $ref: "#/components/parameters/accept-Language"
         - $ref: "#/components/parameters/preferred-currency"
       responses:
@@ -584,7 +584,7 @@ paths:
               - diving
               - family
               - coffee
-              - mutalu
+              - mutelu
       responses:
         "200":
           description: The cross sell experience
@@ -641,7 +641,7 @@ paths:
                     - diving
                     - family
                     - coffee
-                    - mutalu
+                    - mutelu
               required:
                 - klubCategory
       responses:
@@ -690,7 +690,7 @@ paths:
                     - diving
                     - family
                     - coffee
-                    - mutalu
+                    - mutelu
               required:
                 - klubCategory
       responses:
@@ -5662,7 +5662,7 @@ components:
             - diving
             - family
             - coffee
-            - mutalu
+            - mutelu
           examples:
             - diving
         tabMenu:
@@ -5794,7 +5794,7 @@ components:
             - diving
             - family
             - coffee
-            - mutalu
+            - mutelu
           examples:
             - diving
         title:
@@ -6021,7 +6021,7 @@ components:
             - diving
             - family
             - coffee
-            - mutalu
+            - mutelu
     PromotionTypeObject:
       description: The promotion type object
       type: object
@@ -6565,7 +6565,7 @@ components:
         - diving
         - family
         - coffee
-        - mutalu
+        - mutelu
     TicketType:
       description: Ticket type object
       type: string

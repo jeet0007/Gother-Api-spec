@@ -5,7 +5,7 @@ info:
     This is the GoApi documentation. You can find out more about the project on the [GoApi Repository](https://gl.traveligo.com/t1/go-api).
     Some useful links:
     - [GoApi Repository](https://gl.traveligo.com/t1/go-api)
-  version: 1.3.20
+  version: 1.4.20
   license:
     name: Internal
     url: "https://gl.traveligo.com/"
@@ -142,7 +142,7 @@ paths:
                       $ref: "#/components/schemas/ExclusiveKlubObject"
         "401":
           $ref: "#/components/responses/UnauthorizedError"
-  /v2/klub/recommended:
+  /v2/klub/recommend:
     get:
       summary: Get the recommended klub
       description: Gets the data required to render the recommended klub
@@ -5574,12 +5574,6 @@ components:
               description: The color of the exclusive banner
               examples:
                 - "#50D77A"
-            highlight-3:
-              type: string
-              default: null
-              description: The highlight exclusive banner
-              examples:
-                - "https://klub-image.com/klub-shape-mobile.jpg"
     RegularKlubObject:
       description: The klub object
       type: object

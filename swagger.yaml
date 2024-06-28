@@ -6932,6 +6932,8 @@ components:
           type: object
           description: The category of the experience
           properties:
+            id:
+              type: string
             name:
               type: string
               description: The name of the category
@@ -8278,6 +8280,36 @@ components:
           schema:
             type: string
             format: date-time
+        X-Powered-By:
+          description: The server technology
+          schema:
+            type: string
+            examples:
+              - Express
+              - PHP
+        Connection:
+          description: The connection type
+          schema:
+            type: string
+            examples:
+              - keep-alive
+        Expires:
+          description: The expiration date
+          schema:
+            type: string
+            format: date-time
+        Cache-Control:
+          description: The cache control
+          schema:
+            type: string
+            examples:
+              - no-cache
+        Pragma:
+          description: The pragma
+          schema:
+            type: string
+            examples:
+              - no-cache
       content:
         application/json:
           schema:

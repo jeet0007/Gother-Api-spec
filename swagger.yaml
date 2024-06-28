@@ -5,7 +5,7 @@ info:
     This is the GoApi documentation. You can find out more about the project on the [GoApi Repository](https://gl.traveligo.com/t1/go-api).
     Some useful links:
     - [GoApi Repository](https://gl.traveligo.com/t1/go-api)
-  version: 1.3.18
+  version: 1.3.19
   license:
     name: Internal
     url: "https://gl.traveligo.com/"
@@ -4974,6 +4974,207 @@ paths:
                   TypeOfFares:
                     type: string
                     description: The number of fares M(multi destination)
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "405":
+          $ref: "#/components/responses/MethodNotAllowedError"
+  /v2/flight/seatMap:
+    post:
+      tags:
+        - flight
+      summary: Get flight seat map
+      description: get seat availability for a flight given the flight keys
+      operationId: getFlightSeatMap
+      parameters:
+        - $ref: "#/components/parameters/accept-Language"
+        - $ref: "#/components/parameters/preferred-currency"
+        - $ref: "#/components/parameters/data-Token"
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                keySearch:
+                  type: string
+                  description: The key of the search
+                keyDeparture:
+                  type: string
+                  description: The key of the departure flight
+                keyReturn:
+                  type: string
+                  description: The key of the return flight
+                keySearchDate:
+                  type: string
+                  description: The key search date for the search
+                "legs[0][key]":
+                  type: string
+                  description: The key of the leg
+              required:
+                - keySearch
+                - keySearchDate
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: boolean
+                    description: The status code
+                  seatMap:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        seatMapDetail:
+                          description: Seat map detail object
+                          type: object
+                          properties:
+                            seatMapLeg:
+                              type: string
+                              description: The leg of the seat map
+                              examples:
+                                - 1
+                                - Departure
+                            departureAirport:
+                              type: string
+                              description: The departure airport code (IATA)
+                              examples:
+                                - BKK
+                            arrivalAirport:
+                              type: string
+                              description: The arrival airport code (IATA)
+                              examples:
+                                - HND
+                            departureAirportCityName:
+                              type: string
+                              description: The departure airport city name
+                              examples:
+                                - Bangkok
+                            arrivalAirportCityName:
+                              type: string
+                              description: The arrival airport city name
+                              examples:
+                                - Tokyo
+                            departureDateTime:
+                              type: string
+                              format: date-time
+                              description: The departure date and time
+                              examples:
+                                - "2020-01-01T00:00:00"
+                            arrivalDateTime:
+                              type: string
+                              format: date-time
+                              description: The arrival date and time
+                              examples:
+                                - "2020-01-01T00:00:00"
+                            marketingAirline:
+                              type: string
+                              description: The marketing airline code
+                              examples:
+                                - PG
+                            flightNumber:
+                              type: string
+                              description: The flight number
+                              examples:
+                                - FD215
+                            equipment:
+                              type: string
+                              description: The equipment code
+                              examples:
+                                - A738
+                            seats:
+                              type: array
+                              items:
+                                description: Seat object
+                                type: object
+                                properties:
+                                  seatRow:
+                                    type: string
+                                    examples:
+                                      - "1"
+                                  seatNumber:
+                                    type: string
+                                    examples:
+                                      - 1A
+                                  seatColumn:
+                                    type: string
+                                    examples:
+                                      - A
+                                  assignable:
+                                    type: string
+                                    enum:
+                                      - "True"
+                                      - "False"
+                                    examples:
+                                      - "True"
+                                  availability:
+                                    type: string
+                                    enum:
+                                      - "True"
+                                      - "False"
+                                    examples:
+                                      - "True"
+                                  properties:
+                                    type: object
+                                    properties:
+                                      window:
+                                        type: string
+                                        enum:
+                                          - "True"
+                                          - "False"
+                                        examples:
+                                          - "True"
+                                      aisle:
+                                        type: string
+                                        enum:
+                                          - "True"
+                                          - "False"
+                                        examples:
+                                          - "False"
+                                      wing:
+                                        type: string
+                                        enum:
+                                          - "True"
+                                          - "False"
+                                        examples:
+                                          - "False"
+                                      exitrow:
+                                        type: string
+                                        enum:
+                                          - "True"
+                                          - "False"
+                                        examples:
+                                          - "False"
+                                      bulkhead:
+                                        type: string
+                                        enum:
+                                          - "True"
+                                          - "False"
+                                        examples:
+                                          - "True"
+                                  price:
+                                    type: object
+                                    properties:
+                                      currency:
+                                        type: string
+                                        examples:
+                                          - THB
+                                      amount:
+                                        type: number
+                                        examples:
+                                          - 0
+                                  seatKey:
+                                    type: string
+                                    examples:
+                                      - WVpxT3lWcFhGdTQrdGJ1NmQvNCtkQ0FacS9XZFBuQmlLU2pP2azJLclUwNWxmVzJCYlFUVUY4WjRSQnpDMlRqcGNzOUJkWk5hV3JQK2E1Rj02QXFWQ2c9PQ==
+                  seatMapUrl:
+                    type: string
+                    description: The seat map url
+                    example: "https://www.bangkokair.com/seatmap/PG215"
         "401":
           $ref: "#/components/responses/UnauthorizedError"
         "405":

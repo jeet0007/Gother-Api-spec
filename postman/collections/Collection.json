@@ -697,7 +697,7 @@
 											},
 											{
 												"key": "preferred-currency",
-												"value": "<string>",
+												"value": "THB",
 												"description": "The preferred currency of the user"
 											},
 											{
@@ -916,12 +916,12 @@
 											},
 											{
 												"key": "preferred-currency",
-												"value": "<string>",
+												"value": "THB",
 												"description": "The preferred currency of the user"
 											},
 											{
 												"key": "data-token",
-												"value": "<JWT>",
+												"value": "{{Data-Token}}",
 												"description": "If the user is logged in, the data token is required to see the user-specific data"
 											},
 											{

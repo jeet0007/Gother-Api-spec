@@ -5,7 +5,7 @@ info:
     This is the GoApi documentation. You can find out more about the project on the [GoApi Repository](https://gl.traveligo.com/t1/go-api).
     Some useful links:
     - [GoApi Repository](https://gl.traveligo.com/t1/go-api)
-  version: 1.4.21
+  version: 1.4.22
   license:
     name: Internal
     url: "https://gl.traveligo.com/"
@@ -469,7 +469,7 @@ paths:
             enum:
               - diving
               - family
-              - coffee
+              - coffee-and-tea
               - mutelu
           required: true
         - $ref: "#/components/parameters/accept-Language"
@@ -526,7 +526,7 @@ paths:
             enum:
               - diving
               - family
-              - coffee
+              - coffee-and-tea
               - mutelu
         - $ref: "#/components/parameters/accept-Language"
         - $ref: "#/components/parameters/preferred-currency"
@@ -583,7 +583,7 @@ paths:
             enum:
               - diving
               - family
-              - coffee
+              - coffee-and-tea
               - mutelu
       responses:
         "200":
@@ -640,7 +640,7 @@ paths:
                   enum:
                     - diving
                     - family
-                    - coffee
+                    - coffee-and-tea
                     - mutelu
               required:
                 - klubCategory
@@ -689,7 +689,7 @@ paths:
                   enum:
                     - diving
                     - family
-                    - coffee
+                    - coffee-and-tea
                     - mutelu
               required:
                 - klubCategory
@@ -5661,7 +5661,7 @@ components:
           enum:
             - diving
             - family
-            - coffee
+            - coffee-and-tea
             - mutelu
           examples:
             - diving
@@ -5793,7 +5793,7 @@ components:
           enum:
             - diving
             - family
-            - coffee
+            - coffee-and-tea
             - mutelu
           examples:
             - diving
@@ -6020,7 +6020,7 @@ components:
           examples:
             - diving
             - family
-            - coffee
+            - coffee-and-tea
             - mutelu
     PromotionTypeObject:
       description: The promotion type object
@@ -6564,7 +6564,7 @@ components:
       enum:
         - diving
         - family
-        - coffee
+        - coffee-and-tea
         - mutelu
     TicketType:
       description: Ticket type object
@@ -8199,7 +8199,7 @@ components:
         enum:
           - diving
           - family
-          - coffee
+          - coffee-and-tea
           - mutelu
     data-Token:
       name: data-token

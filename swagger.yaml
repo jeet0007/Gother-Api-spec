@@ -8118,11 +8118,13 @@ components:
               description: The latitude of the location
               examples:
                 - 13.7563
+                - null
             long:
               type: number
               description: The longitude of the location
               examples:
                 - 100.5018
+                - null
         photos:
           type: array
           items:
@@ -8136,12 +8138,13 @@ components:
           default: null
           examples:
             - 5
+            - null
         numReview:
           type: number
           description: The number of reviews of the experience
-          default: null
           examples:
             - 2.1
+            - null
         redeemStart:
           type: string
           description: The redeem start date of the experience
@@ -8149,10 +8152,10 @@ components:
             - "2021-01-01"
         redeemEnd:
           type: string
-          default: null
           description: The redeem end date of the experience
           examples:
             - "2021-12-31"
+            - null
         isPrivate:
           type: boolean
           description: The status of the experience

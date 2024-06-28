@@ -473,6 +473,7 @@ paths:
               - mutalu
           required: true
         - $ref: "#/components/parameters/accept-Language"
+        - $ref: "#/components/parameters/preferred-currency"
       responses:
         "200":
           description: The cross sell hotel
@@ -5429,7 +5430,7 @@ paths:
                               examples:
                                 - Reward Description
         "401":
-          $ref: "#/components/responses/AuthSuccessResponse"
+          $ref: "#/components/responses/UnauthorizedError"
         "405":
           $ref: "#/components/responses/MethodNotAllowedError"
   /v2/countryOfPassportList:
@@ -8188,6 +8189,7 @@ components:
           - EUR
           - JPY
           - CNY
+        default: THB
       description: The preferred currency of the user
     klubCategory:
       name: klubCategory
@@ -8246,6 +8248,36 @@ components:
                 default: false
     AuthSuccessResponse:
       description: successful authentication response
+      headers:
+        Server:
+          description: The server name
+          schema:
+            type: string
+            examples:
+              - nginx
+        Content-Type:
+          description: The content type
+          schema:
+            type: string
+            examples:
+              - application/json
+        Content-Encoding:
+          description: The content encoding
+          schema:
+            type: string
+            examples:
+              - gzip
+        Content-Length:
+          description: The content length
+          schema:
+            type: string
+            examples:
+              - "1024"
+        Date:
+          description: The response date
+          schema:
+            type: string
+            format: date-time
       content:
         application/json:
           schema:

@@ -5,7 +5,7 @@ info:
     This is the GoApi documentation. You can find out more about the project on the [GoApi Repository](https://gl.traveligo.com/t1/go-api).
     Some useful links:
     - [GoApi Repository](https://gl.traveligo.com/t1/go-api)
-  version: 1.4.23
+  version: 1.4.24
   license:
     name: Internal
     url: "https://gl.traveligo.com/"
@@ -4646,7 +4646,7 @@ paths:
           $ref: "#/components/responses/UnauthorizedError"
         "405":
           $ref: "#/components/responses/MethodNotAllowedError"
-  /v2/flight/flightSeo:
+  /v2/flight/flightsSeo:
     get:
       tags:
         - flight
@@ -4655,15 +4655,28 @@ paths:
       operationId: getFlightSeo
       parameters:
         - $ref: "#/components/parameters/accept-Language"
-        - $ref: "#/components/parameters/limit"
+        - name: limit
+          in: query
+          description: The limit of the promotion list
+          schema:
+            type: number
+          required: true
         - in: query
           name: citySlug
           schema:
             type: string
+          required: true
         - in: query
           name: countrySlug
           schema:
             type: string
+          required: true
+        - in: query
+          name: page
+          schema:
+            type: number
+            minimum: 1
+          required: true
       responses:
         "200":
           description: OK
@@ -4707,6 +4720,7 @@ paths:
                     description: The total number of pages
                     example: 1
                   flightOffer:
+                    default: null
                     type: array
                     items:
                       description: Flight offer Object
@@ -4817,7 +4831,7 @@ paths:
                     description: Flight city description Object
                     type: object
                     allOf:
-                      - $ref: "#/paths/~1v2~1flight~1flightSeo/get/responses/200/content/application~1json/schema/properties/breadcrumbs"
+                      - $ref: "#/paths/~1v2~1flight~1flightsSeo/get/responses/200/content/application~1json/schema/properties/breadcrumbs"
                       - type: object
                         properties:
                           cityLatitude:
@@ -4845,13 +4859,22 @@ paths:
                           type: string
                           description: The airport code
                           example: BKK
+                        airportInCountry:
+                          type: string
+                          default: null
+                        cityInCountry:
+                          type: string
+                          default: null
+                        aboutCountry:
+                          type: string
+                          default: null
                   hotelData:
                     description: Flight hotel data Object
                     type: object
                     properties:
                       breadcrumbs:
                         allOf:
-                          - $ref: "#/paths/~1v2~1flight~1flightSeo/get/responses/200/content/application~1json/schema/properties/breadcrumbs"
+                          - $ref: "#/paths/~1v2~1flight~1flightsSeo/get/responses/200/content/application~1json/schema/properties/breadcrumbs"
                           - type: object
                             properties:
                               areaName:

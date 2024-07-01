@@ -5,7 +5,7 @@ info:
     This is the GoApi documentation. You can find out more about the project on the [GoApi Repository](https://gl.traveligo.com/t1/go-api).
     Some useful links:
     - [GoApi Repository](https://gl.traveligo.com/t1/go-api)
-  version: 1.4.24
+  version: 1.4.25
   license:
     name: Internal
     url: "https://gl.traveligo.com/"
@@ -5130,6 +5130,12 @@ paths:
           schema:
             type: string
         - in: query
+          name: arrivalAirport
+          required: true
+          description: The arrival airport code (IATA)
+          schema:
+            type: string
+        - in: query
           name: departureDate
           required: true
           description: The departure date in YYYY-MM-DD format
@@ -5495,7 +5501,7 @@ paths:
           description: The booking class for the flight
           required: true
           schema:
-            $ref: "#/paths/~1v2~1flight~1fares/get/parameters/8/schema"
+            $ref: "#/paths/~1v2~1flight~1fares/get/parameters/9/schema"
         - in: query
           name: "route[0][departureAirport]"
           required: true
@@ -6461,8 +6467,8 @@ paths:
                                 type: string
                                 description: The code share status
                                 examples:
-                                  - true
-                                  - false
+                                  - "True"
+                                  - "False"
                               EquipmentCode:
                                 type: string
                                 description: The equipment code
@@ -6502,8 +6508,8 @@ paths:
                                 type: string
                                 description: Whether there is a technical stop
                                 examples:
-                                  - false
-                                  - true
+                                  - "False"
+                                  - "True"
                               TechStopLocation:
                                 type: string
                                 description: The technical stop location

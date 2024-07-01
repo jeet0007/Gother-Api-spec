@@ -5,7 +5,7 @@ info:
     This is the GoApi documentation. You can find out more about the project on the [GoApi Repository](https://gl.traveligo.com/t1/go-api).
     Some useful links:
     - [GoApi Repository](https://gl.traveligo.com/t1/go-api)
-  version: 1.4.22
+  version: 1.4.23
   license:
     name: Internal
     url: "https://gl.traveligo.com/"
@@ -93,6 +93,35 @@ paths:
                     description: The status code
                     examples:
                       - 200
+          headers:
+            Server:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Server"
+            Content-Type:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Content-Type"
+            Content-Encoding:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Content-Encoding"
+            Content-Length:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Content-Length"
+            Date:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Date"
+            X-Powered-By:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/X-Powered-By"
+            Connection:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Connection"
+            Expires:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Date"
+            Cache-Control:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Cache-Control"
+            Pragma:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Pragma"
+            Access-Control-Allow-Origin:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Access-Control-Allow-Origin"
+            Access-Control-Allow-Methods:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Access-Control-Allow-Methods"
+            Access-Control-Allow-Headers:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Access-Control-Allow-Headers"
+            Vary:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Vary"
         "401":
           description: The token is invalid
           content:
@@ -864,9 +893,416 @@ paths:
                   data:
                     type: array
                     items:
-                      $ref: "#/components/schemas/ExperienceCrossSellObject"
+                      description: Experience cross sell object
+                      type: object
+                      properties:
+                        experienceId:
+                          type: number
+                          description: The id of the experience
+                          examples:
+                            - 1
+                        name:
+                          type: string
+                          description: The name of the experience
+                          examples:
+                            - ทดสอบชื่อไทย
+                        slug:
+                          type: string
+                          description: The slug of the experience
+                          examples:
+                            - experience-slug
+                        areaName:
+                          type: string
+                          description: The area name of the experience
+                          examples:
+                            - สัตหีบ
+                        areaSlug:
+                          type: string
+                          description: The area slug of the experience
+                          examples:
+                            - sattahip
+                        cityName:
+                          type: string
+                          description: The city name of the experience
+                          examples:
+                            - ชลบุรี
+                        citySlug:
+                          type: string
+                          description: The city slug of the experience
+                          examples:
+                            - chonburi
+                        countryName:
+                          type: string
+                          description: The country name of the experience
+                          examples:
+                            - ประเทศไทย
+                        countrySlug:
+                          type: string
+                          description: The country slug of the experience
+                          examples:
+                            - thailand
+                        tier:
+                          $ref: "#/paths/~1v2~1experience~1preAllocate/post/responses/200/content/application~1json/schema/properties/data/properties/tier"
+                        ticketType:
+                          $ref: "#/paths/~1v2~1experience~1categories/get/responses/200/content/application~1json/schema/properties/data/items/properties/group"
+                        isFavourite:
+                          type: boolean
+                          description: Wether the experience is favorite or not
+                          examples:
+                            - true
+                        isExclusive:
+                          type: boolean
+                          description: Wether the experience is exclusive or not
+                          examples:
+                            - true
+                        klubCategory:
+                          type: object
+                          description: The category of the experience
+                          properties:
+                            id:
+                              type: string
+                            name:
+                              type: string
+                              description: The name of the category
+                              examples:
+                                - Theme Park
+                            slug:
+                              type: string
+                              description: The slug of the category
+                              examples:
+                                - theme-park
+                        category:
+                          type: array
+                          description: The category of the experience
+                          items:
+                            properties:
+                              name:
+                                type: string
+                                description: The name of the category
+                                examples:
+                                  - Theme Park
+                              slug:
+                                type: string
+                                description: The slug of the category
+                                examples:
+                                  - theme-park
+                        location:
+                          type: object
+                          properties:
+                            lat:
+                              type: number
+                              description: The latitude of the experience
+                              examples:
+                                - 13.7563
+                            long:
+                              type: number
+                              description: The longitude of the experience
+                              examples:
+                                - 100.5018
+                        photos:
+                          type: array
+                          description: The photos of the experience
+                          items:
+                            type: string
+                            examples:
+                              - "https://www.example.com/photo.jpg"
+                        rating:
+                          type: number
+                          description: The rating of the experience
+                          examples:
+                            - 5
+                        numReview:
+                          type: number
+                          description: The number of the reviews of the experience
+                          examples:
+                            - 2.1
+                        redeemStart:
+                          type: string
+                          description: The redeem start date of the experience
+                          examples:
+                            - "2021-01-01"
+                        redeemEnd:
+                          type: string
+                          description: The redeem end date of the experience
+                          examples:
+                            - "2021-12-31"
+                        isPrivate:
+                          type: boolean
+                          description: Wether the experience is private or not
+                          examples:
+                            - true
+                        prices:
+                          description: Price object
+                          type: object
+                          properties:
+                            id:
+                              type: string
+                              description: The id of the price
+                              examples:
+                                - "1"
+                            type:
+                              type: string
+                              description: The type of the price
+                              examples:
+                                - ADULT
+                            nameEn:
+                              type: string
+                              description: The name of the price in English
+                              examples:
+                                - Adult
+                            nameTh:
+                              type: string
+                              description: The name of the price in Thai
+                              examples:
+                                - ผู้ใหญ่
+                            price:
+                              type: number
+                              description: The price of the price
+                              examples:
+                                - 700
+                            originalPrice:
+                              type: number
+                              description: The original price of the price
+                              examples:
+                                - 800
+                            exclusivePrice:
+                              type: number
+                              description: The exclusive price of the price
+                              examples:
+                                - 700
+                            settlementPrice:
+                              type: number
+                              description: The settlement price of the price
+                              examples:
+                                - 350
+                            currency:
+                              type: string
+                              description: The currency of the price
+                              examples:
+                                - THB
+                        exclusiveHeader:
+                          type: object
+                          properties:
+                            banner:
+                              description: Banner object
+                              type: object
+                              properties:
+                                background:
+                                  type: string
+                                  description: The background of the banner
+                                  examples:
+                                    - "https://www.example.com/banner.jpg"
+                                bannerImage:
+                                  type: string
+                                  description: The banner image of the banner
+                                  examples:
+                                    - "https://www.example.com/banner.jpg"
+                                textTitleBanner1:
+                                  type: string
+                                  description: The text title banner 1 of the banner
+                                  examples:
+                                    - Banner Title 1
+                                textTitleBanner2:
+                                  type: string
+                                  description: The text title banner 2 of the banner
+                                  examples:
+                                    - Banner Title 2
+                                textDescriptBanner1:
+                                  type: string
+                                  description: The text description banner 1 of the banner
+                                  examples:
+                                    - Banner Description 1
+                                textDescriptBanner2:
+                                  type: string
+                                  description: The text description banner 2 of the banner
+                                  examples:
+                                    - Banner Description 2
+                                textDescriptBanner3:
+                                  type: string
+                                  description: The text description banner 3 of the banner
+                                  examples:
+                                    - Banner Description 3
+                            exclusiveContainer:
+                              type: object
+                              description: The exclusive container of the experience
+                              properties:
+                                quota:
+                                  type: object
+                                  properties:
+                                    message:
+                                      type: string
+                                      description: The message of the quota
+                                      examples:
+                                        - Quota Message
+                                    location:
+                                      type: string
+                                      description: The location of the event
+                                      examples:
+                                        - ภูเก็ต
+                                    date:
+                                      type: string
+                                      description: The date of the event
+                                      examples:
+                                        - "2022-01-01"
+                                    rating:
+                                      type: number
+                                      description: The rating of the event
+                                      examples:
+                                        - 5
+                                    review:
+                                      type: number
+                                      description: The review of the event
+                                      examples:
+                                        - 2.1
+                                exclusiveBanner:
+                                  description: The exclusive banner of the klub
+                                  type: object
+                                  properties:
+                                    title:
+                                      type: string
+                                      description: The title of the exclusive banner
+                                      examples:
+                                        - Exclusive Banner Title
+                                    description:
+                                      type: string
+                                      description: The description of the exclusive banner
+                                      examples:
+                                        - Exclusive Banner Description
+                                    route:
+                                      type: string
+                                      description: The route of the exclusive banner in the platform
+                                      examples:
+                                        - home
+                                    image:
+                                      type: object
+                                      description: The image of the exclusive banner
+                                      properties:
+                                        background:
+                                          type: string
+                                          description: The background image of the exclusive banner
+                                          examples:
+                                            - "https://klub-image.com/klub-exclusive.jpg"
+                                        people:
+                                          type: string
+                                          description: The people image of the exclusive banner
+                                          examples:
+                                            - "https://klub-image.com/klub-people.jpg"
+                                        shape:
+                                          type: string
+                                          description: The shape image of the exclusive banner
+                                          examples:
+                                            - "https://klub-image.com/klub-shape.jpg"
+                                        shapeMobile:
+                                          type: string
+                                          description: The shape mobile image of the exclusive banner
+                                          examples:
+                                            - "https://klub-image.com/klub-shape-mobile.jpg"
+                                        color:
+                                          type: string
+                                          default: null
+                                          description: The color of the exclusive banner
+                                          examples:
+                                            - "#50D77A"
+                                media:
+                                  description: The media object
+                                  properties:
+                                    type:
+                                      type: string
+                                      description: The type of the media
+                                      examples:
+                                        - video
+                                    caption:
+                                      type: string
+                                      description: The caption of the media
+                                      examples:
+                                        - Media Caption
+                                    url:
+                                      type: string
+                                      description: The url of the media
+                                      examples:
+                                        - "https://klub-image.com/klub-media.jpg"
+                            buttonBanner:
+                              type: object
+                              description: The button banner of the experience
+                              properties:
+                                icon:
+                                  type: string
+                                  description: The icon of the button
+                                  examples:
+                                    - "https://www.example.com/icon.jpg"
+                                klubName:
+                                  type: string
+                                  description: The klub name of the button
+                                  examples:
+                                    - Klub Name
+                            cardInfluencer:
+                              type: object
+                              description: The influencer card of the experience
+                              properties:
+                                imgInflu:
+                                  type: string
+                                  description: The image of the influencer
+                                  examples:
+                                    - "https://www.example.com/influ.jpg"
+                                nameInflu:
+                                  type: string
+                                  description: The name of the influencer
+                                  examples:
+                                    - Influencer Name
+                                detailInflu:
+                                  type: string
+                                  description: The detail of the influencer
+                                  examples:
+                                    - Influencer Detail
+                            airline:
+                              type: object
+                              properties:
+                                logoAirline:
+                                  type: string
+                                  description: The title logo of the airline
+                                  examples:
+                                    - "https://www.example.com/logo.jpg"
+                                textTitleLogo:
+                                  type: string
+                                  description: The title of the logo
+                                  examples:
+                                    - Airline Title
+                                textDescriptLogo:
+                                  type: string
+                                  description: The description of the logo
+                                  examples:
+                                    - ""
+          headers:
+            Server:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Server"
+            Content-Type:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Content-Type"
+            Content-Encoding:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Content-Encoding"
+            Content-Length:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Content-Length"
+            Date:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Date"
+            X-Powered-By:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/X-Powered-By"
+            Connection:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Connection"
+            Expires:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Date"
+            Cache-Control:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Cache-Control"
+            Pragma:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Pragma"
+            Access-Control-Allow-Origin:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Access-Control-Allow-Origin"
+            Access-Control-Allow-Methods:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Access-Control-Allow-Methods"
+            Access-Control-Allow-Headers:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Access-Control-Allow-Headers"
+            Vary:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Vary"
         "401":
-          $ref: "#/components/responses/TokenExpiredError"
+          $ref: "#/components/responses/UnauthorizedError"
         "405":
           $ref: "#/components/responses/MethodNotAllowedError"
   /v2/experience/categories:
@@ -899,9 +1335,81 @@ paths:
                   data:
                     type: array
                     items:
-                      $ref: "#/components/schemas/ExperienceCategoryObject"
+                      description: Experience category object
+                      type: object
+                      properties:
+                        id:
+                          type: number
+                          description: The id of the category
+                          examples:
+                            - 1
+                        icon:
+                          type: string
+                          description: The icon of the category
+                          examples:
+                            - "https://www.example.com/icon.jpg"
+                        name:
+                          type: string
+                          description: The name of the category
+                          examples:
+                            - Theme Park
+                        group:
+                          description: Ticket type object
+                          type: string
+                          enum:
+                            - ticket
+                            - daytrip
+                            - event
+                            - voucher
+                        groupName:
+                          type: string
+                          description: The name of the group
+                          examples:
+                            - Theme Park
+                        ordering:
+                          type: number
+                          description: The ordering of the category
+                          examples:
+                            - 1
+                        slug:
+                          type: string
+                          description: The slug of the category
+                          examples:
+                            - theme-park
+                        isRecommend:
+                          type: boolean
+                          description: Wether the category is recommended or not
+          headers:
+            Server:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Server"
+            Content-Type:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Content-Type"
+            Content-Encoding:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Content-Encoding"
+            Content-Length:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Content-Length"
+            Date:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Date"
+            X-Powered-By:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/X-Powered-By"
+            Connection:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Connection"
+            Expires:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Date"
+            Cache-Control:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Cache-Control"
+            Pragma:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Pragma"
+            Access-Control-Allow-Origin:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Access-Control-Allow-Origin"
+            Access-Control-Allow-Methods:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Access-Control-Allow-Methods"
+            Access-Control-Allow-Headers:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Access-Control-Allow-Headers"
+            Vary:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Vary"
         "401":
-          $ref: "#/components/responses/TokenExpiredError"
+          $ref: "#/components/responses/UnauthorizedError"
         "405":
           $ref: "#/components/responses/MethodNotAllowedError"
   /v2/experience/tourist:
@@ -975,6 +1483,35 @@ paths:
                         type: array
                         items:
                           $ref: "#/paths/~1v2~1experience~1tourist/get/responses/200/content/application~1json/schema/properties/data/properties/experience/items"
+          headers:
+            Server:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Server"
+            Content-Type:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Content-Type"
+            Content-Encoding:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Content-Encoding"
+            Content-Length:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Content-Length"
+            Date:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Date"
+            X-Powered-By:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/X-Powered-By"
+            Connection:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Connection"
+            Expires:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Date"
+            Cache-Control:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Cache-Control"
+            Pragma:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Pragma"
+            Access-Control-Allow-Origin:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Access-Control-Allow-Origin"
+            Access-Control-Allow-Methods:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Access-Control-Allow-Methods"
+            Access-Control-Allow-Headers:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Access-Control-Allow-Headers"
+            Vary:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Vary"
         "401":
           $ref: "#/components/responses/UnauthorizedError"
         "405":
@@ -985,15 +1522,29 @@ paths:
         - experience
       security:
         - bearerAuth: []
-        - dataToken: []
       summary: Pre allocate experience
       operationId: postPreAllocateExperience
       description: Pre allocate experience this is an optional step to allocate experience before booking to check for availability of the product
       parameters:
         - $ref: "#/components/parameters/accept-Language"
+        - $ref: "#/components/parameters/data-Token"
         - $ref: "#/components/parameters/preferred-currency"
       requestBody:
-        $ref: "#/components/requestBodies/PreAllocateRequest"
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                key:
+                  type: string
+                  description: The key of the package used as reference in the payment process
+                  examples:
+                    - someKey
+                tickets:
+                  $ref: "#/paths/~1v2~1experience~1allocate/post/requestBody/content/multipart~1form-data/schema/properties/tickets"
+              required:
+                - key
+                - tickets
       responses:
         "200":
           description: Pre allocate experience
@@ -1011,9 +1562,297 @@ paths:
                     description: The message
                     default: Pre allocate experience
                   data:
-                    $ref: "#/components/schemas/PreAllocationObject"
+                    description: The pre allocation object provides the summary of the order
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        description: The id of the pre allocation
+                        examples:
+                          - "1"
+                      ticket_name:
+                        type: string
+                        description: The name of the ticket
+                        examples:
+                          - Ticket Name
+                      ticket_slug:
+                        type: string
+                        description: The slug of the ticket
+                        examples:
+                          - ticket-slug
+                      tier:
+                        description: Tier type object
+                        type: string
+                        enum:
+                          - exclusive
+                          - handpick
+                          - general
+                      mobile_number:
+                        type: string
+                        description: The mobile number
+                        examples:
+                          - 0812345678
+                      photo_cover_path:
+                        type: string
+                        description: The photo cover path for the ticket summary
+                        examples:
+                          - "https://www.example.com/photo.jpg"
+                      expired:
+                        type: string
+                        format: date-time
+                        description: The expiry date of the ticket
+                        examples:
+                          - "2024-05-30 12:52:14"
+                      questions:
+                        type: array
+                        description: The questions of the ticket
+                        default: []
+                        items:
+                          description: Question's object
+                          type: object
+                          properties:
+                            id:
+                              type: number
+                              description: The id of the question
+                              examples:
+                                - 1
+                            question:
+                              type: string
+                              description: The question
+                              examples:
+                                - What is your name?
+                            options:
+                              type: array
+                              description: The options of the question
+                              default: []
+                              items:
+                                type: string
+                                examples:
+                                  - Option one
+                            optional:
+                              type: boolean
+                              description: Wether the question is optional or not
+                              default: false
+                            type:
+                              type: object
+                              description: The type of the question
+                              properties:
+                                name:
+                                  type: string
+                                  description: The name of the type
+                                  examples:
+                                    - FREETEXT
+                                    - OPTION
+                      itineraryDetail:
+                        type: array
+                        description: The itinerary detail of the package
+                        items:
+                          description: Itinerary detail object
+                          type: object
+                          properties:
+                            photoPath:
+                              type: string
+                              description: The photo path of the itinerary
+                              examples:
+                                - "https://www.example.com/photo.jpg"
+                            detail:
+                              type: string
+                              description: The detail of the itinerary
+                              examples:
+                                - Itinerary detail
+                            time:
+                              type: string
+                              description: The time of the itinerary
+                              examples:
+                                - "10:00"
+                                - "12:00"
+                                - "14:00"
+                            addressDetail:
+                              type: string
+                              description: The address detail of the itinerary
+                              examples:
+                                - Address detail
+                            airportId:
+                              type: number
+                              description: The airport id of the itinerary
+                              examples:
+                                - 1
+                            countryId:
+                              type: number
+                              description: The country id of the itinerary
+                              examples:
+                                - 1
+                            areaId:
+                              type: number
+                              description: The area id of the itinerary
+                              examples:
+                                - 1
+                            cityId:
+                              type: number
+                              description: The city id of the itinerary
+                              examples:
+                                - 1
+                      meetingPoint:
+                        $ref: "#/paths/~1v2~1experience~1allocate/post/requestBody/content/multipart~1form-data/schema/properties/meetingPoint"
+                      freeCancellation:
+                        type: boolean
+                        description: Wether the ticket is free cancellation or not
+                        default: false
+                      cancellationPolicy:
+                        description: Cancellation policy object
+                        type: object
+                        default: null
+                        properties:
+                          chargeType:
+                            type: string
+                            enum:
+                              - NonRefundable
+                              - FreeCancel
+                      photoPath:
+                        type: string
+                        description: The photo path of the ticket
+                        examples:
+                          - "https://www.example.com/photo.jpg"
+                        default: null
+                      howToUse:
+                        type: object
+                        description: The how to use of the package
+                        properties:
+                          header:
+                            type: string
+                            description: The header of the how to use
+                            examples:
+                              - How to use header
+                          list:
+                            type: array
+                            description: The list of the how to use
+                            items:
+                              type: string
+                              examples:
+                                - How to use one
+                      termsAndConditions:
+                        type: object
+                        description: The terms and conditions of the package
+                        properties:
+                          title:
+                            type: string
+                            description: The title of the terms and conditions
+                            examples:
+                              - Terms and conditions header
+                          description:
+                            type: array
+                            description: The list of the terms and conditions
+                            items:
+                              type: string
+                              examples:
+                                - Terms and conditions one
+                      redeemStart:
+                        type: string
+                        description: The redeem start date of the ticket
+                        examples:
+                          - "2021-01-01"
+                      redeemEnd:
+                        type: string
+                        description: The redeem end date of the ticket will be future date from redeem start
+                        examples:
+                          - "2021-12-31"
+                      area_slug:
+                        type: string
+                        description: The area slug of the ticket
+                        examples:
+                          - area-slug
+                      city_slug:
+                        type: string
+                        description: The city slug of the ticket
+                        examples:
+                          - city-slug
+                      country_slug:
+                        type: string
+                        description: The country slug of the ticket
+                        examples:
+                          - country-slug
+                      totalAdult:
+                        type: number
+                        description: The total adult of the ticket
+                        examples:
+                          - 1
+                      totalChild:
+                        type: number
+                        description: The total child of the ticket
+                        examples:
+                          - 1
+                      totalSenior:
+                        type: number
+                        description: The total senior of the ticket
+                        examples:
+                          - 1
+                      totalPrepack:
+                        type: number
+                        description: The total prepack of the ticket
+                        examples:
+                          - 1
+                      totalAmount:
+                        type: number
+                        description: The total amount of the ticket
+                        examples:
+                          - 100
+                      totalPrice:
+                        type: number
+                        description: The total price of the ticket
+                        examples:
+                          - 100
+                      currency:
+                        type: string
+                        description: The currency of the ticket prices
+                        examples:
+                          - THB
+                      keySearchTimeExpire:
+                        type: number
+                        description: The duration of the key search time to expire
+                        default: 3600
+                        examples:
+                          - 3600
+                      minPax:
+                        type: number
+                        description: The minimum pax of the ticket
+                        examples:
+                          - 1
+                      maxPax:
+                        type: number
+                        description: The maximum pax of the ticket
+                        examples:
+                          - 10
+          headers:
+            Server:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Server"
+            Content-Type:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Content-Type"
+            Content-Encoding:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Content-Encoding"
+            Content-Length:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Content-Length"
+            Date:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Date"
+            X-Powered-By:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/X-Powered-By"
+            Connection:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Connection"
+            Expires:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Date"
+            Cache-Control:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Cache-Control"
+            Pragma:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Pragma"
+            Access-Control-Allow-Origin:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Access-Control-Allow-Origin"
+            Access-Control-Allow-Methods:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Access-Control-Allow-Methods"
+            Access-Control-Allow-Headers:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Access-Control-Allow-Headers"
+            Vary:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Vary"
         "401":
-          $ref: "#/components/responses/TokenExpiredError"
+          $ref: "#/components/responses/UnauthorizedError"
         "405":
           $ref: "#/components/responses/MethodNotAllowedError"
   /v2/experience/allocate:
@@ -1022,15 +1861,129 @@ paths:
         - experience
       security:
         - bearerAuth: []
-        - dataToken: []
       summary: Allocate experience
       description: Allocate is an mandatory step to generate the payment link for the user to book the experience
       operationId: postAllocateExperience
       parameters:
         - $ref: "#/components/parameters/accept-Language"
+        - $ref: "#/components/parameters/data-Token"
         - $ref: "#/components/parameters/preferred-currency"
       requestBody:
-        $ref: "#/components/requestBodies/AllocateRequest"
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                key:
+                  type: string
+                  description: The key of the package used as reference in the payment process
+                  examples:
+                    - someKey
+                contactTitle:
+                  type: string
+                  description: The title of the contact person
+                  examples:
+                    - Mr
+                    - Mrs
+                    - Ms
+                contactFirstname:
+                  type: string
+                  description: The first name of the contact person
+                  examples:
+                    - John
+                contactLastname:
+                  type: string
+                  description: The last name of the contact person
+                  examples:
+                    - Doe
+                contactEmail:
+                  type: string
+                  description: The email of the contact person
+                  examples:
+                    - someOne@somemail.com
+                contactPhone:
+                  type: string
+                  description: The phone number of the contact person
+                  examples:
+                    - 0812345678
+                date:
+                  type: string
+                  format: date
+                  description: The date of the ticket
+                  examples:
+                    - "2021-01-01"
+                tickets:
+                  type: array
+                  description: The tickets of the package
+                  items:
+                    type: object
+                    properties:
+                      type:
+                        type: string
+                        description: The type of the ticket
+                        examples:
+                          - ADULT
+                          - CHILD
+                      amount:
+                        type: number
+                        description: The amount of the ticket
+                        examples:
+                          - 1
+                meetingPoint:
+                  description: meeting point for the experience
+                  type: object
+                  properties:
+                    id:
+                      type: number
+                      description: The id of the meeting point
+                      examples:
+                        - 1
+                    name:
+                      type: string
+                      description: The name of the meeting point
+                      examples:
+                        - Meeting Point Name
+                    address:
+                      type: string
+                      description: The address of the meeting point
+                      examples:
+                        - Meeting Point Address
+                    location:
+                      type: object
+                      description: The location of the meeting point
+                      properties:
+                        latitude:
+                          type: number
+                          description: The latitude of the meeting point
+                          examples:
+                            - 13.7563
+                        longitude:
+                          type: number
+                          description: The longitude of the meeting point
+                          examples:
+                            - 100.5018
+                    isCustom:
+                      type: boolean
+                      description: Wether the meeting point is custom or not
+                      examples:
+                        - true
+                answers:
+                  type: array
+                  description: The answers of the ticket
+                  default: []
+                  items:
+                    type: object
+                    properties:
+                      id:
+                        type: number
+                        description: The id of the question
+                        examples:
+                          - 1
+                      detail:
+                        type: string
+                        description: The detail of the answer
+                        examples:
+                          - Answer Detail
       responses:
         "200":
           description: Allocate experience
@@ -1048,9 +2001,251 @@ paths:
                     description: The message
                     default: Allocate experience
                   data:
-                    $ref: "#/components/schemas/AllocationObject"
+                    description: The allocation object provides the summary of the order with payment url
+                    type: object
+                    properties:
+                      bookingInternalNo:
+                        type: string
+                        description: The booking internal number
+                        examples:
+                          - "123456"
+                      rsvnId:
+                        type: string
+                        description: The reservation id
+                        examples:
+                          - "123456"
+                      currency:
+                        type: string
+                        description: The currency of the order
+                        examples:
+                          - THB
+                      tickets:
+                        type: object
+                        description: The ticket object
+                        properties:
+                          ticket_id:
+                            type: string
+                            description: The ticket id
+                            examples:
+                              - "1"
+                          ticket_category_id:
+                            type: string
+                            description: The ticket category id
+                            examples:
+                              - "1"
+                          ticket_supplier_id:
+                            type: string
+                            description: The ticket supplier id
+                            examples:
+                              - "1"
+                          wholesale_id:
+                            type: string
+                            description: The wholesale id
+                            examples:
+                              - "1"
+                          ticket_wholesale_id:
+                            type: string
+                            description: The ticket wholesale id
+                            examples:
+                              - "1"
+                          klub_category_id:
+                            type: string
+                            description: The klub category id
+                            examples:
+                              - "1"
+                          klub_category_name:
+                            type: string
+                            description: The klub category name
+                            examples:
+                              - diving
+                          klub_category_slug:
+                            type: string
+                            description: The klub category slug
+                            examples:
+                              - diving
+                          ticket_name:
+                            type: string
+                            description: The ticket name
+                            examples:
+                              - Ticket Name
+                          ticket_description:
+                            type: string
+                            description: The ticket description
+                            examples:
+                              - Ticket Description
+                          ticket_description_details:
+                            type: string
+                            description: The ticket description details (JSON string)
+                            examples:
+                              - Ticket Description Details
+                          address:
+                            type: string
+                            description: The address of the event
+                            examples:
+                              - Address
+                          area_id:
+                            type: string
+                            description: The area id
+                            examples:
+                              - "1"
+                          area_name:
+                            type: string
+                            description: The area name
+                            examples:
+                              - Area Name
+                          city_id:
+                            type: string
+                            description: The city id
+                            examples:
+                              - "1"
+                          city_name:
+                            type: string
+                            description: The city name
+                            examples:
+                              - City Name
+                          country_id:
+                            type: string
+                            description: The country id
+                            examples:
+                              - "1"
+                          country_name:
+                            type: string
+                            description: The country name
+                            examples:
+                              - Country Name
+                          ticket_slug:
+                            type: string
+                            description: The ticket slug
+                            examples:
+                              - ticket-slug
+                          latitude:
+                            default: null
+                            type: number
+                            description: The latitude of the hotel
+                            examples:
+                              - 13.7563
+                          longitude:
+                            default: null
+                            type: number
+                            description: The longitude of the hotel
+                            examples:
+                              - 100.5018
+                          mobile_number:
+                            type: string
+                            description: The mobile number
+                            examples:
+                              - 0812345678
+                          tier:
+                            $ref: "#/paths/~1v2~1experience~1preAllocate/post/responses/200/content/application~1json/schema/properties/data/properties/tier"
+                          ticket_type:
+                            type: string
+                            description: The ticket type
+                            examples:
+                              - ticket
+                              - daytrip
+                              - event
+                              - voucher
+                          time_duration:
+                            type: string
+                            description: The time duration
+                            examples:
+                              - 1 hour
+                              - 4 Hours - 1 Day
+                          available_language:
+                            type: string
+                            description: The available language (JSON string)
+                            examples:
+                              - '["th"]'
+                              - '["en"]'
+                          transportation_detail:
+                            type: string
+                            default: null
+                            description: The transportation detail
+                            examples:
+                              - Transportation Detail
+                          experience_detail:
+                            type: string
+                            description: The experience detail JSON string
+                            examples:
+                              - Experience Detail
+                          preparation_detail:
+                            type: string
+                            description: The preparation detail JSON string
+                            examples:
+                              - Preparation Detail
+                          price_condition:
+                            type: string
+                            description: The price condition JSON string
+                            examples:
+                              - Price Condition
+                          ticket_include:
+                            type: string
+                            description: The ticket include JSON string
+                            examples:
+                              - Ticket Include
+                          photo_cover_path:
+                            type: string
+                            description: The photo cover path
+                            examples:
+                              - "https://www.example.com/photo.jpg"
+                          is_best_selling:
+                            type: string
+                            description: Wether the ticket is best selling or not
+                            examples:
+                              - "1"
+                              - "0"
+                          is_top_rating:
+                            type: string
+                            description: Wether the ticket is top rating or not
+                            examples:
+                              - "1"
+                              - "0"
+                      totalAmount:
+                        type: number
+                        description: The total amount of the order
+                        examples:
+                          - 10
+                      totalPrice:
+                        type: number
+                        description: The total price of the order
+                        examples:
+                          - 10
+                      paymentUrl:
+                        type: string
+                        description: The payment url of the order
+                        examples:
+                          - "https://www.example.com/payment"
+          headers:
+            Server:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Server"
+            Content-Type:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Content-Type"
+            Content-Encoding:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Content-Encoding"
+            Content-Length:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Content-Length"
+            Date:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Date"
+            X-Powered-By:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/X-Powered-By"
+            Connection:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Connection"
+            Expires:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Date"
+            Cache-Control:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Cache-Control"
+            Pragma:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Pragma"
+            Access-Control-Allow-Origin:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Access-Control-Allow-Origin"
+            Access-Control-Allow-Methods:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Access-Control-Allow-Methods"
+            Access-Control-Allow-Headers:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Access-Control-Allow-Headers"
+            Vary:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Vary"
         "401":
-          $ref: "#/components/responses/TokenExpiredError"
+          $ref: "#/components/responses/UnauthorizedError"
         "405":
           $ref: "#/components/responses/MethodNotAllowedError"
   /v2/hotel/hotelsAvailable:
@@ -1456,6 +2651,35 @@ paths:
                           examples:
                             - true
                             - false
+          headers:
+            Server:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Server"
+            Content-Type:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Content-Type"
+            Content-Encoding:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Content-Encoding"
+            Content-Length:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Content-Length"
+            Date:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Date"
+            X-Powered-By:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/X-Powered-By"
+            Connection:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Connection"
+            Expires:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Date"
+            Cache-Control:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Cache-Control"
+            Pragma:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Pragma"
+            Access-Control-Allow-Origin:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Access-Control-Allow-Origin"
+            Access-Control-Allow-Methods:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Access-Control-Allow-Methods"
+            Access-Control-Allow-Headers:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Access-Control-Allow-Headers"
+            Vary:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Vary"
         "401":
           $ref: "#/components/responses/UnauthorizedError"
         "405":
@@ -1860,6 +3084,35 @@ paths:
                     description: The key search time expire
                     examples:
                       - 1
+          headers:
+            Server:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Server"
+            Content-Type:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Content-Type"
+            Content-Encoding:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Content-Encoding"
+            Content-Length:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Content-Length"
+            Date:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Date"
+            X-Powered-By:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/X-Powered-By"
+            Connection:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Connection"
+            Expires:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Date"
+            Cache-Control:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Cache-Control"
+            Pragma:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Pragma"
+            Access-Control-Allow-Origin:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Access-Control-Allow-Origin"
+            Access-Control-Allow-Methods:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Access-Control-Allow-Methods"
+            Access-Control-Allow-Headers:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Access-Control-Allow-Headers"
+            Vary:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Vary"
         "401":
           $ref: "#/components/responses/UnauthorizedError"
         "405":
@@ -1976,6 +3229,35 @@ paths:
                     type: integer
                     description: The total number of hotels
                     example: 1
+          headers:
+            Server:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Server"
+            Content-Type:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Content-Type"
+            Content-Encoding:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Content-Encoding"
+            Content-Length:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Content-Length"
+            Date:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Date"
+            X-Powered-By:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/X-Powered-By"
+            Connection:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Connection"
+            Expires:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Date"
+            Cache-Control:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Cache-Control"
+            Pragma:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Pragma"
+            Access-Control-Allow-Origin:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Access-Control-Allow-Origin"
+            Access-Control-Allow-Methods:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Access-Control-Allow-Methods"
+            Access-Control-Allow-Headers:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Access-Control-Allow-Headers"
+            Vary:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Vary"
         "401":
           $ref: "#/components/responses/UnauthorizedError"
         "405":
@@ -2121,6 +3403,35 @@ paths:
                       description: The tourist object area slug
                       examples:
                         - pathum-wan
+          headers:
+            Server:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Server"
+            Content-Type:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Content-Type"
+            Content-Encoding:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Content-Encoding"
+            Content-Length:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Content-Length"
+            Date:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Date"
+            X-Powered-By:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/X-Powered-By"
+            Connection:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Connection"
+            Expires:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Date"
+            Cache-Control:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Cache-Control"
+            Pragma:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Pragma"
+            Access-Control-Allow-Origin:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Access-Control-Allow-Origin"
+            Access-Control-Allow-Methods:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Access-Control-Allow-Methods"
+            Access-Control-Allow-Headers:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Access-Control-Allow-Headers"
+            Vary:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Vary"
         "401":
           $ref: "#/components/responses/UnauthorizedError"
         "405":
@@ -2184,6 +3495,35 @@ paths:
                             description: The distance
                             examples:
                               - 0.1 กม.
+          headers:
+            Server:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Server"
+            Content-Type:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Content-Type"
+            Content-Encoding:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Content-Encoding"
+            Content-Length:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Content-Length"
+            Date:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Date"
+            X-Powered-By:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/X-Powered-By"
+            Connection:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Connection"
+            Expires:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Date"
+            Cache-Control:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Cache-Control"
+            Pragma:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Pragma"
+            Access-Control-Allow-Origin:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Access-Control-Allow-Origin"
+            Access-Control-Allow-Methods:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Access-Control-Allow-Methods"
+            Access-Control-Allow-Headers:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Access-Control-Allow-Headers"
+            Vary:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Vary"
         "401":
           $ref: "#/components/responses/UnauthorizedError"
         "405":
@@ -2367,6 +3707,35 @@ paths:
                     type: string
                     description: The payment URL
                     example: "https://payment.example.com"
+          headers:
+            Server:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Server"
+            Content-Type:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Content-Type"
+            Content-Encoding:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Content-Encoding"
+            Content-Length:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Content-Length"
+            Date:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Date"
+            X-Powered-By:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/X-Powered-By"
+            Connection:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Connection"
+            Expires:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Date"
+            Cache-Control:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Cache-Control"
+            Pragma:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Pragma"
+            Access-Control-Allow-Origin:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Access-Control-Allow-Origin"
+            Access-Control-Allow-Methods:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Access-Control-Allow-Methods"
+            Access-Control-Allow-Headers:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Access-Control-Allow-Headers"
+            Vary:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Vary"
         "401":
           $ref: "#/components/responses/UnauthorizedError"
         "405":
@@ -3057,6 +4426,35 @@ paths:
                     examples:
                       - true
                       - false
+          headers:
+            Server:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Server"
+            Content-Type:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Content-Type"
+            Content-Encoding:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Content-Encoding"
+            Content-Length:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Content-Length"
+            Date:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Date"
+            X-Powered-By:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/X-Powered-By"
+            Connection:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Connection"
+            Expires:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Date"
+            Cache-Control:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Cache-Control"
+            Pragma:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Pragma"
+            Access-Control-Allow-Origin:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Access-Control-Allow-Origin"
+            Access-Control-Allow-Methods:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Access-Control-Allow-Methods"
+            Access-Control-Allow-Headers:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Access-Control-Allow-Headers"
+            Vary:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Vary"
         "401":
           $ref: "#/components/responses/UnauthorizedError"
         "405":
@@ -3148,6 +4546,35 @@ paths:
                     type: array
                     items:
                       type: string
+          headers:
+            Server:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Server"
+            Content-Type:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Content-Type"
+            Content-Encoding:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Content-Encoding"
+            Content-Length:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Content-Length"
+            Date:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Date"
+            X-Powered-By:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/X-Powered-By"
+            Connection:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Connection"
+            Expires:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Date"
+            Cache-Control:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Cache-Control"
+            Pragma:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Pragma"
+            Access-Control-Allow-Origin:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Access-Control-Allow-Origin"
+            Access-Control-Allow-Methods:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Access-Control-Allow-Methods"
+            Access-Control-Allow-Headers:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Access-Control-Allow-Headers"
+            Vary:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Vary"
         "401":
           $ref: "#/components/responses/UnauthorizedError"
         "405":
@@ -3611,6 +5038,35 @@ paths:
                                   description: The hotel number of reviews
                                   examples:
                                     - 100
+          headers:
+            Server:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Server"
+            Content-Type:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Content-Type"
+            Content-Encoding:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Content-Encoding"
+            Content-Length:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Content-Length"
+            Date:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Date"
+            X-Powered-By:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/X-Powered-By"
+            Connection:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Connection"
+            Expires:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Date"
+            Cache-Control:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Cache-Control"
+            Pragma:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Pragma"
+            Access-Control-Allow-Origin:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Access-Control-Allow-Origin"
+            Access-Control-Allow-Methods:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Access-Control-Allow-Methods"
+            Access-Control-Allow-Headers:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Access-Control-Allow-Headers"
+            Vary:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Vary"
         "401":
           $ref: "#/components/responses/UnauthorizedError"
         "405":
@@ -3724,6 +5180,35 @@ paths:
                         type: number
                         examples:
                           - 1616428800
+          headers:
+            Server:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Server"
+            Content-Type:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Content-Type"
+            Content-Encoding:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Content-Encoding"
+            Content-Length:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Content-Length"
+            Date:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Date"
+            X-Powered-By:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/X-Powered-By"
+            Connection:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Connection"
+            Expires:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Date"
+            Cache-Control:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Cache-Control"
+            Pragma:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Pragma"
+            Access-Control-Allow-Origin:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Access-Control-Allow-Origin"
+            Access-Control-Allow-Methods:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Access-Control-Allow-Methods"
+            Access-Control-Allow-Headers:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Access-Control-Allow-Headers"
+            Vary:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Vary"
         "401":
           $ref: "#/components/responses/UnauthorizedError"
         "405":
@@ -3920,6 +5405,35 @@ paths:
                           description: The total count of the recommended flight
                           examples:
                             - 1
+          headers:
+            Server:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Server"
+            Content-Type:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Content-Type"
+            Content-Encoding:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Content-Encoding"
+            Content-Length:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Content-Length"
+            Date:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Date"
+            X-Powered-By:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/X-Powered-By"
+            Connection:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Connection"
+            Expires:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Date"
+            Cache-Control:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Cache-Control"
+            Pragma:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Pragma"
+            Access-Control-Allow-Origin:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Access-Control-Allow-Origin"
+            Access-Control-Allow-Methods:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Access-Control-Allow-Methods"
+            Access-Control-Allow-Headers:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Access-Control-Allow-Headers"
+            Vary:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Vary"
         "401":
           $ref: "#/components/responses/UnauthorizedError"
         "405":
@@ -4523,6 +6037,35 @@ paths:
                           - someLongToken
                 discriminator:
                   propertyName: departure
+          headers:
+            Server:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Server"
+            Content-Type:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Content-Type"
+            Content-Encoding:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Content-Encoding"
+            Content-Length:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Content-Length"
+            Date:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Date"
+            X-Powered-By:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/X-Powered-By"
+            Connection:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Connection"
+            Expires:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Date"
+            Cache-Control:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Cache-Control"
+            Pragma:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Pragma"
+            Access-Control-Allow-Origin:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Access-Control-Allow-Origin"
+            Access-Control-Allow-Methods:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Access-Control-Allow-Methods"
+            Access-Control-Allow-Headers:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Access-Control-Allow-Headers"
+            Vary:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Vary"
         "401":
           $ref: "#/components/responses/UnauthorizedError"
         "405":
@@ -5050,6 +6593,35 @@ paths:
                   TypeOfFares:
                     type: string
                     description: The number of fares M(multi destination)
+          headers:
+            Server:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Server"
+            Content-Type:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Content-Type"
+            Content-Encoding:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Content-Encoding"
+            Content-Length:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Content-Length"
+            Date:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Date"
+            X-Powered-By:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/X-Powered-By"
+            Connection:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Connection"
+            Expires:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Date"
+            Cache-Control:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Cache-Control"
+            Pragma:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Pragma"
+            Access-Control-Allow-Origin:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Access-Control-Allow-Origin"
+            Access-Control-Allow-Methods:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Access-Control-Allow-Methods"
+            Access-Control-Allow-Headers:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Access-Control-Allow-Headers"
+            Vary:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Vary"
         "401":
           $ref: "#/components/responses/UnauthorizedError"
         "405":
@@ -5251,6 +6823,35 @@ paths:
                     type: string
                     description: The seat map url
                     example: "https://www.bangkokair.com/seatmap/PG215"
+          headers:
+            Server:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Server"
+            Content-Type:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Content-Type"
+            Content-Encoding:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Content-Encoding"
+            Content-Length:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Content-Length"
+            Date:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Date"
+            X-Powered-By:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/X-Powered-By"
+            Connection:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Connection"
+            Expires:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Date"
+            Cache-Control:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Cache-Control"
+            Pragma:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Pragma"
+            Access-Control-Allow-Origin:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Access-Control-Allow-Origin"
+            Access-Control-Allow-Methods:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Access-Control-Allow-Methods"
+            Access-Control-Allow-Headers:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Access-Control-Allow-Headers"
+            Vary:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Vary"
         "401":
           $ref: "#/components/responses/UnauthorizedError"
         "405":
@@ -5429,6 +7030,35 @@ paths:
                               description: The reward description
                               examples:
                                 - Reward Description
+          headers:
+            Server:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Server"
+            Content-Type:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Content-Type"
+            Content-Encoding:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Content-Encoding"
+            Content-Length:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Content-Length"
+            Date:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Date"
+            X-Powered-By:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/X-Powered-By"
+            Connection:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Connection"
+            Expires:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Date"
+            Cache-Control:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Cache-Control"
+            Pragma:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Pragma"
+            Access-Control-Allow-Origin:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Access-Control-Allow-Origin"
+            Access-Control-Allow-Methods:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Access-Control-Allow-Methods"
+            Access-Control-Allow-Headers:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Access-Control-Allow-Headers"
+            Vary:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Vary"
         "401":
           $ref: "#/components/responses/UnauthorizedError"
         "405":
@@ -5959,7 +7589,7 @@ components:
                   type: string
                   description: Name of the club
                   examples:
-                    - Coffee & Tea KLUB
+                    - coffee & Tea KLUB
                 titleBack:
                   type: string
                   description: The title of the klub bellow the title color
@@ -7035,44 +8665,6 @@ components:
             type: string
             examples:
               - Terms and conditions one
-    MeetingPointObject:
-      description: meeting point for the experience
-      type: object
-      properties:
-        id:
-          type: number
-          description: The id of the meeting point
-          examples:
-            - 1
-        name:
-          type: string
-          description: The name of the meeting point
-          examples:
-            - Meeting Point Name
-        address:
-          type: string
-          description: The address of the meeting point
-          examples:
-            - Meeting Point Address
-        location:
-          type: object
-          description: The location of the meeting point
-          properties:
-            latitude:
-              type: number
-              description: The latitude of the meeting point
-              examples:
-                - 13.7563
-            longitude:
-              type: number
-              description: The longitude of the meeting point
-              examples:
-                - 100.5018
-        isCustom:
-          type: boolean
-          description: Wether the meeting point is custom or not
-          examples:
-            - true
     ExperienceDetailObject:
       description: Experience detail object
       type: object
@@ -7469,431 +9061,6 @@ components:
                 description: The body of the highlight
                 examples:
                   - Highlight Body
-    CancellationPolicyObject:
-      description: Cancellation policy object
-      type: object
-      default: null
-      properties:
-        chargeType:
-          type: string
-          enum:
-            - NonRefundable
-            - FreeCancel
-    PreAllocationObject:
-      description: The pre allocation object provides the summary of the order
-      type: object
-      properties:
-        id:
-          type: string
-          description: The id of the pre allocation
-          examples:
-            - "1"
-        ticket_name:
-          type: string
-          description: The name of the ticket
-          examples:
-            - Ticket Name
-        ticket_slug:
-          type: string
-          description: The slug of the ticket
-          examples:
-            - ticket-slug
-        tier:
-          $ref: "#/components/schemas/TierType"
-        mobile_number:
-          type: string
-          description: The mobile number
-          examples:
-            - 0812345678
-        photo_cover_path:
-          type: string
-          description: The photo cover path for the ticket summary
-          examples:
-            - "https://www.example.com/photo.jpg"
-        expired:
-          type: string
-          format: date-time
-          description: The expiry date of the ticket
-          examples:
-            - "2024-05-30 12:52:14"
-        questions:
-          type: array
-          description: The questions of the ticket
-          default: []
-          items:
-            $ref: "#/components/schemas/QuestionObject"
-        itineraryDetail:
-          type: array
-          description: The itinerary detail of the package
-          items:
-            $ref: "#/components/schemas/ItineraryDetailObject"
-        meetingPoint:
-          $ref: "#/components/schemas/MeetingPointObject"
-        freeCancellation:
-          type: boolean
-          description: Wether the ticket is free cancellation or not
-          default: false
-        cancellationPolicy:
-          $ref: "#/components/schemas/CancellationPolicyObject"
-        photoPath:
-          type: string
-          description: The photo path of the ticket
-          examples:
-            - "https://www.example.com/photo.jpg"
-          default: null
-        howToUse:
-          $ref: "#/components/schemas/HowToUseObject"
-        termsAndConditions:
-          $ref: "#/components/schemas/TermsAndConditionsObject"
-        redeemStart:
-          type: string
-          description: The redeem start date of the ticket
-          examples:
-            - "2021-01-01"
-        redeemEnd:
-          type: string
-          description: The redeem end date of the ticket will be future date from redeem start
-          examples:
-            - "2021-12-31"
-        area_slug:
-          type: string
-          description: The area slug of the ticket
-          examples:
-            - area-slug
-        city_slug:
-          type: string
-          description: The city slug of the ticket
-          examples:
-            - city-slug
-        country_slug:
-          type: string
-          description: The country slug of the ticket
-          examples:
-            - country-slug
-        totalAdult:
-          type: number
-          description: The total adult of the ticket
-          examples:
-            - 1
-        totalChild:
-          type: number
-          description: The total child of the ticket
-          examples:
-            - 1
-        totalSenior:
-          type: number
-          description: The total senior of the ticket
-          examples:
-            - 1
-        totalPrepack:
-          type: number
-          description: The total prepack of the ticket
-          examples:
-            - 1
-        totalAmount:
-          type: number
-          description: The total amount of the ticket
-          examples:
-            - 100
-        totalPrice:
-          type: number
-          description: The total price of the ticket
-          examples:
-            - 100
-        currency:
-          type: string
-          description: The currency of the ticket prices
-          examples:
-            - THB
-        keySearchTimeExpire:
-          type: number
-          description: The duration of the key search time to expire
-          default: 3600
-          examples:
-            - 3600
-        minPax:
-          type: number
-          description: The minimum pax of the ticket
-          examples:
-            - 1
-        maxPax:
-          type: number
-          description: The maximum pax of the ticket
-          examples:
-            - 10
-    TicketObject:
-      type: array
-      description: The tickets of the package
-      items:
-        type: object
-        properties:
-          type:
-            type: string
-            description: The type of the ticket
-            examples:
-              - ADULT
-              - CHILD
-          amount:
-            type: number
-            description: The amount of the ticket
-            examples:
-              - 1
-    AllocationTicketObject:
-      type: object
-      description: The ticket object
-      properties:
-        ticket_id:
-          type: string
-          description: The ticket id
-          examples:
-            - "1"
-        ticket_category_id:
-          type: string
-          description: The ticket category id
-          examples:
-            - "1"
-        ticket_supplier_id:
-          type: string
-          description: The ticket supplier id
-          examples:
-            - "1"
-        wholesale_id:
-          type: string
-          description: The wholesale id
-          examples:
-            - "1"
-        ticket_wholesale_id:
-          type: string
-          description: The ticket wholesale id
-          examples:
-            - "1"
-        klub_category_id:
-          type: string
-          description: The klub category id
-          examples:
-            - "1"
-        klub_category_name:
-          type: string
-          description: The klub category name
-          examples:
-            - diving
-        klub_category_slug:
-          type: string
-          description: The klub category slug
-          examples:
-            - diving
-        ticket_name:
-          type: string
-          description: The ticket name
-          examples:
-            - Ticket Name
-        ticket_description:
-          type: string
-          description: The ticket description
-          examples:
-            - Ticket Description
-        ticket_description_details:
-          type: string
-          description: The ticket description details (JSON string)
-          examples:
-            - Ticket Description Details
-        address:
-          type: string
-          description: The address of the event
-          examples:
-            - Address
-        area_id:
-          type: string
-          description: The area id
-          examples:
-            - "1"
-        area_name:
-          type: string
-          description: The area name
-          examples:
-            - Area Name
-        city_id:
-          type: string
-          description: The city id
-          examples:
-            - "1"
-        city_name:
-          type: string
-          description: The city name
-          examples:
-            - City Name
-        country_id:
-          type: string
-          description: The country id
-          examples:
-            - "1"
-        country_name:
-          type: string
-          description: The country name
-          examples:
-            - Country Name
-        ticket_slug:
-          type: string
-          description: The ticket slug
-          examples:
-            - ticket-slug
-        latitude:
-          default: null
-          type: number
-          description: The latitude of the hotel
-          examples:
-            - 13.7563
-        longitude:
-          default: null
-          type: number
-          description: The longitude of the hotel
-          examples:
-            - 100.5018
-        mobile_number:
-          type: string
-          description: The mobile number
-          examples:
-            - 0812345678
-        tier:
-          $ref: "#/components/schemas/TierType"
-        ticket_type:
-          type: string
-          description: The ticket type
-          examples:
-            - ticket
-            - daytrip
-            - event
-            - voucher
-        time_duration:
-          type: string
-          description: The time duration
-          examples:
-            - 1 hour
-            - 4 Hours - 1 Day
-        available_language:
-          type: string
-          description: The available language (JSON string)
-          examples:
-            - '["th"]'
-            - '["en"]'
-        transportation_detail:
-          type: string
-          default: null
-          description: The transportation detail
-          examples:
-            - Transportation Detail
-        experience_detail:
-          type: string
-          description: The experience detail JSON string
-          examples:
-            - Experience Detail
-        preparation_detail:
-          type: string
-          description: The preparation detail JSON string
-          examples:
-            - Preparation Detail
-        price_condition:
-          type: string
-          description: The price condition JSON string
-          examples:
-            - Price Condition
-        ticket_include:
-          type: string
-          description: The ticket include JSON string
-          examples:
-            - Ticket Include
-        photo_cover_path:
-          type: string
-          description: The photo cover path
-          examples:
-            - "https://www.example.com/photo.jpg"
-        is_best_selling:
-          type: string
-          description: Wether the ticket is best selling or not
-          examples:
-            - "1"
-            - "0"
-        is_top_rating:
-          type: string
-          description: Wether the ticket is top rating or not
-          examples:
-            - "1"
-            - "0"
-    AllocationObject:
-      description: The allocation object provides the summary of the order with payment url
-      type: object
-      properties:
-        bookingInternalNo:
-          type: string
-          description: The booking internal number
-          examples:
-            - "123456"
-        rsvnId:
-          type: string
-          description: The reservation id
-          examples:
-            - "123456"
-        currency:
-          type: string
-          description: The currency of the order
-          examples:
-            - THB
-        tickets:
-          $ref: "#/components/schemas/AllocationTicketObject"
-        totalAmount:
-          type: number
-          description: The total amount of the order
-          examples:
-            - 10
-        totalPrice:
-          type: number
-          description: The total price of the order
-          examples:
-            - 10
-        paymentUrl:
-          type: string
-          description: The payment url of the order
-          examples:
-            - "https://www.example.com/payment"
-    ExperienceCategoryObject:
-      description: Experience category object
-      type: object
-      properties:
-        id:
-          type: number
-          description: The id of the category
-          examples:
-            - 1
-        icon:
-          type: string
-          description: The icon of the category
-          examples:
-            - "https://www.example.com/icon.jpg"
-        name:
-          type: string
-          description: The name of the category
-          examples:
-            - Theme Park
-        group:
-          $ref: "#/components/schemas/TicketType"
-        groupName:
-          type: string
-          description: The name of the group
-          examples:
-            - Theme Park
-        ordering:
-          type: number
-          description: The ordering of the category
-          examples:
-            - 1
-        slug:
-          type: string
-          description: The slug of the category
-          examples:
-            - theme-park
-        isRecommend:
-          type: boolean
-          description: Wether the category is recommended or not
     BannerObjectExclusive:
       description: Banner object
       type: object
@@ -8247,6 +9414,19 @@ components:
                 default: false
     AuthSuccessResponse:
       description: successful authentication response
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              token:
+                type: string
+                description: The auth token
+                format: JWT
+              expires:
+                type: string
+                description: The token expiration date
+                format: date-time
       headers:
         Server:
           description: The server name
@@ -8273,7 +9453,7 @@ components:
             examples:
               - "1024"
         Date:
-          description: The response date
+          description: A date-time string
           schema:
             type: string
             format: date-time
@@ -8291,10 +9471,7 @@ components:
             examples:
               - keep-alive
         Expires:
-          description: The expiration date
-          schema:
-            type: string
-            format: date-time
+          $ref: "#/components/responses/AuthSuccessResponse/headers/Date"
         Cache-Control:
           description: The cache control
           schema:
@@ -8302,24 +9479,38 @@ components:
             examples:
               - no-cache
         Pragma:
-          description: The pragma
+          description: The pragma directive
           schema:
             type: string
             examples:
               - no-cache
-      content:
-        application/json:
+        Access-Control-Allow-Origin:
+          description: The allowed origins
           schema:
-            type: object
-            properties:
-              token:
-                type: string
-                description: The auth token
-                format: JWT
-              expires:
-                type: string
-                description: The token expiration date
-                format: date-time
+            type: string
+            examples:
+              - "*"
+        Access-Control-Allow-Methods:
+          description: Used to specify the methods allowed when accessing the resource in response to a preflight request.
+          schema:
+            type: string
+            examples:
+              - GET
+              - POST
+        Access-Control-Allow-Headers:
+          description: Used in response to a preflight request to indicate which HTTP headers can be used when making the actual request.
+          schema:
+            type: string
+            examples:
+              - Content-Type
+              - Authorization
+        Vary:
+          description: Determines how to match future request headers to decide whether a cached response can be used rather than requesting a fresh one from the origin server.
+          schema:
+            type: string
+            examples:
+              - Accept-Encoding
+              - Accept-Language
     TokenExpiredError:
       description: Expired token
       content:
@@ -8350,88 +9541,6 @@ components:
                 type: string
                 description: The error message
                 default: Unknown method
-  requestBodies:
-    PreAllocateRequest:
-      content:
-        multipart/form-data:
-          schema:
-            type: object
-            properties:
-              key:
-                type: string
-                description: The key of the package used as reference in the payment process
-                examples:
-                  - someKey
-              tickets:
-                $ref: "#/components/schemas/TicketObject"
-            required:
-              - key
-              - tickets
-    AllocateRequest:
-      content:
-        multipart/form-data:
-          schema:
-            type: object
-            properties:
-              key:
-                type: string
-                description: The key of the package used as reference in the payment process
-                examples:
-                  - someKey
-              contactTitle:
-                type: string
-                description: The title of the contact person
-                examples:
-                  - Mr
-                  - Mrs
-                  - Ms
-              contactFirstname:
-                type: string
-                description: The first name of the contact person
-                examples:
-                  - John
-              contactLastname:
-                type: string
-                description: The last name of the contact person
-                examples:
-                  - Doe
-              contactEmail:
-                type: string
-                description: The email of the contact person
-                examples:
-                  - someOne@somemail.com
-              contactPhone:
-                type: string
-                description: The phone number of the contact person
-                examples:
-                  - 0812345678
-              date:
-                type: string
-                format: date
-                description: The date of the ticket
-                examples:
-                  - "2021-01-01"
-              tickets:
-                $ref: "#/components/schemas/TicketObject"
-              meetingPoint:
-                $ref: "#/components/schemas/MeetingPointObject"
-              answers:
-                type: array
-                description: The answers of the ticket
-                default: []
-                items:
-                  type: object
-                  properties:
-                    id:
-                      type: number
-                      description: The id of the question
-                      examples:
-                        - 1
-                    detail:
-                      type: string
-                      description: The detail of the answer
-                      examples:
-                        - Answer Detail
   securitySchemes:
     bearerAuth:
       type: http

@@ -6885,8 +6885,10 @@ paths:
                     description: The message of the prize
                     examples:
                       - null
+                      - account not found
                   data:
                     type: object
+                    default: null
                     properties:
                       rewardPrizes:
                         type: array

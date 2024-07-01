@@ -5,7 +5,7 @@ info:
     This is the GoApi documentation. You can find out more about the project on the [GoApi Repository](https://gl.traveligo.com/t1/go-api).
     Some useful links:
     - [GoApi Repository](https://gl.traveligo.com/t1/go-api)
-  version: 1.4.25
+  version: 1.4.26
   license:
     name: Internal
     url: "https://gl.traveligo.com/"
@@ -802,25 +802,9 @@ paths:
       operationId: getExperienceDetail
       description: Get experience detail by experience id or ticket id or slug
       parameters:
-        - name: experienceId
-          in: query
-          description: Experience id
-          schema:
-            type: number
-            description: Experience id
-            examples:
-              - 3794
-              - 3713
-              - 3792
+        - $ref: "#/components/parameters/experienceId"
         - $ref: "#/components/parameters/accept-Language"
-        - name: slug
-          in: query
-          description: Experience slug
-          schema:
-            type: string
-            description: Experience slug
-            examples:
-              - experience-slug
+        - $ref: "#/components/parameters/slug"
         - name: citySlug
           in: query
           description: City slug
@@ -854,9 +838,693 @@ paths:
                     description: The message
                     default: Get experience detail by id
                   data:
-                    $ref: "#/components/schemas/ExperienceDetailObject"
+                    description: Experience detail object
+                    type: object
+                    properties:
+                      id:
+                        type: number
+                        description: The id of the experience
+                        examples:
+                          - 3794
+                      ticketType:
+                        description: Ticket type object
+                        type: string
+                        enum:
+                          - ticket
+                          - daytrip
+                          - event
+                          - voucher
+                      category:
+                        type: array
+                        description: The category of the experience
+                        items:
+                          type: object
+                          properties:
+                            name:
+                              type: string
+                              description: The name of the category
+                              examples:
+                                - Theme Park
+                            slug:
+                              type: string
+                              description: The slug of the category
+                              examples:
+                                - theme-park
+                      klubCategory:
+                        type: object
+                        description: The klub category of the experience
+                        properties:
+                          name:
+                            type: string
+                            description: The name of the category
+                            examples:
+                              - diving
+                          slug:
+                            type: string
+                            description: The slug of the category
+                            examples:
+                              - diving
+                      name:
+                        type: string
+                        description: The name of the experience
+                        examples:
+                          - ทดลองดำน้ำ Scuba ด้วยอุปกรณ์ระดับมืออาชีพ
+                      description:
+                        type: string
+                        description: The description of the experience
+                        examples:
+                          - ทดลองดำน้ำ Scuba ด้วยอุปกรณ์ระดับมืออาชีพ
+                      tel:
+                        type: string
+                        description: The phone number of the contact person
+                        examples:
+                          - 0812345678
+                      address:
+                        type: string
+                        description: The address of the experience
+                        examples:
+                          - "แสมสาร, สัตหีบ, ชลบุรี"
+                      areaName:
+                        type: string
+                        description: The area name of the experience
+                        examples:
+                          - สัตหีบ
+                      cityName:
+                        type: string
+                        description: The city name of the experience
+                        examples:
+                          - ชลบุรี
+                      countryName:
+                        type: string
+                        description: The country name of the experience
+                        examples:
+                          - ประเทศไทย
+                      tier:
+                        description: Tier type object
+                        type: string
+                        enum:
+                          - exclusive
+                          - handpick
+                          - general
+                      timeDuration:
+                        type: string
+                        description: The time duration of when the experience will need to be booked in advance
+                        examples:
+                          - 1 hour
+                          - 4 Hours - 1 Day
+                      transportation:
+                        type: string
+                        description: The transportation of the experience
+                        examples:
+                          - รถยนต์ส่วนตัว
+                      isFavourite:
+                        type: boolean
+                        description: Wether the experience is favorite or not
+                        examples:
+                          - true
+                      bestSeller:
+                        type: boolean
+                        description: Wether the experience is best seller or not
+                        examples:
+                          - true
+                          - false
+                      topRated:
+                        type: boolean
+                        description: Wether the experience is top rated or not
+                        examples:
+                          - true
+                          - false
+                      photos:
+                        type: array
+                        description: The photos of the experience
+                        items:
+                          type: string
+                          examples:
+                            - "https://www.example.com/photo.jpg"
+                      location:
+                        type: object
+                        description: The location of the experience
+                        properties:
+                          lat:
+                            type: number
+                            description: The latitude of the experience
+                            examples:
+                              - 13.7563
+                              - null
+                          long:
+                            type: number
+                            description: The longitude of the experience
+                            examples:
+                              - 100.5018
+                              - null
+                      sponsor:
+                        type: object
+                        description: The sponsor of the experience
+                        default: null
+                        properties:
+                          logo:
+                            type: string
+                            description: The logo of the sponsor
+                            examples:
+                              - "https://www.example.com/logo.jpg"
+                          title:
+                            type: string
+                            description: The title of the sponsor
+                            examples:
+                              - Sponsor Title
+                          description:
+                            type: string
+                            description: The description of the sponsor
+                            examples:
+                              - Sponsor Description
+                      availableLauguage:
+                        type: array
+                        description: The available language of the experience
+                        items:
+                          type: string
+                        examples:
+                          - th
+                          - en
+                      ticketInclude:
+                        type: array
+                        description: The things that are included in the ticket
+                        default: null
+                        items:
+                          type: string
+                          examples:
+                            - Free Food
+                      rating:
+                        type: number
+                        description: The rating of the experience
+                        examples:
+                          - 5
+                      numReview:
+                        type: number
+                        description: The number of reviews of the experience
+                        examples:
+                          - 2.1
+                      reviews:
+                        type: array
+                        description: The reviews of the experience
+                        items:
+                          type: object
+                          properties:
+                            rating:
+                              type: number
+                              description: The rating of the review
+                              examples:
+                                - 5
+                                - null
+                            text_rating_1:
+                              type: string
+                              description: The text rating 1 of the review
+                              examples:
+                                - text rating 1
+                            text_rating_2:
+                              type: string
+                              description: The text rating 2 of the review
+                              examples:
+                                - text rating 2
+                            text_rating_3:
+                              type: string
+                              description: The text rating 3 of the review
+                              examples:
+                                - text rating 3
+                            text_rating_4:
+                              type: string
+                              description: The text rating 4 of the review
+                              examples:
+                                - text rating 4
+                            text_rating_5:
+                              type: string
+                              description: The text rating 5 of the review
+                              examples:
+                                - text rating 5
+                            review_rating_count:
+                              type: number
+                              description: The review rating count of the review
+                              examples:
+                                - 5
+                                - null
+                            review_rating_count_percent:
+                              type: number
+                              description: The review rating count percent of the review
+                              examples:
+                                - 5
+                                - null
+                            commentList:
+                              type: array
+                              default: null
+                      experience:
+                        type: array
+                        description: the description of the experience with images
+                        items:
+                          type: object
+                          properties:
+                            detail:
+                              type: string
+                              description: The description of the experience with html format
+                              examples:
+                                - <p>Experience Description</p>
+                            photo_path:
+                              type: array
+                              items:
+                                type: string
+                                description: The photo path of the experience
+                                examples:
+                                  - "https://www.example.com/photo.jpg"
+                      preparation:
+                        type: object
+                        description: The preparation of things to bring for the experience
+                        examples:
+                          - null
+                          - title: Preparation Title
+                            title_detail:
+                              - Preparation Title Detail
+                        properties:
+                          title:
+                            type: string
+                            description: The title of the preparation
+                          title_detail:
+                            type: array
+                            items:
+                              type: string
+                              description: The title detail of the preparation
+                      priceCondition:
+                        type: object
+                        description: The price condition of the experience
+                        properties:
+                          title:
+                            type: string
+                            description: The title of the price condition
+                            examples:
+                              - Price Condition Title
+                          title_detail:
+                            type: array
+                            items:
+                              type: string
+                              description: The title detail of the price condition
+                              examples:
+                                - Price Condition Title Detail
+                        examples:
+                          - null
+                          - title: Preparation Condition title
+                            title_detail:
+                              - Preparation Condition Detail
+                      slug:
+                        type: string
+                        description: The slug of the experience
+                        examples:
+                          - experience-slug
+                      isExclusive:
+                        type: boolean
+                        description: Wether the experience is exclusive or not
+                        examples:
+                          - true
+                      type:
+                        description: Klub category object
+                        type: string
+                        enum:
+                          - diving
+                          - family
+                          - coffee-and-tea
+                          - mutelu
+                      banner:
+                        description: Banner object
+                        type: object
+                        properties:
+                          background:
+                            type: string
+                            description: The background of the banner
+                            examples:
+                              - "https://www.example.com/banner.jpg"
+                          bannerImage:
+                            type: string
+                            description: The banner image of the banner
+                            examples:
+                              - "https://www.example.com/banner.jpg"
+                          textTitleBanner1:
+                            type: string
+                            description: The text title banner 1 of the banner
+                            examples:
+                              - Banner Title 1
+                          textTitleBanner2:
+                            type: string
+                            description: The text title banner 2 of the banner
+                            examples:
+                              - Banner Title 2
+                          textDescriptBanner1:
+                            type: string
+                            description: The text description banner 1 of the banner
+                            examples:
+                              - Banner Description 1
+                          textDescriptBanner2:
+                            type: string
+                            description: The text description banner 2 of the banner
+                            examples:
+                              - Banner Description 2
+                          textDescriptBanner3:
+                            type: string
+                            description: The text description banner 3 of the banner
+                            examples:
+                              - Banner Description 3
+                      exclusiveContainer:
+                        type: object
+                        properties:
+                          banner:
+                            $ref: "#/paths/~1v2~1experience~1detail/get/responses/200/content/application~1json/schema/properties/data/properties/banner"
+                          exclusiveContainer:
+                            type: object
+                            description: The exclusive container of the experience
+                            properties:
+                              quota:
+                                type: object
+                                properties:
+                                  message:
+                                    type: string
+                                    description: The message of the quota
+                                    examples:
+                                      - Quota Message
+                                  location:
+                                    type: string
+                                    description: The location of the event
+                                    examples:
+                                      - ภูเก็ต
+                                  date:
+                                    type: string
+                                    description: The date of the event
+                                    examples:
+                                      - "2022-01-01"
+                                  rating:
+                                    type: number
+                                    description: The rating of the event
+                                    examples:
+                                      - 5
+                                  review:
+                                    type: number
+                                    description: The review of the event
+                                    examples:
+                                      - 2.1
+                              exclusiveBanner:
+                                description: The exclusive banner of the klub
+                                type: object
+                                properties:
+                                  title:
+                                    type: string
+                                    description: The title of the exclusive banner
+                                    examples:
+                                      - Exclusive Banner Title
+                                  description:
+                                    type: string
+                                    description: The description of the exclusive banner
+                                    examples:
+                                      - Exclusive Banner Description
+                                  route:
+                                    type: string
+                                    description: The route of the exclusive banner in the platform
+                                    examples:
+                                      - home
+                                  image:
+                                    type: object
+                                    description: The image of the exclusive banner
+                                    properties:
+                                      background:
+                                        type: string
+                                        description: The background image of the exclusive banner
+                                        examples:
+                                          - "https://klub-image.com/klub-exclusive.jpg"
+                                      people:
+                                        type: string
+                                        description: The people image of the exclusive banner
+                                        examples:
+                                          - "https://klub-image.com/klub-people.jpg"
+                                      shape:
+                                        type: string
+                                        description: The shape image of the exclusive banner
+                                        examples:
+                                          - "https://klub-image.com/klub-shape.jpg"
+                                      shapeMobile:
+                                        type: string
+                                        description: The shape mobile image of the exclusive banner
+                                        examples:
+                                          - "https://klub-image.com/klub-shape-mobile.jpg"
+                                      color:
+                                        type: string
+                                        default: null
+                                        description: The color of the exclusive banner
+                                        examples:
+                                          - "#50D77A"
+                              media:
+                                description: The media object
+                                properties:
+                                  type:
+                                    type: string
+                                    description: The type of the media
+                                    examples:
+                                      - video
+                                  caption:
+                                    type: string
+                                    description: The caption of the media
+                                    examples:
+                                      - Media Caption
+                                  url:
+                                    type: string
+                                    description: The url of the media
+                                    examples:
+                                      - "https://klub-image.com/klub-media.jpg"
+                          buttonBanner:
+                            $ref: "#/paths/~1v2~1experience~1detail/get/responses/200/content/application~1json/schema/properties/data/properties/buttonBanner"
+                          cardInfluencer:
+                            $ref: "#/paths/~1v2~1experience~1detail/get/responses/200/content/application~1json/schema/properties/data/properties/cardInfluencer"
+                          airline:
+                            type: object
+                            properties:
+                              logoAirline:
+                                type: string
+                                description: The title logo of the airline
+                                examples:
+                                  - "https://www.example.com/logo.jpg"
+                              textTitleLogo:
+                                type: string
+                                description: The title of the logo
+                                examples:
+                                  - Airline Title
+                              textDescriptLogo:
+                                type: string
+                                description: The description of the logo
+                                examples:
+                                  - ""
+                      buttonBanner:
+                        type: object
+                        description: The button banner of the experience
+                        properties:
+                          icon:
+                            type: string
+                            description: The icon of the button
+                            examples:
+                              - "https://www.example.com/icon.jpg"
+                          klubName:
+                            type: string
+                            description: The klub name of the button
+                            examples:
+                              - Klub Name
+                      cardInfluencer:
+                        type: object
+                        description: The influencer card of the experience
+                        properties:
+                          imgInflu:
+                            type: string
+                            description: The image of the influencer
+                            examples:
+                              - "https://www.example.com/influ.jpg"
+                          nameInflu:
+                            type: string
+                            description: The name of the influencer
+                            examples:
+                              - Influencer Name
+                          detailInflu:
+                            type: string
+                            description: The detail of the influencer
+                            examples:
+                              - Influencer Detail
+                      gallery:
+                        type: object
+                        description: The gallery of the experience
+                        properties:
+                          id:
+                            type: number
+                            description: The id of the gallery
+                            examples:
+                              - 1
+                          photos:
+                            type: array
+                            description: The photos of the gallery
+                            items:
+                              type: string
+                              examples:
+                                - "https://www.example.com/photo.jpg"
+                          starRating:
+                            type: number
+                            description: The star rating of the gallery
+                            examples:
+                              - 5
+                          numReviews:
+                            type: number
+                            description: The number of reviews of the gallery
+                            examples:
+                              - 2.1
+                          isFavourite:
+                            type: boolean
+                            description: Wether the gallery is favorite or not
+                            examples:
+                              - true
+                          nameExp:
+                            type: string
+                            description: The name of the experience
+                            examples:
+                              - Experience Name
+                          locationExp:
+                            type: string
+                            description: The location of the experience
+                            examples:
+                              - Bangkok
+                          description:
+                            type: string
+                            description: The description of the gallery
+                            examples:
+                              - Gallery Description
+                      experienceBlog:
+                        type: array
+                        description: The experience blog of the experience
+                        items:
+                          type: object
+                          properties:
+                            image:
+                              type: array
+                              items:
+                                type: string
+                                description: The image of the blog
+                                examples:
+                                  - "https://www.example.com/blog.jpg"
+                            description:
+                              type: string
+                              description: The description of the blog
+                              examples:
+                                - Blog Description
+                      prepare:
+                        type: object
+                        description: The prepare of the experience
+                        properties:
+                          titlePrepare:
+                            type: string
+                            description: The title of the prepare
+                            examples:
+                              - Prepare Title
+                          bodyPrepare:
+                            type: string
+                            description: The body of the prepare
+                            examples:
+                              - Prepare Body
+                      condition:
+                        type: object
+                        description: The condition of the experience
+                        properties:
+                          titleCondition:
+                            type: string
+                            description: The title of the condition
+                            examples:
+                              - Condition Title
+                          bodyCondition:
+                            type: string
+                            description: The body of the condition
+                            examples:
+                              - Condition Body
+                      map:
+                        type: object
+                        description: The map of the experience
+                        properties:
+                          address:
+                            type: string
+                            description: The address of the map
+                            examples:
+                              - Bangkok
+                          latitude:
+                            type: number
+                            description: The latitude of the map
+                            examples:
+                              - 13.7563
+                          longitude:
+                            type: number
+                            description: The longitude of the map
+                            examples:
+                              - 100.5018
+                          areaName:
+                            type: string
+                            description: The area name of the map
+                            examples:
+                              - Bangkok
+                          cityName:
+                            type: string
+                            description: The city name of the map
+                            examples:
+                              - Bangkok
+                          countryName:
+                            type: string
+                            description: The country name of the map
+                            examples:
+                              - Thailand
+                      highlights:
+                        description: The highlights of the experience
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            icon:
+                              type: string
+                              description: The icon of the highlight
+                              examples:
+                                - "https://www.example.com/icon.jpg"
+                            title:
+                              type: string
+                              description: The title of the highlight
+                              examples:
+                                - Highlight Title
+                            body:
+                              type: string
+                              description: The body of the highlight
+                              examples:
+                                - Highlight Body
+          headers:
+            Server:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Server"
+            Content-Type:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Content-Type"
+            Content-Encoding:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Content-Encoding"
+            Content-Length:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Content-Length"
+            Date:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Date"
+            X-Powered-By:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/X-Powered-By"
+            Connection:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Connection"
+            Expires:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Date"
+            Cache-Control:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Cache-Control"
+            Pragma:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Pragma"
+            Access-Control-Allow-Origin:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Access-Control-Allow-Origin"
+            Access-Control-Allow-Methods:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Access-Control-Allow-Methods"
+            Access-Control-Allow-Headers:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Access-Control-Allow-Headers"
+            Vary:
+              $ref: "#/components/responses/AuthSuccessResponse/headers/Vary"
         "401":
-          $ref: "#/components/responses/TokenExpiredError"
+          $ref: "#/components/responses/UnauthorizedError"
         "405":
           $ref: "#/components/responses/MethodNotAllowedError"
   /v2/experience/recommended:
@@ -942,9 +1610,9 @@ paths:
                           examples:
                             - thailand
                         tier:
-                          $ref: "#/paths/~1v2~1experience~1preAllocate/post/responses/200/content/application~1json/schema/properties/data/properties/tier"
+                          $ref: "#/paths/~1v2~1experience~1detail/get/responses/200/content/application~1json/schema/properties/data/properties/tier"
                         ticketType:
-                          $ref: "#/paths/~1v2~1experience~1categories/get/responses/200/content/application~1json/schema/properties/data/items/properties/group"
+                          $ref: "#/paths/~1v2~1experience~1detail/get/responses/200/content/application~1json/schema/properties/data/properties/ticketType"
                         isFavourite:
                           type: boolean
                           description: Wether the experience is favorite or not
@@ -1081,197 +1749,7 @@ paths:
                               examples:
                                 - THB
                         exclusiveHeader:
-                          type: object
-                          properties:
-                            banner:
-                              description: Banner object
-                              type: object
-                              properties:
-                                background:
-                                  type: string
-                                  description: The background of the banner
-                                  examples:
-                                    - "https://www.example.com/banner.jpg"
-                                bannerImage:
-                                  type: string
-                                  description: The banner image of the banner
-                                  examples:
-                                    - "https://www.example.com/banner.jpg"
-                                textTitleBanner1:
-                                  type: string
-                                  description: The text title banner 1 of the banner
-                                  examples:
-                                    - Banner Title 1
-                                textTitleBanner2:
-                                  type: string
-                                  description: The text title banner 2 of the banner
-                                  examples:
-                                    - Banner Title 2
-                                textDescriptBanner1:
-                                  type: string
-                                  description: The text description banner 1 of the banner
-                                  examples:
-                                    - Banner Description 1
-                                textDescriptBanner2:
-                                  type: string
-                                  description: The text description banner 2 of the banner
-                                  examples:
-                                    - Banner Description 2
-                                textDescriptBanner3:
-                                  type: string
-                                  description: The text description banner 3 of the banner
-                                  examples:
-                                    - Banner Description 3
-                            exclusiveContainer:
-                              type: object
-                              description: The exclusive container of the experience
-                              properties:
-                                quota:
-                                  type: object
-                                  properties:
-                                    message:
-                                      type: string
-                                      description: The message of the quota
-                                      examples:
-                                        - Quota Message
-                                    location:
-                                      type: string
-                                      description: The location of the event
-                                      examples:
-                                        - ภูเก็ต
-                                    date:
-                                      type: string
-                                      description: The date of the event
-                                      examples:
-                                        - "2022-01-01"
-                                    rating:
-                                      type: number
-                                      description: The rating of the event
-                                      examples:
-                                        - 5
-                                    review:
-                                      type: number
-                                      description: The review of the event
-                                      examples:
-                                        - 2.1
-                                exclusiveBanner:
-                                  description: The exclusive banner of the klub
-                                  type: object
-                                  properties:
-                                    title:
-                                      type: string
-                                      description: The title of the exclusive banner
-                                      examples:
-                                        - Exclusive Banner Title
-                                    description:
-                                      type: string
-                                      description: The description of the exclusive banner
-                                      examples:
-                                        - Exclusive Banner Description
-                                    route:
-                                      type: string
-                                      description: The route of the exclusive banner in the platform
-                                      examples:
-                                        - home
-                                    image:
-                                      type: object
-                                      description: The image of the exclusive banner
-                                      properties:
-                                        background:
-                                          type: string
-                                          description: The background image of the exclusive banner
-                                          examples:
-                                            - "https://klub-image.com/klub-exclusive.jpg"
-                                        people:
-                                          type: string
-                                          description: The people image of the exclusive banner
-                                          examples:
-                                            - "https://klub-image.com/klub-people.jpg"
-                                        shape:
-                                          type: string
-                                          description: The shape image of the exclusive banner
-                                          examples:
-                                            - "https://klub-image.com/klub-shape.jpg"
-                                        shapeMobile:
-                                          type: string
-                                          description: The shape mobile image of the exclusive banner
-                                          examples:
-                                            - "https://klub-image.com/klub-shape-mobile.jpg"
-                                        color:
-                                          type: string
-                                          default: null
-                                          description: The color of the exclusive banner
-                                          examples:
-                                            - "#50D77A"
-                                media:
-                                  description: The media object
-                                  properties:
-                                    type:
-                                      type: string
-                                      description: The type of the media
-                                      examples:
-                                        - video
-                                    caption:
-                                      type: string
-                                      description: The caption of the media
-                                      examples:
-                                        - Media Caption
-                                    url:
-                                      type: string
-                                      description: The url of the media
-                                      examples:
-                                        - "https://klub-image.com/klub-media.jpg"
-                            buttonBanner:
-                              type: object
-                              description: The button banner of the experience
-                              properties:
-                                icon:
-                                  type: string
-                                  description: The icon of the button
-                                  examples:
-                                    - "https://www.example.com/icon.jpg"
-                                klubName:
-                                  type: string
-                                  description: The klub name of the button
-                                  examples:
-                                    - Klub Name
-                            cardInfluencer:
-                              type: object
-                              description: The influencer card of the experience
-                              properties:
-                                imgInflu:
-                                  type: string
-                                  description: The image of the influencer
-                                  examples:
-                                    - "https://www.example.com/influ.jpg"
-                                nameInflu:
-                                  type: string
-                                  description: The name of the influencer
-                                  examples:
-                                    - Influencer Name
-                                detailInflu:
-                                  type: string
-                                  description: The detail of the influencer
-                                  examples:
-                                    - Influencer Detail
-                            airline:
-                              type: object
-                              properties:
-                                logoAirline:
-                                  type: string
-                                  description: The title logo of the airline
-                                  examples:
-                                    - "https://www.example.com/logo.jpg"
-                                textTitleLogo:
-                                  type: string
-                                  description: The title of the logo
-                                  examples:
-                                    - Airline Title
-                                textDescriptLogo:
-                                  type: string
-                                  description: The description of the logo
-                                  examples:
-                                    - ""
+                          $ref: "#/paths/~1v2~1experience~1detail/get/responses/200/content/application~1json/schema/properties/data/properties/exclusiveContainer"
           headers:
             Server:
               $ref: "#/components/responses/AuthSuccessResponse/headers/Server"
@@ -1354,13 +1832,7 @@ paths:
                           examples:
                             - Theme Park
                         group:
-                          description: Ticket type object
-                          type: string
-                          enum:
-                            - ticket
-                            - daytrip
-                            - event
-                            - voucher
+                          $ref: "#/paths/~1v2~1experience~1detail/get/responses/200/content/application~1json/schema/properties/data/properties/ticketType"
                         groupName:
                           type: string
                           description: The name of the group
@@ -1581,12 +2053,7 @@ paths:
                         examples:
                           - ticket-slug
                       tier:
-                        description: Tier type object
-                        type: string
-                        enum:
-                          - exclusive
-                          - handpick
-                          - general
+                        $ref: "#/paths/~1v2~1experience~1detail/get/responses/200/content/application~1json/schema/properties/data/properties/tier"
                       mobile_number:
                         type: string
                         description: The mobile number
@@ -2136,7 +2603,7 @@ paths:
                             examples:
                               - 0812345678
                           tier:
-                            $ref: "#/paths/~1v2~1experience~1preAllocate/post/responses/200/content/application~1json/schema/properties/data/properties/tier"
+                            $ref: "#/paths/~1v2~1experience~1detail/get/responses/200/content/application~1json/schema/properties/data/properties/tier"
                           ticket_type:
                             type: string
                             description: The ticket type
@@ -8696,402 +9163,6 @@ components:
             type: string
             examples:
               - Terms and conditions one
-    ExperienceDetailObject:
-      description: Experience detail object
-      type: object
-      properties:
-        id:
-          type: number
-          description: The id of the experience
-          examples:
-            - 3794
-        ticketType:
-          $ref: "#/components/schemas/TicketType"
-        category:
-          type: object
-          description: The category of the experience
-          properties:
-            name:
-              type: string
-              description: The name of the category
-              examples:
-                - Theme Park
-            slug:
-              type: string
-              description: The slug of the category
-              examples:
-                - theme-park
-        klubCategory:
-          type: object
-          description: The klub category of the experience
-          properties:
-            name:
-              type: string
-              description: The name of the category
-              examples:
-                - diving
-            slug:
-              type: string
-              description: The slug of the category
-              examples:
-                - diving
-        name:
-          type: string
-          description: The name of the experience
-          examples:
-            - ทดลองดำน้ำ Scuba ด้วยอุปกรณ์ระดับมืออาชีพ
-        description:
-          type: string
-          description: The description of the experience
-          examples:
-            - ทดลองดำน้ำ Scuba ด้วยอุปกรณ์ระดับมืออาชีพ
-        tel:
-          type: string
-          description: The phone number of the contact person
-          examples:
-            - 0812345678
-        address:
-          type: string
-          description: The address of the experience
-          examples:
-            - "แสมสาร, สัตหีบ, ชลบุรี"
-        areaName:
-          type: string
-          description: The area name of the experience
-          examples:
-            - สัตหีบ
-        cityName:
-          type: string
-          description: The city name of the experience
-          examples:
-            - ชลบุรี
-        countryName:
-          type: string
-          description: The country name of the experience
-          examples:
-            - ประเทศไทย
-        tier:
-          type: string
-          description: The tier of the experience
-          enum:
-            - exclusive
-            - handpick
-            - general
-          examples:
-            - exclusive
-        timeDuration:
-          type: string
-          description: The time duration of when the experience will need to be booked in advance
-          examples:
-            - 1 hour
-            - 4 Hours - 1 Day
-        transportation:
-          type: string
-          description: The transportation of the experience
-          examples:
-            - รถยนต์ส่วนตัว
-        isFavourite:
-          type: boolean
-          description: Wether the experience is favorite or not
-          examples:
-            - true
-        photos:
-          type: array
-          description: The photos of the experience
-          items:
-            type: string
-            examples:
-              - "https://www.example.com/photo.jpg"
-        location:
-          type: object
-          description: The location of the experience
-          properties:
-            lat:
-              type: number
-              description: The latitude of the experience
-              examples:
-                - 13.7563
-            long:
-              type: number
-              description: The longitude of the experience
-              examples:
-                - 100.5018
-        sponsor:
-          type: object
-          description: The sponsor of the experience
-          properties:
-            logo:
-              type: string
-              description: The logo of the sponsor
-              examples:
-                - "https://www.example.com/logo.jpg"
-            title:
-              type: string
-              description: The title of the sponsor
-              examples:
-                - Sponsor Title
-            description:
-              type: string
-              description: The description of the sponsor
-              examples:
-                - Sponsor Description
-        availableLauguage:
-          type: string
-          description: The available language of the experience
-          examples:
-            - th
-            - en
-        ticketInclude:
-          type: array
-          description: The things that are included in the ticket
-          items:
-            type: string
-            examples:
-              - Free Food
-        rating:
-          type: number
-          description: The rating of the experience
-          examples:
-            - 5
-        numReview:
-          type: number
-          description: The number of reviews of the experience
-          examples:
-            - 2.1
-        experience:
-          type: array
-          description: the description of the experience with images
-          items:
-            type: object
-            properties:
-              detail:
-                type: string
-                description: The description of the experience with html format
-                examples:
-                  - <p>Experience Description</p>
-              photo_path:
-                type: array
-                items:
-                  type: string
-                  description: The photo path of the experience
-                  examples:
-                    - "https://www.example.com/photo.jpg"
-        preparation:
-          type: object
-          description: The preparation of things to bring for the experience
-          properties:
-            title:
-              type: string
-              description: The title of the preparation
-              examples:
-                - Preparation Title
-            title_detail:
-              type: array
-              items:
-                type: string
-                description: The title detail of the preparation
-                examples:
-                  - Preparation Title Detail
-        priceCondition:
-          type: object
-          description: The price condition of the experience
-          properties:
-            title:
-              type: string
-              description: The title of the price condition
-              examples:
-                - Price Condition Title
-            title_detail:
-              type: array
-              items:
-                type: string
-                description: The title detail of the price condition
-                examples:
-                  - Price Condition Title Detail
-        slug:
-          type: string
-          description: The slug of the experience
-          examples:
-            - experience-slug
-        isExclusive:
-          type: boolean
-          description: Wether the experience is exclusive or not
-          examples:
-            - true
-        type:
-          $ref: "#/components/schemas/KlubCategory"
-        banner:
-          $ref: "#/components/schemas/BannerObjectExclusive"
-        exclusiveContainer:
-          $ref: "#/components/schemas/ExclusiveContainerObject"
-        buttonBanner:
-          $ref: "#/components/schemas/ButtonBannerObject"
-        cardInfluencer:
-          type: object
-          description: The influencer card of the experience
-          properties:
-            imgInflu:
-              type: string
-              description: The image of the influencer
-              examples:
-                - "https://www.example.com/influ.jpg"
-            nameInflu:
-              type: string
-              description: The name of the influencer
-              examples:
-                - Influencer Name
-            detailInflu:
-              type: string
-              description: The detail of the influencer
-              examples:
-                - Influencer Detail
-        gallery:
-          type: object
-          description: The gallery of the experience
-          properties:
-            id:
-              type: number
-              description: The id of the gallery
-              examples:
-                - 1
-            photos:
-              type: array
-              description: The photos of the gallery
-              items:
-                type: string
-                examples:
-                  - "https://www.example.com/photo.jpg"
-            starRating:
-              type: number
-              description: The star rating of the gallery
-              examples:
-                - 5
-            numReviews:
-              type: number
-              description: The number of reviews of the gallery
-              examples:
-                - 2.1
-            isFavourite:
-              type: boolean
-              description: Wether the gallery is favorite or not
-              examples:
-                - true
-            nameExp:
-              type: string
-              description: The name of the experience
-              examples:
-                - Experience Name
-            locationExp:
-              type: string
-              description: The location of the experience
-              examples:
-                - Bangkok
-            description:
-              type: string
-              description: The description of the gallery
-              examples:
-                - Gallery Description
-        experienceBlog:
-          type: array
-          description: The experience blog of the experience
-          items:
-            type: object
-            properties:
-              image:
-                type: array
-                items:
-                  type: string
-                  description: The image of the blog
-                  examples:
-                    - "https://www.example.com/blog.jpg"
-              description:
-                type: string
-                description: The description of the blog
-                examples:
-                  - Blog Description
-        prepare:
-          type: object
-          description: The prepare of the experience
-          properties:
-            titlePrepare:
-              type: string
-              description: The title of the prepare
-              examples:
-                - Prepare Title
-            bodyPrepare:
-              type: string
-              description: The body of the prepare
-              examples:
-                - Prepare Body
-        condition:
-          type: object
-          description: The condition of the experience
-          properties:
-            titleCondition:
-              type: string
-              description: The title of the condition
-              examples:
-                - Condition Title
-            bodyCondition:
-              type: string
-              description: The body of the condition
-              examples:
-                - Condition Body
-        map:
-          type: object
-          description: The map of the experience
-          properties:
-            address:
-              type: string
-              description: The address of the map
-              examples:
-                - Bangkok
-            latitude:
-              type: number
-              description: The latitude of the map
-              examples:
-                - 13.7563
-            longitude:
-              type: number
-              description: The longitude of the map
-              examples:
-                - 100.5018
-            areaName:
-              type: string
-              description: The area name of the map
-              examples:
-                - Bangkok
-            cityName:
-              type: string
-              description: The city name of the map
-              examples:
-                - Bangkok
-            countryName:
-              type: string
-              description: The country name of the map
-              examples:
-                - Thailand
-        highlights:
-          description: The highlights of the experience
-          type: array
-          items:
-            type: object
-            properties:
-              icon:
-                type: string
-                description: The icon of the highlight
-                examples:
-                  - "https://www.example.com/icon.jpg"
-              title:
-                type: string
-                description: The title of the highlight
-                examples:
-                  - Highlight Title
-              body:
-                type: string
-                description: The body of the highlight
-                examples:
-                  - Highlight Body
     BannerObjectExclusive:
       description: Banner object
       type: object
